@@ -18,7 +18,7 @@ export const renderSelectedItemTemplate = (option: Country | string, props: any)
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <img
                 alt={option.name}
-                src={`/flags/${option.code.toLowerCase()}.svg`}
+                src={`./flags/${option.code.toLowerCase()}.svg`}
                 style={{ width: '18px', display: 'inline-block', verticalAlign: 'middle' }}
             />
             <span>{option.name}</span>
@@ -38,7 +38,7 @@ export const renderOptionTemplate = (option: Country | string) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <img
                 alt={option.name}
-                src={`/flags/${option.code.toLowerCase()}.svg`}
+                src={`./flags/${option.code.toLowerCase()}.svg`}
                 style={{ width: '18px', display: 'inline-block', verticalAlign: 'middle' }}
             />
             <span>{option.name}</span>
