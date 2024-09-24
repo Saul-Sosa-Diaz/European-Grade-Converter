@@ -13,7 +13,10 @@ export class IrelandGradeConverter implements ICountryConverter {
     { min: 70, max: 100, base: 9}, // Entre 70-100, base 9
   ];
   convertToDestinationCountry(grade: number): string {
-    return grade.toFixed(2);
+    const range = this.gradeRanges.find((r) => grade >= r.base && grade <= r.base + 1);
+    if (!range) return "0%-39%";
+    return`${range.min}%-${range.max}%`;
+
   }
   convertToSpain(grade: number): string {
     const range = this.gradeRanges.find((r) => grade >= r.min && grade <= r.max); // Find the range of the grade

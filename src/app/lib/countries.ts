@@ -2,7 +2,7 @@ import { ICountryConverter } from "@/src/app/lib/interfaces/i-grade-converter";
 import { FranceGradeConverter } from "@/src/app/lib/countriesClasses/france-grade-converter";
 import { DenmarkGradeConverter } from "@/src/app/lib/countriesClasses/denmark-grade-converter";
 import { IrelandGradeConverter } from "@/src/app/lib/countriesClasses/ireland-grade-converter";
-import { SloveniaGradeConverter } from "@/src/app/lib/countriesClasses/slovenia-grade-converter";
+//import { SloveniaGradeConverter } from "@/src/app/lib/countriesClasses/slovenia-grade-converter";
 import { SpainGradeConverter } from "@/src/app/lib/countriesClasses/spain-grade-converter";
 
 
@@ -28,13 +28,6 @@ export const COUNTRIES: Country[] = [
     minGrade: 0,
     maxGrade: 10,
     gradeConverter: new SpainGradeConverter(),
-  },
-  {
-    name: "Slovenia",
-    code: "SI",
-    minGrade: 2,
-    maxGrade: 5,
-    gradeConverter: new SloveniaGradeConverter(),
   },
   {
     name: "Ireland",

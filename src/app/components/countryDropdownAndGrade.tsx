@@ -15,7 +15,7 @@ import {
  */
 const CountryDropdown: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null); // Country selection state
-  const [selectedGrade, setSelectedGrade] = useState<string | null>(null); // Grade selection state
+  const [selectedGrade, setSelectedGrade] = useState<number | null>(null); // Grade selection state
   const {setGradeToConvert, setCountryFrom } = useContext(ToConvertContext); // Global context for grade selection
 
 
@@ -31,7 +31,7 @@ const CountryDropdown: React.FC = () => {
   };
 
   const handleGradeChange = (e: DropdownChangeEvent) => {
-    const selectedGradeValue = e.value;
+    const selectedGradeValue = e.value as number;
     setSelectedGrade(selectedGradeValue);
     setGradeToConvert(selectedGradeValue);
   };
@@ -61,7 +61,7 @@ const CountryDropdown: React.FC = () => {
       {/* Grade dropdown (only shown when a country is selected) */}
       {selectedCountry && (
         <InputNumber
-          value={selectedGrade}
+          value={selectedGrade  ? Number(selectedGrade) : null}
           onValueChange={(e) => handleGradeChange(e)}
           min={selectedCountry.minGrade}
           max={selectedCountry.maxGrade}
