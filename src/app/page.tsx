@@ -13,7 +13,7 @@ export default function Home() {
           <CountryDropdownAndGrade />
           <img
             className="w-1"
-            src="https://cdn.pixabay.com/photo/2012/04/24/11/42/arrow-39526_1280.png"
+            src="https://openclipart.org/image/2400px/svg_to_png/200343/primary-line-line-arrow-end.png"
           ></img>
           <CountryDropdownAndGradeConversed />
         </ToConvertContextProvider>
