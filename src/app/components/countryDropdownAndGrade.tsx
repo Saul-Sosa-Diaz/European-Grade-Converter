@@ -65,6 +65,8 @@ const CountryDropdown: React.FC = () => {
           onValueChange={(e) => handleGradeChange(e)}
           min={selectedCountry.minGrade}
           max={selectedCountry.maxGrade}
+          maxFractionDigits={selectedCountry.decimalPlaces}
+          suffix={selectedCountry.suffix}
         />
       )}
     </div>

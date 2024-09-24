@@ -12,6 +12,8 @@ export interface Country {
   minGrade: number;
   maxGrade: number;
   gradeConverter: ICountryConverter;
+  suffix?: string;
+  decimalPlaces: number;
 }
 
 export const COUNTRIES: Country[] = [
@@ -21,6 +23,7 @@ export const COUNTRIES: Country[] = [
     minGrade: 0,
     maxGrade: 20,
     gradeConverter: new FranceGradeConverter(),
+    decimalPlaces: 2,
   },
   {
     name: "Spain",
@@ -28,6 +31,7 @@ export const COUNTRIES: Country[] = [
     minGrade: 0,
     maxGrade: 10,
     gradeConverter: new SpainGradeConverter(),
+    decimalPlaces: 2,
   },
   {
     name: "Ireland",
@@ -35,6 +39,8 @@ export const COUNTRIES: Country[] = [
     minGrade: 0,
     maxGrade: 100,
     gradeConverter: new IrelandGradeConverter(),
+    decimalPlaces: 0,
+    suffix: "%",
   },
   {
     name: "Denmark",
@@ -42,5 +48,6 @@ export const COUNTRIES: Country[] = [
     minGrade: 0,
     maxGrade: 12,
     gradeConverter: new DenmarkGradeConverter(),
+    decimalPlaces: 0,
   },
 ];
