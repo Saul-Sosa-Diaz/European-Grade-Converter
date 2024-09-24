@@ -1,10 +1,25 @@
 import { ICountryConverter } from "@/src/app/lib/interfaces/i-grade-converter";
-
+type GradeRange = {
+  min: number;
+  max: number;
+  base: number;
+  divisor: number;
+};
 export class IrelandGradeConverter implements ICountryConverter {
-  convertTo(grade: number): string {
-    return (grade * 2).toString();
+  private gradeRanges: GradeRange[] = [
+    { min: 40, max: 44, base: 5, divisor: 5 }, // Entre 40-45, base 5
+    { min: 45, max: 49, base: 6, divisor: 5 }, // Entre 45-50, base 6
+    { min: 50, max: 59, base: 7, divisor: 10 }, // Entre 50-60, base 7
+    { min: 60, max: 69, base: 8, divisor: 10 }, // Entre 60-70, base 8
+    { min: 70, max: 100, base: 9, divisor: 30 }, // Entre 70-100, base 9
+  ];
+  convertToDestinationCountry(grade: number): string {
+    return grade.toFixed(2);
   }
-  convertFrom(grade: number): string {
-    return (grade / 2).toString();
+  convertToSpain(grade: number): string {
+    const range = this.gradeRanges.find((r) => grade >= r.min && grade < r.max); // Find the range of the grade
+    if (!range) return "0"; // if the range is not found, return 0
+    const result = range.base + (grade - range.min) / range.divisor;
+    return result.toFixed(2);
   }
 }

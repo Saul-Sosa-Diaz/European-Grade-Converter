@@ -23,9 +23,9 @@ const CountryDropdownAndGradeConversed: React.FC = () => {
   // Function to calculate the grade based on the selected country's grading system
   const calculateGrade = () => {
     const GRADE_CONVERSOR = new GeneralGradeConverter();
-    console.log("Calculating grade...", gradeToConvert);
-    // If the selected country is Spain, convert the grade to the selected country's grading system
-    if (countryTo && gradeToConvert) {
+    if (!gradeToConvert) { setCalculatedGrade(null)}
+    else if (countryTo && gradeToConvert) {
+      // If the selected country is Spain, convert the grade to the selected country's grading system
       const CONVERTED_GRADE = GRADE_CONVERSOR.convert(
         gradeToConvert,
         countryFrom,
@@ -38,7 +38,7 @@ const CountryDropdownAndGradeConversed: React.FC = () => {
   // Trigger grade calculation whenever countryTo or grade changes
   useEffect(() => {
     calculateGrade();
-  }, [countryTo, gradeToConvert]);
+  }, [countryTo, gradeToConvert, countryFrom]);
 
   return (
     <div className="flex flex-column gap-3">

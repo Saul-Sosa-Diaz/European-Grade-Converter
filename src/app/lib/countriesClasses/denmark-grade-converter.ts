@@ -1,7 +1,7 @@
 import { ICountryConverter } from "@/src/app/lib/interfaces/i-grade-converter";
 
 export class DenmarkGradeConverter implements ICountryConverter {
-  convertTo(grade: number): string {
+  convertToDestinationCountry(grade: number): string {
     if (grade >= 9) return "12";
     if (grade >= 8) return "10";
     if (grade >= 7) return "7";
@@ -10,7 +10,7 @@ export class DenmarkGradeConverter implements ICountryConverter {
     return "0";
   }
 
-  convertFrom(grade: number): string {
+  convertToSpain(grade: number): string {
     if (grade >= 12) return "9.5";
     if (grade >= 10) return "8.5";
     if (grade >= 7) return "7.5";

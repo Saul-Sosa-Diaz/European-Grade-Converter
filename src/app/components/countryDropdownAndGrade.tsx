@@ -22,6 +22,8 @@ const CountryDropdown: React.FC = () => {
   const handleCountryChange = (e: DropdownChangeEvent) => {
     const selectedCountryValue = e.value;
     if (selectedCountryValue) {
+      setSelectedGrade(null);
+      setGradeToConvert(null);
       setSelectedCountry(selectedCountryValue);
       setCountryFrom(selectedCountryValue);
     }
