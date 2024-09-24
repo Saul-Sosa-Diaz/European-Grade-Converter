@@ -1,64 +1,53 @@
+import { IGradeConverter } from "@/src/app/lib/interfaces/i-grade-converter";
+import { FranceGradeConverter } from "@/src/app/lib/countriesClasses/france-grade-converter";
+import { DenmarkGradeConverter } from "@/src/app/lib/countriesClasses/denmark-grade-converter";
+import { IrelandGradeConverter } from "@/src/app/lib/countriesClasses/ireland-grade-converter";
+import { SloveniaGradeConverter } from "@/src/app/lib/countriesClasses/slovenia-grade-converter";
+import { SpainGradeConverter } from "@/src/app/lib/countriesClasses/spain-grade-converter";
+
 
 export interface Country {
-    name: string;
-    code: string;
-    grades: Array<Grade>;
-}
-
-export interface Grade {
-    grade: string;
-    index: string;
+  name: string;
+  code: string;
+  minGrade: number;
+  maxGrade: number;
+  converter: IGradeConverter;
 }
 
 export const COUNTRIES: Country[] = [
-    { name: 'France', 
-      code: 'FR', 
-      grades: [
-        {grade: "20 - 16", index: "A"}, 
-        {grade: "16 - 14", index: "B"}, 
-        {grade: "14-12", index: "C"} ,
-        {grade: "12-10", index: "D"},
-        {grade: "12-10", index: "E"}
-        ]
-    },
-
-    { name: 'Spain', 
-      code: 'ES', 
-      grades: [
-        {grade: "10 - 9.00", index: "A"}, 
-        {grade: "8.99 - 8.00", index: "B"}, 
-        {grade: "7.99 - 7.00", index: "C"}, 
-        {grade: "6.99 - 6.00", index: "D"}, 
-        {grade: "5.99 - 5.00", index: "E"}] 
-    },
-
-    { name: 'Slovenia', 
-        code: 'SI',  
-        grades: [
-            {grade: "5", index: "A"}, 
-            {grade: "4", index: "B"}, 
-            {grade: "3", index: "C"},
-            {grade: "2", index: "D"},
-            {grade: "1", index: "E"}] 
-        },
-    
-    { name: 'Ireland', 
-        code: 'IE',  
-        grades: [
-            {grade: "First Class Honours / (100% or 70%)", index: "A"}, 
-            {grade: "Upper Second Class Honours / (60% - 69%)", index: "B"}, 
-            {grade: "Lower Second Class Honours / (50% - 59%)", index: "C"},
-            {grade: "Third Class Honours / (45% - 49%)", index: "D"},
-            {grade: "Compensating Fail / (40% - 44%)", index: "E"}] 
-        },
-    
-        { name: 'Denmark', 
-            code: 'DK',  
-            grades: [
-                {grade: "12", index: "A"}, 
-                {grade: "10", index: "B"}, 
-                {grade: "7", index: "C"},
-                {grade: "4", index: "D"},
-                {grade: "2", index: "E"}] 
-            }
+  {
+    name: "France",
+    code: "FR",
+    minGrade: 0,
+    maxGrade: 20,
+    converter: new FranceGradeConverter(),
+  },
+  {
+    name: "Spain",
+    code: "ES",
+    minGrade: 0,
+    maxGrade: 10,
+    converter: new SpainGradeConverter(),
+  },
+  {
+    name: "Slovenia",
+    code: "SI",
+    minGrade: 2,
+    maxGrade: 5,
+    converter: new SloveniaGradeConverter(),
+  },
+  {
+    name: "Ireland",
+    code: "IE",
+    minGrade: 0,
+    maxGrade: 100,
+    converter: new IrelandGradeConverter(),
+  },
+  {
+    name: "Denmark",
+    code: "DK",
+    minGrade: 0,
+    maxGrade: 12,
+    converter: new DenmarkGradeConverter(),
+  },
 ];

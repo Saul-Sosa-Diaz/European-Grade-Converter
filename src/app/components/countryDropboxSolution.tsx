@@ -17,36 +17,34 @@ const CountryDropdownAndGradeConversed: React.FC = () => {
 
     // Function to calculate the grade based on the selected country's grading system
     const calculateGrade = () => {
-        if (!selectedCountry || !selectedCountry.grades || !grade) return;
-
-        const matchedGrades = selectedCountry.grades.filter(grading => grading.index === grade.index);
-        if (matchedGrades.length === 0) return;
-
-        let result: string | null = null;
-        const gradeToCompare = matchedGrades[0].grade;
-
-        // Case 1: Grade is not a percentage
-        if (!grade.grade.match(/[0-9]+%/)) {
-            if (gradeToCompare.includes("-")) {
-                const [min, max] = gradeToCompare.split("-").map(Number);
-                result = ((min + max) / 2).toFixed(2); // Calculate the average
-            } else {
-                result = gradeToCompare; // Use the grade directly
-            }
+        console.log('Calculating grade...', grade);
+        // Calculate the grade based on the selected country's grading system
+        if (selectedCountry && grade) {
+            let calculatedGrade;
+            switch (selectedCountry.name) {
+              case 'France': 
+                calculatedGrade = (grade * 2).toString();
+                setCalculatedGrade(calculatedGrade);
+                break;
+              case 'Denmark':
+                if (grade >= 9) {
+                    calculatedGrade = '12';
+                } else if (grade >= 8) {
+                    calculatedGrade = '10';
+                } else if (grade >= 7)  {
+                  calculatedGrade = "7";
+                } else if (grade >= 6) {
+                    calculatedGrade = "4";
+                } else if (grade >= 5) {
+                    calculatedGrade = "2";
+                } else {
+                    calculatedGrade = "0";
+                }
+                        
+                setCalculatedGrade(calculatedGrade);
+                break;
         }
-        // Case 2: Grade is a percentage
-        else {
-            if (gradeToCompare.includes("-")) {
-                const match = grade.grade.match(/[0-9]+/g);
-                const [x1, x2] = match.map(Number);
-                const [y2, y1] = gradeToCompare.split("-").map(Number);
-                // Apply linear interpolation to calculate the equivalent grade
-                result = (y1 + ((y2 - y1) / (x2 - x1)) * (y2 - y1)).toFixed(2);
-            } else {
-                result = gradeToCompare; // Use the grade directly
-            }
-        }
-        setCalculatedGrade(result); // Update the result
+      };
     };
 
     // Trigger grade calculation whenever selectedCountry or grade changes

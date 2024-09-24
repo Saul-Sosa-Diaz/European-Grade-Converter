@@ -2,6 +2,7 @@
 import React, { useState, useContext } from 'react';
 import { DropdownChangeEvent } from 'primereact/dropdown';
 import { GradeContext } from "../context/gradeContext";
+import { InputNumber } from 'primereact/inputnumber';
 import { Country, COUNTRIES } from '@/src/app/lib/countries';
 import CustomDropdown from './customDropdown';
 import { renderSelectedItemTemplate, renderOptionTemplate } from './dropdownTemplates';
@@ -18,42 +19,45 @@ const CountryDropdown: React.FC = () => {
      * Handles grade selection and updates the context.
      */
     const handleGradeChange = (e: DropdownChangeEvent) => {
+
         const selectedGradeValue = e.value;
         setSelectedGrade(selectedGradeValue);
 
-        const selectedGradeInfo = selectedCountry?.grades.find(grading => grading.grade === selectedGradeValue);
-        if (selectedGradeInfo) {
-            setGrade({ grade: selectedGradeValue, index: selectedGradeInfo.index });
-        }
+        setGrade(selectedGradeValue);
     };
 
     return (
-        <div className="flex flex-column gap-3">
-            {/* Country dropdown */}
-            <CustomDropdown<Country>
-                value={selectedCountry}
-                onChange={(e: DropdownChangeEvent) => setSelectedCountry(e.value)}
-                options={COUNTRIES}
-                optionLabel="name"
-                placeholder="Select a Country"
-                valueTemplate={renderSelectedItemTemplate}
-                itemTemplate={renderOptionTemplate}
-                panelFooterTemplate={() =>
-                    selectedCountry ? <span><b>{selectedCountry.name}</b> selected.</span> : 'No country selected.'
-                }
-            />
+      <div className="flex flex-column gap-3">
+        {/* Country dropdown */}
+        <CustomDropdown<Country>
+          value={selectedCountry}
+          onChange={(e: DropdownChangeEvent) => setSelectedCountry(e.value)}
+          options={COUNTRIES}
+          optionLabel="name"
+          placeholder="Select a Country"
+          valueTemplate={renderSelectedItemTemplate}
+          itemTemplate={renderOptionTemplate}
+          panelFooterTemplate={() =>
+            selectedCountry ? (
+              <span>
+                <b>{selectedCountry.name}</b> selected.
+              </span>
+            ) : (
+              "No country selected."
+            )
+          }
+        />
 
-            {/* Grade dropdown (only shown when a country is selected) */}
-            {selectedCountry && selectedCountry.grades && (
-                <CustomDropdown<string>
-                    value={selectedGrade}
-                    onChange={handleGradeChange}
-                    options={selectedCountry.grades.map((grade) => grade.grade)}
-                    optionLabel="grade"
-                    placeholder="Select a Grade"
-                />
-            )}
-        </div>
+        {/* Grade dropdown (only shown when a country is selected) */}
+        {selectedCountry && (
+          <InputNumber
+            value={selectedGrade}
+            onValueChange={(e) => handleGradeChange(e)}
+            min={selectedCountry.minGrade}
+            max={selectedCountry.maxGrade}
+          />
+        )}
+      </div>
     );
 };
 
