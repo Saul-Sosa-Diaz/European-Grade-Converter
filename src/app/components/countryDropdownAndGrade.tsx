@@ -58,8 +58,7 @@ const CountryDropdown: React.FC = () => {
         }
       />
 
-      {/* Grade dropdown (only shown when a country is selected) */}
-      {selectedCountry && (
+      {selectedCountry && !selectedCountry.grades && (
         <InputNumber
           value={selectedGrade  ? Number(selectedGrade) : null}
           onValueChange={(e) => handleGradeChange(e)}
@@ -69,8 +68,18 @@ const CountryDropdown: React.FC = () => {
           suffix={selectedCountry.suffix}
         />
       )}
-    </div>
-  );
+
+      {selectedCountry && selectedCountry.grades && (
+        <CustomDropdown<number>
+          value={selectedGrade}
+          onChange={(e: DropdownChangeEvent) => handleGradeChange(e)}
+          options={selectedCountry.grades}
+          placeholder="Select a Grade"
+        optionLabel="value"
+      />
+    )}
+  </div>
+);
 };
 
 export default CountryDropdown;

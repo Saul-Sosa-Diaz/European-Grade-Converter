@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import "primereact/resources/themes/bootstrap4-light-purple/theme.css"
-import "/node_modules/primeflex/primeflex.css"
+import "/node_modules/primeflex/primeflex.css";
 
 export const metadata: Metadata = {
-  title: "Erasmus grade conversion tool",
+  title: "University Grade Conversion tool",
 };
 
 export default function RootLayout({
@@ -13,9 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body className=" m-0">{children}</body>
     </html>
   );
 }

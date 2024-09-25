@@ -29,3 +29,5 @@ El sistema está diseñado de manera que puedes agregar nuevos países y sus res
 - **TypeScript:** Lenguaje que añade tipado estático a JavaScript, mejorando la seguridad del código.
 - **Prime react:** Componentes prefabricados para interfaces de usuario.
 
+//Problema camino intermdedio
+Austria dos valores
