@@ -18,7 +18,7 @@ export class IrelandGradeConverter implements ICountryConverter {
       (r) => grade >= r.base && grade < r.base + 1
     );
     if (!range) return "Fail (0%-39%)";
-    return ` ${range.name} (${range.min}%-${range.max - 1}%)`;
+    return ` ${range.name} (${range.min}%-${range.max}%)`;
   }
   convertToSpain(grade: number): string {
     const range = this.gradeRanges.find(
