@@ -6,7 +6,6 @@ import CountryDropdownAndGradeConversed from "./components/countryDropboxSolutio
 import { ToConvertContextProvider } from "./context/to-convert-context";
 
 export default function Home() {
-  
   return (
     <main className="w-screen" style={{ margin: "0px 00px 0px 0px" }}>
       <div className="flex justify-content-center flex-wrap w-screen gap-7">
