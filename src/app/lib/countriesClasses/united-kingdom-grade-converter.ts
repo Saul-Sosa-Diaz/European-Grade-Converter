@@ -10,22 +10,26 @@ export class UnitedKingdomGradeConverter implements ICountryConverter {
     { min: 50, max: 54, base: 6 },
     { min: 55, max: 59, base: 7 },
     { min: 60, max: 69, base: 8 },
-    { min: 70, max: 100, base: 9 },
+    { min: 70, max: 99, base: 9 },
   ];
   convertToDestinationCountry(grade: number): string {
-    const range = this.gradeRanges.find(
-      (r) => grade >= r.base && grade < r.base + 1
+    const RANGE = this.gradeRanges.find(
+      (r) => grade >= r.base && grade <= r.base + 1
     );
-    if (!range) return "Fail (0%-39%)";
-    return ` (${range.min}%-${range.max}%)`;
+    if (!RANGE) return "Fail (0%-39%)";
+    const RESULT = (
+      RANGE.min +
+      (grade - RANGE.base) * (RANGE.max + 1 - RANGE.min)
+    ).toFixed(2);
+    return ` ${RESULT}%`;
   }
   convertToSpain(grade: number): string {
-    const range = this.gradeRanges.find(
+    const RANGE = this.gradeRanges.find(
       (r) => grade >= r.min && grade <= r.max
     ); // Find the range of the grade
-    if (!range) return "0"; // if the range is not found, return 0
+    if (!RANGE) return "0"; // if the range is not found, return 0
     const result =
-      range.base + (grade - range.min) / (range.max + 1 - range.min); // 6 + (49 - 45) / (49 - 45) // 7 + (50 - 50) / (59 - 50)
+      RANGE.base + (grade - RANGE.min) / (RANGE.max + 1 - RANGE.min);
     return result.toFixed(2);
   }
 }

@@ -8,6 +8,7 @@ import { BelgiumGradeConverter } from "./countriesClasses/belgium-grade-converte
 import { AustriaGradeConverter } from "./countriesClasses/austria-grade-converter";
 import { BulgariaGradeConverter } from "./countriesClasses/czech-republic-grade-converter";
 import { CzechRepublicGradeConverter } from "./countriesClasses/bulgaria-grade-converter copy";
+import { ItalyGradeConverter } from "./countriesClasses/italy-grade-converter";
 
 
 export interface Country {
@@ -46,6 +47,14 @@ export const COUNTRIES: Country[] = [
     gradeConverter: new IrelandGradeConverter(),
     decimalPlaces: 0,
     suffix: "%",
+  },
+  {
+    name: "Italy",
+    code: "IT",
+    minGrade: 0,
+    maxGrade: 31,
+    gradeConverter: new ItalyGradeConverter(),
+    decimalPlaces: 0,
   },
   {
     name: "United Kingdom",
