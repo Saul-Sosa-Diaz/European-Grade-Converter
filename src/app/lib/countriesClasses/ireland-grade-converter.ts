@@ -25,7 +25,7 @@ export class IrelandGradeConverter implements ICountryConverter {
       (r) => grade >= r.min && grade <= r.max
     ); // Find the range of the grade
     if (!range) return "0"; // if the range is not found, return 0
-    const result = range.base + (grade - range.min) / (range.max  - range.min); // 6 + (49 - 45) / (49 - 45) // 7 + (50 - 50) / (59 - 50)
+    const result = range.base + (grade - range.min) / (range.max + 1  - range.min); // 6 + (49 - 45) / (49 - 45) // 7 + (50 - 50) / (59 - 50)
     return result.toFixed(2);
   }
 }

@@ -6,6 +6,8 @@ import { SpainGradeConverter } from "@/src/app/lib/countriesClasses/spain-grade-
 import { UnitedKingdomGradeConverter } from "./countriesClasses/united-kingdom-grade-converter";
 import { BelgiumGradeConverter } from "./countriesClasses/belgium-grade-converter";
 import { AustriaGradeConverter } from "./countriesClasses/austria-grade-converter";
+import { BulgariaGradeConverter } from "./countriesClasses/czech-republic-grade-converter";
+import { CzechRepublicGradeConverter } from "./countriesClasses/bulgaria-grade-converter copy";
 
 
 export interface Country {
@@ -78,6 +80,24 @@ export const COUNTRIES: Country[] = [
     grades: [4, 3, 2, 1],
     maxGrade: 4,
     gradeConverter: new AustriaGradeConverter(),
+    decimalPlaces: 0,
+  },
+  {
+    name: "Bulgaria",
+    code: "BG",
+    minGrade: 3,
+    grades: [3, 4, 5, 6],
+    maxGrade: 6,
+    gradeConverter: new BulgariaGradeConverter(),
+    decimalPlaces: 0,
+  },
+  {
+    name: "Cnzech Republic",
+    code: "CZ",
+    minGrade: 1,
+    grades: [3, 2.5, 2, 1.5, 1],
+    maxGrade: 3,
+    gradeConverter: new CzechRepublicGradeConverter(),
     decimalPlaces: 0,
   },
 ];
