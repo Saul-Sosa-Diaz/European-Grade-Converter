@@ -20,6 +20,7 @@ export interface Country {
   suffix?: string;
   grades?: number[];
   decimalPlaces: number;
+  aditionalInfo?: string;
 }
 
 export const COUNTRIES: Country[] = [
@@ -55,6 +56,7 @@ export const COUNTRIES: Country[] = [
     maxGrade: 31,
     gradeConverter: new ItalyGradeConverter(),
     decimalPlaces: 0,
+    aditionalInfo: "To write Cum Laude, write 31",
   },
   {
     name: "United Kingdom",

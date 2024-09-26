@@ -60,7 +60,7 @@ const CountryDropdown: React.FC = () => {
 
       {selectedCountry && !selectedCountry.grades && (
         <InputNumber
-          value={selectedGrade  ? Number(selectedGrade) : null}
+          value={selectedGrade ? Number(selectedGrade) : null}
           onValueChange={(e) => handleGradeChange(e)}
           min={selectedCountry.minGrade}
           max={selectedCountry.maxGrade}
@@ -75,11 +75,14 @@ const CountryDropdown: React.FC = () => {
           onChange={(e: DropdownChangeEvent) => handleGradeChange(e)}
           options={selectedCountry.grades}
           placeholder="Select a Grade"
-        optionLabel="value"
-      />
-    )}
-  </div>
-);
+          optionLabel="value"
+        />
+      )}
+      {selectedCountry && selectedCountry.aditionalInfo && (
+        <div>{selectedCountry.aditionalInfo}</div>
+      )}
+    </div>
+  );
 };
 
 export default CountryDropdown;

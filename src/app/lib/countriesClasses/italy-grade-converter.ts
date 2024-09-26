@@ -15,10 +15,26 @@ export class ItalyGradeConverter implements ICountryConverter {
     { min: 18, max: 21, base: 5, factor: 1 / 4 }, // De 5 a 6 (1 punto distribuido en 4 unidades)
   ];
   convertToDestinationCountry(grade: number): string {
-    if (grade === 10) return "30 cum Laude";
-    return ((grade * 30) / 9).toFixed(2);
+    if (grade === 10) return "30 Cum Laude";
+      for (const range of this.gradeRanges) {
+        // Si la nota española cae dentro del rango de este grupo
+        if (
+          grade >= range.base &&
+          (!range.factor ||
+            grade <= range.base + range.factor * (range.max - range.min))
+        ) {
+          if (range.factor) {
+            // Usamos la fórmula inversa para calcular la nota italiana
+            return (range.min + (grade - range.base) / range.factor).toFixed(2);
+          }
+          return range.min.toString(); // Si no hay factor, devolvemos la mínima del rango italiano
+        }
+      }
+
+    return "0";
   }
   convertToSpain(grade: number): string {
+    if (grade === 31) return "10";
     for (const range of this.gradeRanges) {
         if (grade >= range.min && grade <= range.max) {
             // Si el rango tiene un factor, ajustamos la nota proporcionalmente
@@ -28,5 +44,6 @@ export class ItalyGradeConverter implements ICountryConverter {
             return (range.base).toString(); // Si no hay factor, devolvemos la base directamente
         }
     }
+    return "0";
   }
 }
