@@ -45,6 +45,7 @@ const CountryDropdownAndGradeConversed: React.FC = () => {
     <div className="flex flex-column gap-3 w-15rem">
       {/* Country dropdown */}
       <CustomDropdown<Country>
+        filter={true}
         value={countryTo}
         onChange={(e: DropdownChangeEvent) => setCountryTo(e.value)}
         options={COUNTRIES}
