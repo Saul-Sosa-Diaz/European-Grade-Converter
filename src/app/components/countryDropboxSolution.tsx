@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { DropdownChangeEvent } from "primereact/dropdown";
 import { ToConvertContext } from "../context/to-convert-context";
 import { Country, COUNTRIES } from "@/src/app/lib/countries";
+import { Card } from "primereact/card";
 import CustomDropdown from "./customDropdown";
 import {
   renderSelectedItemTemplate,
@@ -17,7 +18,7 @@ import { GeneralGradeConverter } from "@/src/app/lib/interfaces/i-grade-converte
 const CountryDropdownAndGradeConversed: React.FC = () => {
   const { gradeToConvert, countryFrom } =
     useContext(ToConvertContext); // Access the grade from context
-  const [countryTo, setCountryTo] = useState<Country | null>(null); // Selected country state
+  const [countryTo, setCountryTo] = useState<Country | null>(COUNTRIES.find((country) => country.code === "ES")); // Selected country state
   const [calculatedGrade, setCalculatedGrade] = useState<string | null>(null); // Calculated grade state
 
   // Function to calculate the grade based on the selected country's grading system
@@ -41,7 +42,7 @@ const CountryDropdownAndGradeConversed: React.FC = () => {
   }, [countryTo, gradeToConvert, countryFrom]);
 
   return (
-    <div className="flex flex-column gap-3">
+    <div className="flex flex-column gap-3 w-15rem">
       {/* Country dropdown */}
       <CustomDropdown<Country>
         value={countryTo}
@@ -61,7 +62,13 @@ const CountryDropdownAndGradeConversed: React.FC = () => {
           )
         }
       />
-      {calculatedGrade && <div>{calculatedGrade}</div>}
+      {calculatedGrade && (
+        <div className="card w-100">
+          <Card className="flex justify-content-center align-items-center">
+            <p className="m-0 text-xl">{calculatedGrade}</p>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };
