@@ -29,5 +29,6 @@ export class IrelandGradeConverter implements ICountryConverter {
     const result =
       RANGE.base + (grade - RANGE.min) / (RANGE.max + 1 - RANGE.min);
     return result.toFixed(2);
+    // new comment
   }
 }
