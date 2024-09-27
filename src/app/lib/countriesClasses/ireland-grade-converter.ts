@@ -21,6 +21,7 @@ export class IrelandGradeConverter implements ICountryConverter {
     return ` ${RESULT}% (${RANGE.name})`;
   }
   convertToSpain(grade: number): string {
+    if (grade === this.gradeRanges[this.gradeRanges.length - 1].max + 1) return "10"; // if the grade is 100, return 10
     const RANGE = this.gradeRanges.find(
       (r) => grade >= r.min && grade <= r.max
     ); // Find the range of the grade
