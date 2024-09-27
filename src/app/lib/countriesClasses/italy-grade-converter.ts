@@ -13,6 +13,7 @@ export class ItalyGradeConverter implements ICountryConverter {
     { min: 26, max: 28, base: 7.5, factor: 1.5 / 3 }, // De 7.5 a 9 (1.5 puntos distribuidos en 3 unidades)
     { min: 22, max: 25, base: 6, factor: 1.5 / 4 }, // De 6 a 7.5 (1.5 puntos distribuidos en 4 unidades)
     { min: 18, max: 21, base: 5, factor: 1 / 4 }, // De 5 a 6 (1 punto distribuido en 4 unidades)
+    { min: 0, max: 17, base: 0, factor: 5 / 18 }, // De 0 a 5 (5 puntos distribuidos en 18 unidades)
   ];
   convertToDestinationCountry(grade: number): string {
     if (grade === 10) return "30 Cum Laude";

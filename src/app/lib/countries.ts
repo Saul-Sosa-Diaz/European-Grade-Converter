@@ -60,7 +60,7 @@ export const COUNTRIES: Country[] = [
     gradeConverter: new ItalyGradeConverter(),
     decimalPlaces: 0,
     aditionalInfo:
-      "Insert an integer number between 0 and 30.to write Cum Laude, write 31",
+      "Insert an integer number between 0 and 30. To write Cum Laude, write 30L",
   },
   {
     name: "United Kingdom",
