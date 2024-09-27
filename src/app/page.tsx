@@ -25,8 +25,7 @@ export default function Home() {
 
         <div>
           <p className="border-round surface-100">
-            ⚠️ Some countries have evaluation conversion systems that have not
-            yet been properly tested.
+            Select the countries in origin and destination, insert the mark in origin to convert see the mark in destination.
           </p>
         </div>
       </div>

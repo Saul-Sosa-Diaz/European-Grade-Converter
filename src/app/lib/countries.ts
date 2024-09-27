@@ -31,6 +31,7 @@ export const COUNTRIES: Country[] = [
     maxGrade: 20,
     gradeConverter: new FranceGradeConverter(),
     decimalPlaces: 2,
+    aditionalInfo: "Insert an integer number between 0 and 20",
   },
   {
     name: "Spain",
@@ -39,6 +40,7 @@ export const COUNTRIES: Country[] = [
     maxGrade: 10,
     gradeConverter: new SpainGradeConverter(),
     decimalPlaces: 2,
+    aditionalInfo: "Insert a number with a maximum of 2 decimal places",
   },
   {
     name: "Ireland",
@@ -48,6 +50,7 @@ export const COUNTRIES: Country[] = [
     gradeConverter: new IrelandGradeConverter(),
     decimalPlaces: 0,
     suffix: "%",
+    aditionalInfo: "Insert an integer number between 0 and 100",
   },
   {
     name: "Italy",
@@ -56,7 +59,8 @@ export const COUNTRIES: Country[] = [
     maxGrade: 31,
     gradeConverter: new ItalyGradeConverter(),
     decimalPlaces: 0,
-    aditionalInfo: "To write Cum Laude, write 31",
+    aditionalInfo:
+      "Insert an integer number between 0 and 30.to write Cum Laude, write 31",
   },
   {
     name: "United Kingdom",
@@ -66,6 +70,7 @@ export const COUNTRIES: Country[] = [
     gradeConverter: new UnitedKingdomGradeConverter(),
     decimalPlaces: 0,
     suffix: "%",
+    aditionalInfo: "Insert an integer number between 0 and 100",
   },
   {
     name: "Belgium",
@@ -74,6 +79,7 @@ export const COUNTRIES: Country[] = [
     maxGrade: 20,
     gradeConverter: new BelgiumGradeConverter(),
     decimalPlaces: 2,
+    aditionalInfo: "Insert a number with a maximum of 2 decimal places",
   },
   {
     name: "Denmark",
@@ -111,4 +117,6 @@ export const COUNTRIES: Country[] = [
     gradeConverter: new CzechRepublicGradeConverter(),
     decimalPlaces: 0,
   },
-];
+].sort((a, b) => a.name.localeCompare(b.name));;
+
+

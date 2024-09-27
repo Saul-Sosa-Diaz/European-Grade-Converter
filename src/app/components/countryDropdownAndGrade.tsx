@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useContext } from "react";
+import "@/src/app/styles/card.css";
 import { DropdownChangeEvent } from "primereact/dropdown";
 import { ToConvertContext } from "../context/to-convert-context";
 import { InputNumber } from "primereact/inputnumber";
@@ -37,7 +38,7 @@ const CountryDropdown: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-column gap-3">
+    <div className="flex flex-column gap-3 w-15rem">
       {/* Country dropdown */}
       <CustomDropdown<Country>
         value={selectedCountry}
@@ -56,6 +57,7 @@ const CountryDropdown: React.FC = () => {
             "No country selected."
           )
         }
+        filter={true}
       />
 
       {selectedCountry && !selectedCountry.grades && (

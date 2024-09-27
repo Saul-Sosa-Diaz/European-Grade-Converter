@@ -17,6 +17,7 @@ interface CustomDropdownProps<T> {
     itemTemplate?: (option: T) => React.ReactNode;
     panelFooterTemplate?: () => React.ReactNode;
     dropdownClassName?: string;
+    filter?: boolean;
 }
 
 /**
@@ -31,7 +32,8 @@ const CustomDropdown = <T,>({
     valueTemplate, 
     itemTemplate, 
     panelFooterTemplate,
-    dropdownClassName = "w-full md:w-14rem vertical-align-middle"
+    dropdownClassName = "w-full vertical-align-middle",
+    filter
 }: CustomDropdownProps<T>) => {
     return (
         <Dropdown
@@ -40,6 +42,7 @@ const CustomDropdown = <T,>({
             options={options}
             optionLabel={optionLabel}
             placeholder={placeholder}
+            filter={ filter ? true : false}
             valueTemplate={valueTemplate}
             itemTemplate={itemTemplate}
             className={dropdownClassName}
