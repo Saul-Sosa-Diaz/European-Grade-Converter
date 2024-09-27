@@ -25,7 +25,7 @@ export class IrelandGradeConverter implements ICountryConverter {
     const RANGE = this.gradeRanges.find(
       (r) => grade >= r.min && grade <= r.max
     ); // Find the range of the grade
-    if (!RANGE) return "Suspenso"; // if the range is not found, return 0
+    if (!RANGE) return "0"; // if the range is not found, return 0
     const result =
       RANGE.base + (grade - RANGE.min) / (RANGE.max + 1 - RANGE.min);
     return result.toFixed(2);
