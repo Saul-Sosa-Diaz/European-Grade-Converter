@@ -25,14 +25,21 @@ export default function Home() {
 
         <div>
           <p className="border-round surface-100">
-            Select the countries in origin and destination, insert the mark in origin to convert see the mark in destination.
+            Most of the equivalences are taken from this {" "}
+            <a href="https://drive.google.com/file/d/1CvwHCC1S7QvrdePkg_gFDmVOQmTrJpBr/view">
+              table of equivalences
+            </a>
+            .
           </p>
         </div>
       </div>
       <footer className="flex justify-content-center bg-indigo-600 absolute bottom-0 block w-screen ">
         <p className="text-white">
           If you find any errors or have any suggestions, please submit an email
-          to <strong>alu0101404141@ull.edu.es</strong>
+          to <strong>Saúl Sosa Díaz (alu0101404141@ull.edu.es)</strong>. This
+          project is being supervised by Prof. Juan{" "}
+          <strong>José Salazar González (jjsalaza@ull.edu.es)</strong> at
+          Universidad de La Laguna.
         </p>
       </footer>
     </main>
