@@ -11,6 +11,7 @@ import { CzechRepublicGradeConverter } from "./countriesClasses/bulgaria-grade-c
 import { ItalyGradeConverter } from "./countriesClasses/italy-grade-converter";
 import { PortugalGradeConverter } from "./countriesClasses/portugal-grade-converter";
 import { GermanyGradeConverter } from "./countriesClasses/germany-grade-converter";
+import { GreeceGradeConverter } from "./countriesClasses/greece-grade-converter";
 
 
 export interface Country {
@@ -134,6 +135,14 @@ export const COUNTRIES: Country[] = [
     minGrade: 1,
     maxGrade: 5,
     gradeConverter: new GermanyGradeConverter(),
+    decimalPlaces: 2,
+  },
+  {
+    name: "Greece",
+    code: "GR",
+    minGrade: 0,
+    maxGrade: 10,
+    gradeConverter: new GreeceGradeConverter(),
     decimalPlaces: 2,
   },
 ].sort((a, b) => a.name.localeCompare(b.name));;

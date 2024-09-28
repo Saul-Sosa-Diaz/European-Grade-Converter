@@ -22,7 +22,7 @@ export class GermanyGradeConverter implements ICountryConverter {
     for (const range of this.gradeRanges) {
       if (
         grade >= range.base &&
-        grade <= range.base + range.factor * ((range.max - range.min)*10)
+        grade <= range.top
       ) {
         return (range.max - (grade - range.base) / range.factor / 10).toFixed(2);
       }
@@ -33,7 +33,6 @@ export class GermanyGradeConverter implements ICountryConverter {
   convertToSpain(grade: number): string {
     for (const range of this.gradeRanges) {
       if (grade >= range.min && grade <= range.max) {
-        console.log(range);
         return (range.top - (grade - range.min) * range.factor * 10).toFixed(2);
       }
     }
