@@ -26,9 +26,9 @@ export default function Home() {
       <footer className="flex justify-content-center bg-indigo-600 absolute bottom-0 block w-screen ">
         <p className="text-white">
           If you find an error or have a suggestion, please inform 
-          <strong> Saúl Sosa Díaz (alu0101404141@ull.edu.es)</strong>. This
+          <strong> Saúl Sosa Díaz (<a href="mailto:alu0101404141@ull.edu.es">alu0101404141@ull.edu.es</a>)</strong>. This
           project is being supervised by <strong>Prof. Juan
-          José Salazar González (jjsalaza@ull.edu.es)</strong> at
+          José Salazar González (<a href="mailto:jjsalaza@ull.edu.es">jjsalaza@ull.edu.es</a>)</strong> at
           Universidad de La Laguna.
         </p>
       </footer>
