@@ -121,7 +121,7 @@ export const COUNTRIES: Country[] = [
     decimalPlaces: 0,
   },
   {
-    name: "Cnzech Republic",
+    name: "Czech Republic",
     code: "CZ",
     minGrade: 1,
     grades: [3, 2.5, 2, 1.5, 1],
