@@ -22,22 +22,12 @@ export default function Home() {
             <CountryDropdownAndGradeConversed />
           </ToConvertContextProvider>
         </div>
-
-        <div>
-          <p className="border-round surface-100">
-            Most of the equivalences are taken from the following {" "}
-            <a href="https://drive.google.com/file/d/1CvwHCC1S7QvrdePkg_gFDmVOQmTrJpBr/view">
-              table.
-            </a>
-            .
-          </p>
-        </div>
       </div>
       <footer className="flex justify-content-center bg-indigo-600 absolute bottom-0 block w-screen ">
         <p className="text-white">
-          If you find an error or have a suggestion, please inform
-          <strong>Saúl Sosa Díaz (alu0101404141@ull.edu.es)</strong>. This
-          project is being supervised by <strong>Prof. Juan{" "}
+          If you find an error or have a suggestion, please inform 
+          <strong> Saúl Sosa Díaz (alu0101404141@ull.edu.es)</strong>. This
+          project is being supervised by <strong>Prof. Juan
           José Salazar González (jjsalaza@ull.edu.es)</strong> at
           Universidad de La Laguna.
         </p>
