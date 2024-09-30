@@ -7,8 +7,9 @@ import { UnitedKingdomGradeConverter } from "./countriesClasses/united-kingdom-g
 import { BelgiumGradeConverter } from "./countriesClasses/belgium-grade-converter";
 import { AustriaGradeConverter } from "./countriesClasses/austria-grade-converter";
 import { BulgariaGradeConverter } from "./countriesClasses/czech-republic-grade-converter";
-import { CzechRepublicGradeConverter } from "./countriesClasses/bulgaria-grade-converter copy";
-import { ItalyGradeConverter } from "./countriesClasses/italy-grade-converter";
+import { CzechRepublicGradeConverter } from "./countriesClasses/bulgaria-grade-converter";
+import { ItalySalermoGradeConverter } from "./countriesClasses/italy-salermo-grade-converter";
+import { ItalyBoloniaGradeConverter } from "./countriesClasses/italy-bolonia-grade-converter";
 import { PortugalGradeConverter } from "./countriesClasses/portugal-grade-converter";
 import { GermanyGradeConverter } from "./countriesClasses/germany-grade-converter";
 import { GreeceGradeConverter } from "./countriesClasses/greece-grade-converter";
@@ -56,11 +57,21 @@ export const COUNTRIES: Country[] = [
     aditionalInfo: "Insert an integer number between 0 and 100",
   },
   {
-    name: "Italy",
+    name: "Italy (Salermo)",
     code: "IT",
     minGrade: 0,
     maxGrade: 31,
-    gradeConverter: new ItalyGradeConverter(),
+    gradeConverter: new ItalySalermoGradeConverter(),
+    decimalPlaces: 0,
+    aditionalInfo:
+      "Insert an integer number between 0 and 30. To write Cum Laude, write 30L",
+  },
+  {
+    name: "Italy (Bolonia)",
+    code: "IT",
+    minGrade: 0,
+    maxGrade: 31,
+    gradeConverter: new ItalyBoloniaGradeConverter(),
     decimalPlaces: 0,
     aditionalInfo:
       "Insert an integer number between 0 and 30. To write Cum Laude, write 30L",
