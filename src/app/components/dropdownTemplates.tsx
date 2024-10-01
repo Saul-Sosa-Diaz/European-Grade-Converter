@@ -39,7 +39,6 @@ export const renderOptionTemplate = (option: Country | string) => {
     if (typeof option === 'string') {
         return <span>{option}</span>;
     }
-    console.log(option);
     const src = option.code ? `./flags/${option.code.toLowerCase()}.svg` : null;
     
     return (
