@@ -41,7 +41,7 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
   // Trigger grade calculation whenever keyCountryTo or grade changes
   useEffect(() => {
     calculateGrade();
-  }, [keyCountryTo, gradeToConvert, countryFrom]);
+  }, [keyCountryTo, gradeToConvert, countryFrom, calculateGrade]);
 
   useEffect(() => {
     setActualCountry(findCountryByKey(keyCountryTo));
@@ -53,7 +53,7 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
       <CustomTreeSelect<string>
         filter={true}
         value={keyCountryTo}
-        onChange={(e: TreeSelectChangeEvent) => setCountryTo(e.value)}
+        onChange={(e) => setCountryTo(e.value)}
         options={COUNTRIES}
         nodeTemplate={renderOptionTemplate}
         valueTemplate={renderSelectedItemTemplate}
