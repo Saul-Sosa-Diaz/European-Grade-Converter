@@ -15,6 +15,7 @@ import {
  * Component to select a country and a grade.
  */
 const CountryDropdown: React.FC = () => {
+  const [selectedKeyCountry, setSelectedKeyCountry] = useState<string | null>(null); // key country selection state
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null); // Country selection state
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null); // Grade selection state
   const {setGradeToConvert, setCountryFrom } = useContext(ToConvertContext); // Global context for grade selection
@@ -23,10 +24,12 @@ const CountryDropdown: React.FC = () => {
   const handleCountryChange = (e: DropdownChangeEvent) => {
     const selectedCountryValue = e.value;
     if (selectedCountryValue) {
+      const NEW_COUNTRY = COUNTRIES.find((country) => country.key === selectedCountryValue);
       setSelectedGrade(null);
       setGradeToConvert(null);
-      setSelectedCountry(selectedCountryValue);
-      setCountryFrom(selectedCountryValue);
+      setSelectedKeyCountry(selectedCountryValue);
+      setSelectedCountry(NEW_COUNTRY);
+      setCountryFrom(NEW_COUNTRY);
     }
     
   };
@@ -41,12 +44,13 @@ const CountryDropdown: React.FC = () => {
     <div className="flex flex-column gap-3 w-15rem">
       {/* Country dropdown */}
       <CustomDropdown<Country>
-        value={selectedCountry}
+        value={selectedKeyCountry}
         onChange={(e: DropdownChangeEvent) => handleCountryChange(e)}
         options={COUNTRIES}
+        nodeTemplate={renderOptionTemplate}
+        valueTemplate={renderSelectedItemTemplate}
         optionLabel="name"
         placeholder="Select a Country"
-        valueTemplate={renderSelectedItemTemplate}
         itemTemplate={renderOptionTemplate}
         panelFooterTemplate={() =>
           selectedCountry ? (
