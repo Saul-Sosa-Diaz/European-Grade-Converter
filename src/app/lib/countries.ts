@@ -30,6 +30,7 @@ export interface Country {
   children?: Country[];
 }
 
+
 // Hacer uno para los hoja y otro para los padres
 
 export const COUNTRIES: Country[]= [
@@ -189,3 +190,22 @@ export const COUNTRIES: Country[]= [
 ].sort((a, b) => a.label.localeCompare(b.label));;
 
 
+export function findCountryByKey(key: string): Country | undefined {
+  for (const country of COUNTRIES) {
+    // Si el país coincide con el código proporcionado
+    if (country.key === key) {
+      return country;
+    }
+
+    // Si el país tiene hijos, recorremos sus children
+    if (country.children) {
+      for (const child of country.children) {
+        if (child.key === key) {
+          return child; // O podrías devolver el hijo si prefieres
+        }
+      }
+    }
+  }
+  // Si no se encontró, devolvemos undefined
+  return undefined;
+}

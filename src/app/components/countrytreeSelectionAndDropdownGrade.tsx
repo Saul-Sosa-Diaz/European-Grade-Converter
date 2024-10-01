@@ -4,34 +4,36 @@ import "@/src/app/styles/card.css";
 import { DropdownChangeEvent } from "primereact/dropdown";
 import { ToConvertContext } from "../context/to-convert-context";
 import { InputNumber } from "primereact/inputnumber";
-import { Country, COUNTRIES } from "@/src/app/lib/countries";
-import CustomDropdown from "./customDropdown";
+import { Dropdown } from "primereact/dropdown";
+import { Country, COUNTRIES, findCountryByKey } from "@/src/app/lib/countries";
+import CustomTreeSelect from "./customTreeSelect";
 import {
   renderSelectedItemTemplate,
   renderOptionTemplate,
-} from "./dropdownTemplates";
+} from "./treeSelectTemplates";
 
 /**
  * Component to select a country and a grade.
  */
-const CountryDropdown: React.FC = () => {
-  const [selectedKeyCountry, setSelectedKeyCountry] = useState<string | null>(null); // key country selection state
+const CountryTreeSelect: React.FC = () => {
+  const [selectedKeyCountry, setSelectedKeyCountry] = useState<string | null>(
+    null
+  ); // key country selection state
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null); // Country selection state
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null); // Grade selection state
-  const {setGradeToConvert, setCountryFrom } = useContext(ToConvertContext); // Global context for grade selection
-
+  const { setGradeToConvert, setCountryFrom } = useContext(ToConvertContext); // Global context for grade selection
 
   const handleCountryChange = (e: DropdownChangeEvent) => {
-    const selectedCountryValue = e.value;
-    if (selectedCountryValue) {
-      const NEW_COUNTRY = COUNTRIES.find((country) => country.key === selectedCountryValue);
+    const selectedKeyCountryValue = e.value;
+    if (selectedKeyCountryValue) {
+      const NEW_COUNTRY = findCountryByKey(selectedKeyCountryValue);
       setSelectedGrade(null);
       setGradeToConvert(null);
-      setSelectedKeyCountry(selectedCountryValue);
+      setSelectedKeyCountry(selectedKeyCountryValue);
+      console.log(NEW_COUNTRY);
       setSelectedCountry(NEW_COUNTRY);
       setCountryFrom(NEW_COUNTRY);
     }
-    
   };
 
   const handleGradeChange = (e: DropdownChangeEvent) => {
@@ -43,7 +45,7 @@ const CountryDropdown: React.FC = () => {
   return (
     <div className="flex flex-column gap-3 w-15rem">
       {/* Country dropdown */}
-      <CustomDropdown<Country>
+      <CustomTreeSelect<Country>
         value={selectedKeyCountry}
         onChange={(e: DropdownChangeEvent) => handleCountryChange(e)}
         options={COUNTRIES}
@@ -75,7 +77,7 @@ const CountryDropdown: React.FC = () => {
       )}
 
       {selectedCountry && selectedCountry.grades && (
-        <CustomDropdown<number>
+        <Dropdown
           value={selectedGrade}
           onChange={(e: DropdownChangeEvent) => handleGradeChange(e)}
           options={selectedCountry.grades}
@@ -90,4 +92,4 @@ const CountryDropdown: React.FC = () => {
   );
 };
 
-export default CountryDropdown;
+export default CountryTreeSelect;

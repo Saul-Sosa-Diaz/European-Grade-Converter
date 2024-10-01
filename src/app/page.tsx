@@ -1,8 +1,8 @@
 "use client";
 import "primereact/resources/themes/bootstrap4-light-purple/theme.css";
 
-import CountryDropdownAndGrade from "./components/countryDropdownAndGrade";
-import CountryDropdownAndGradeConversed from "./components/countryDropboxSolution";
+import CountryDropdownAndGrade from "./components/countrytreeSelectionAndDropdownGrade";
+import CountryDropdownAndGradeConversed from "./components/countryTreeSelectionSolution";
 import { ToConvertContextProvider } from "./context/to-convert-context";
 
 export default function Home() {
