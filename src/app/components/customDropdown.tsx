@@ -3,17 +3,21 @@ import React from 'react';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import { ChevronDownIcon } from 'primereact/icons/chevrondown';
 import { ChevronRightIcon } from 'primereact/icons/chevronright';
+import { TreeSelect } from 'primereact/treeselect';
+import { Country } from '../lib/countries';
+import { renderSelectedItemTemplate } from './dropdownTemplates';
+
 
 /**
  * Reusable dropdown component to handle common dropdown logic and rendering.
  */
 interface CustomDropdownProps<T> {
-    value: T | null;
-    options: T[];
+    value: T | null | string;
+    options: T[] | Country[];
     optionLabel: string;
     placeholder: string;
     onChange: (e: DropdownChangeEvent) => void;
-    valueTemplate?: (option: T, props: any) => React.ReactNode;
+    valueTemplate?: (option: any, props: any) => React.ReactNode;
     itemTemplate?: (option: T) => React.ReactNode;
     panelFooterTemplate?: () => React.ReactNode;
     dropdownClassName?: string;
@@ -28,33 +32,33 @@ const CustomDropdown = <T,>({
     options, 
     optionLabel, 
     placeholder, 
-    onChange, 
-    valueTemplate, 
-    itemTemplate, 
+    nodeTemplate,
+    valueTemplate,
+    onChange,
     panelFooterTemplate,
     dropdownClassName = "w-full vertical-align-middle",
     filter
 }: CustomDropdownProps<T>) => {
     return (
-        <Dropdown
-            value={value}
-            onChange={onChange}
-            options={options}
-            optionLabel={optionLabel}
-            placeholder={placeholder}
-            filter={ filter ? true : false}
-            valueTemplate={valueTemplate}
-            itemTemplate={itemTemplate}
-            className={dropdownClassName}
-            panelFooterTemplate={panelFooterTemplate}
-            dropdownIcon={(opts) =>
-                opts.iconProps['data-pr-overlay-visible'] ? (
-                    <ChevronRightIcon {...opts.iconProps} />
-                ) : (
-                    <ChevronDownIcon {...opts.iconProps} />
-                )
-            }
-        />
+      <TreeSelect
+        value={value}
+        onChange={onChange}
+        options={options}
+        optionlabel={optionLabel}
+        placeholder={placeholder}
+        filter={filter ? true : false}
+        className={dropdownClassName}
+        nodeTemplate={nodeTemplate}
+        valueTemplate={valueTemplate}
+        panelFooterTemplate={panelFooterTemplate}
+        dropdownIcon={(opts) =>
+          opts.iconProps["data-pr-overlay-visible"] ? (
+            <ChevronRightIcon {...opts.iconProps} />
+          ) : (
+            <ChevronDownIcon {...opts.iconProps} />
+          )
+        }
+      />
     );
 };
 

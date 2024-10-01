@@ -8,7 +8,7 @@ import { BelgiumGradeConverter } from "./countriesClasses/belgium-grade-converte
 import { AustriaGradeConverter } from "./countriesClasses/austria-grade-converter";
 import { BulgariaGradeConverter } from "./countriesClasses/czech-republic-grade-converter";
 import { CzechRepublicGradeConverter } from "./countriesClasses/bulgaria-grade-converter";
-import { ItalySalermoGradeConverter } from "./countriesClasses/italy-salermo-grade-converter";
+import { ItalySalernoGradeConverter } from "./countriesClasses/italy-salerno-grade-converter";
 import { ItalyBoloniaGradeConverter } from "./countriesClasses/italy-bolonia-grade-converter";
 import { PortugalGradeConverter } from "./countriesClasses/portugal-grade-converter";
 import { GermanyGradeConverter } from "./countriesClasses/germany-grade-converter";
@@ -16,38 +16,79 @@ import { GreeceGradeConverter } from "./countriesClasses/greece-grade-converter"
 
 
 export interface Country {
-  name: string;
-  code: string;
+  label: string;
+  code?: string;
+  key: string;
+  selectable?: boolean;
   minGrade: number;
   maxGrade: number;
-  gradeConverter: ICountryConverter;
+  gradeConverter?: ICountryConverter;
   suffix?: string;
   grades?: number[];
   decimalPlaces: number;
   aditionalInfo?: string;
+  children?: Country[];
 }
 
-export const COUNTRIES: Country[] = [
+// Hacer uno para los hoja y otro para los padres
+
+export const COUNTRIES: Country[]= [
   {
-    name: "France",
+    key: "0",
+    selectable: false,
+    label: "Italy",
+    code: "IT",
+    minGrade: 0,
+    maxGrade: 31,
+    decimalPlaces: 0,
+    children: [
+      {
+        label: "Salermo",
+        key: "0-0",
+        minGrade: 0,
+        maxGrade: 31,
+        gradeConverter: new ItalySalernoGradeConverter(),
+        decimalPlaces: 0,
+        aditionalInfo:
+          "Insert an integer number between 0 and 30. To write Cum Laude, write 30L",
+      },
+      {
+        label: "Bolonia",
+        key: "0-1",
+        minGrade: 0,
+        maxGrade: 31,
+        gradeConverter: new ItalyBoloniaGradeConverter(),
+        decimalPlaces: 0,
+        aditionalInfo:
+          "Insert a number between 0 and 30. Type '30 cum Laude' as '30L'",
+      },
+    ],
+  },
+  {
+    key: "1",
     code: "FR",
+    label: "France",
+    data: "France document",
     minGrade: 0,
     maxGrade: 20,
     gradeConverter: new FranceGradeConverter(),
-    decimalPlaces: 2,
-    aditionalInfo: "Insert an integer number between 0 and 20",
+    decimalPlaces: 1,
+    aditionalInfo: "Insert a number between 0 and 20",
   },
   {
-    name: "Spain",
+    key: "2",
     code: "ES",
+    label: "Spain",
+    data: "Spain Document",
     minGrade: 0,
     maxGrade: 10,
     gradeConverter: new SpainGradeConverter(),
-    decimalPlaces: 2,
-    aditionalInfo: "Insert a number with a maximum of 2 decimal places",
+    decimalPlaces: 1,
+    aditionalInfo: "Insert a number between 0 and 10",
   },
   {
-    name: "Ireland",
+    key: "3",
+    label: "Ireland",
     code: "IE",
     minGrade: 0,
     maxGrade: 100,
@@ -57,27 +98,8 @@ export const COUNTRIES: Country[] = [
     aditionalInfo: "Insert an integer number between 0 and 100",
   },
   {
-    name: "Italy (Salermo)",
-    code: "IT",
-    minGrade: 0,
-    maxGrade: 31,
-    gradeConverter: new ItalySalermoGradeConverter(),
-    decimalPlaces: 0,
-    aditionalInfo:
-      "Insert an integer number between 0 and 30. To write Cum Laude, write 30L",
-  },
-  {
-    name: "Italy (Bolonia)",
-    code: "IT",
-    minGrade: 0,
-    maxGrade: 31,
-    gradeConverter: new ItalyBoloniaGradeConverter(),
-    decimalPlaces: 0,
-    aditionalInfo:
-      "Insert a number between 0 and 30. Type '30 cum Laude' as '30L'",
-  },
-  {
-    name: "United Kingdom",
+    key: "4",
+    label: "United Kingdom",
     code: "GB",
     minGrade: 0,
     maxGrade: 100,
@@ -87,7 +109,8 @@ export const COUNTRIES: Country[] = [
     aditionalInfo: "Insert an integer number between 0 and 100",
   },
   {
-    name: "Belgium",
+    key: "5",
+    label: "Belgium",
     code: "BE",
     minGrade: 0,
     maxGrade: 20,
@@ -96,7 +119,8 @@ export const COUNTRIES: Country[] = [
     aditionalInfo: "Insert a number with a maximum of 2 decimal places",
   },
   {
-    name: "Portugal",
+    key: "6",
+    label: "Portugal",
     code: "PT",
     minGrade: 0,
     maxGrade: 20,
@@ -105,7 +129,8 @@ export const COUNTRIES: Country[] = [
     aditionalInfo: "Insert a number with a maximum of 2 decimal places",
   },
   {
-    name: "Denmark",
+    key: "7",
+    label: "Denmark",
     code: "DK",
     minGrade: 0,
     grades: [0, 2, 4, 7, 10, 12],
@@ -114,7 +139,8 @@ export const COUNTRIES: Country[] = [
     decimalPlaces: 0,
   },
   {
-    name: "Austria",
+    key: "8",
+    label: "Austria",
     code: "AT",
     minGrade: 1,
     grades: [4, 3, 2, 1],
@@ -123,7 +149,8 @@ export const COUNTRIES: Country[] = [
     decimalPlaces: 0,
   },
   {
-    name: "Bulgaria",
+    key: "9",
+    label: "Bulgaria",
     code: "BG",
     minGrade: 3,
     grades: [3, 4, 5, 6],
@@ -132,7 +159,8 @@ export const COUNTRIES: Country[] = [
     decimalPlaces: 0,
   },
   {
-    name: "Czech Republic",
+    key: "10",
+    label: "Czech Republic",
     code: "CZ",
     minGrade: 1,
     grades: [3, 2.5, 2, 1.5, 1],
@@ -141,7 +169,8 @@ export const COUNTRIES: Country[] = [
     decimalPlaces: 0,
   },
   {
-    name: "Germany",
+    key: "11",
+    label: "Germany",
     code: "DE",
     minGrade: 1,
     maxGrade: 5,
@@ -149,13 +178,14 @@ export const COUNTRIES: Country[] = [
     decimalPlaces: 2,
   },
   {
-    name: "Greece",
+    key: "12",
+    label: "Greece",
     code: "GR",
     minGrade: 0,
     maxGrade: 10,
     gradeConverter: new GreeceGradeConverter(),
     decimalPlaces: 2,
   },
-].sort((a, b) => a.name.localeCompare(b.name));;
+].sort((a, b) => a.label.localeCompare(b.label));;
 
 

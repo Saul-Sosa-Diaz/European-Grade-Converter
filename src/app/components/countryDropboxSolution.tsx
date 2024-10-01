@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, use } from "react";
 import { DropdownChangeEvent } from "primereact/dropdown";
 import { ToConvertContext } from "../context/to-convert-context";
 import { Country, COUNTRIES } from "@/src/app/lib/countries";
 import { Card } from "primereact/card";
 import CustomDropdown from "./customDropdown";
 import {
-  renderSelectedItemTemplate,
   renderOptionTemplate,
+  renderSelectedItemTemplate,
 } from "./dropdownTemplates";
 import { GeneralGradeConverter } from "@/src/app/lib/interfaces/i-grade-converter";
 
@@ -16,16 +16,16 @@ import { GeneralGradeConverter } from "@/src/app/lib/interfaces/i-grade-converte
  * It also calculates and displays a grade based on the selected country's grading system and a user grade.
  */
 const CountryDropdownAndGradeConversed: React.FC = () => {
-  const { gradeToConvert, countryFrom } =
-    useContext(ToConvertContext); // Access the grade from context
-  const [countryTo, setCountryTo] = useState<Country | null>(COUNTRIES.find((country) => country.code === "ES")); // Selected country state
+  const { gradeToConvert, countryFrom } = useContext(ToConvertContext); // Access the grade from context
+  const [countryTo, setActualCountry] = useState<Country | null>(COUNTRIES.find((country) => country.code === "ES")); // Actual country state
+  const [keyCountryTo, setCountryTo] = useState<string | null>(countryTo.key); // Selected country state
   const [calculatedGrade, setCalculatedGrade] = useState<string | null>(null); // Calculated grade state
 
   // Function to calculate the grade based on the selected country's grading system
   const calculateGrade = () => {
     const GRADE_CONVERSOR = new GeneralGradeConverter();
     if (!gradeToConvert) { setCalculatedGrade(null)}
-    else if (countryTo && gradeToConvert) {
+    else if (keyCountryTo && gradeToConvert) {
       // If the selected country is Spain, convert the grade to the selected country's grading system
       const CONVERTED_GRADE = GRADE_CONVERSOR.convert(
         gradeToConvert,
@@ -35,28 +35,31 @@ const CountryDropdownAndGradeConversed: React.FC = () => {
       setCalculatedGrade(CONVERTED_GRADE);
     }
   };
-
-  // Trigger grade calculation whenever countryTo or grade changes
+  // Trigger grade calculation whenever keyCountryTo or grade changes
   useEffect(() => {
     calculateGrade();
-  }, [countryTo, gradeToConvert, countryFrom]);
+  }, [keyCountryTo, gradeToConvert, countryFrom]);
+
+  useEffect(() => {
+    setActualCountry(COUNTRIES.find((country) => country.key === keyCountryTo));
+  } , [keyCountryTo]);
 
   return (
     <div className="flex flex-column gap-3 w-15rem">
       {/* Country dropdown */}
-      <CustomDropdown<Country>
+      <CustomDropdown<string>
         filter={true}
-        value={countryTo}
+        value={keyCountryTo}
         onChange={(e: DropdownChangeEvent) => setCountryTo(e.value)}
         options={COUNTRIES}
-        optionLabel="name"
-        placeholder="Select a Country"
+        nodeTemplate={renderOptionTemplate}
         valueTemplate={renderSelectedItemTemplate}
-        itemTemplate={renderOptionTemplate}
+        optionLabel="label"
+        placeholder="Select a Country"
         panelFooterTemplate={() =>
-          countryTo ? (
+          keyCountryTo ? (
             <span>
-              <b>{countryTo.name}</b> selected.
+              <b>{keyCountryTo}</b> selected.
             </span>
           ) : (
             "No country selected."
