@@ -47,15 +47,14 @@ const CountryDropdown: React.FC = () => {
         value={selectedKeyCountry}
         onChange={(e: DropdownChangeEvent) => handleCountryChange(e)}
         options={COUNTRIES}
-        nodeTemplate={renderOptionTemplate}
+        itemTemplate={renderOptionTemplate}
         valueTemplate={renderSelectedItemTemplate}
         optionLabel="name"
         placeholder="Select a Country"
-        itemTemplate={renderOptionTemplate}
         panelFooterTemplate={() =>
           selectedCountry ? (
             <span>
-              <b>{selectedCountry.name}</b> selected.
+              <b>{selectedCountry.label}</b> selected.
             </span>
           ) : (
             "No country selected."

@@ -12,12 +12,12 @@ import { renderSelectedItemTemplate } from './dropdownTemplates';
  * Reusable dropdown component to handle common dropdown logic and rendering.
  */
 interface CustomDropdownProps<T> {
-    value: T | null;
+    value: T | null | string;
     options: T[] | Country[];
     optionLabel: string;
     placeholder: string;
     onChange: (e: DropdownChangeEvent) => void;
-    valueTemplate?: (option: T, props: any) => React.ReactNode;
+    valueTemplate?: (option: any, props: any) => React.ReactNode;
     itemTemplate?: (option: T) => React.ReactNode;
     panelFooterTemplate?: () => React.ReactNode;
     dropdownClassName?: string;
@@ -49,7 +49,7 @@ const CustomDropdown = <T,>({
         filter={filter ? true : false}
         className={dropdownClassName}
         nodeTemplate={nodeTemplate}
-        valueTemplate={renderSelectedItemTemplate}
+        valueTemplate={valueTemplate}
         panelFooterTemplate={panelFooterTemplate}
         dropdownIcon={(opts) =>
           opts.iconProps["data-pr-overlay-visible"] ? (

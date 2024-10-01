@@ -52,7 +52,7 @@ const CountryDropdownAndGradeConversed: React.FC = () => {
         value={keyCountryTo}
         onChange={(e: DropdownChangeEvent) => setCountryTo(e.value)}
         options={COUNTRIES}
-        nodeTemplate={renderOptionTemplate}
+        itemTemplate={renderOptionTemplate}
         valueTemplate={renderSelectedItemTemplate}
         optionLabel="label"
         placeholder="Select a Country"
