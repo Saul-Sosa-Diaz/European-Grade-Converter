@@ -15,6 +15,7 @@ import { GermanyGradeConverter } from "./countriesClasses/germany-grade-converte
 import { GreeceGradeConverter } from "./countriesClasses/greece-grade-converter";
 import { NorwayGradeConverter } from "./countriesClasses/norway-grade-converter";
 import { PolandGradeConverter } from "./countriesClasses/poland-grade-converter";
+import { SloveniaGradeConverter } from "./countriesClasses/slovenia-grade-converter";
 
 
 export interface Country {
@@ -27,7 +28,7 @@ export interface Country {
   gradeConverter?: ICountryConverter;
   suffix?: string;
   grades?: number[];
-  decimalPlaces: number;
+  decimalPlaces?: number;
   aditionalInfo?: string;
   children?: Country[];
 }
@@ -35,7 +36,7 @@ export interface Country {
 
 // Hacer uno para los hoja y otro para los padres
 
-export const COUNTRIES: Country[]= [
+export const COUNTRIES: Country[] = [
   {
     key: "0",
     selectable: false,
@@ -195,7 +196,6 @@ export const COUNTRIES: Country[]= [
     grades: [2, 3, 4, 5, 6],
     maxGrade: 6,
     gradeConverter: new NorwayGradeConverter(),
-    decimalPlaces: 0,
   },
   {
     key: "14",
@@ -205,7 +205,15 @@ export const COUNTRIES: Country[]= [
     grades: [3, 3.5, 4, 4.5, 5],
     maxGrade: 5,
     gradeConverter: new PolandGradeConverter(),
-    decimalPlaces: 1,
+  },
+  {
+    key: "15",
+    label: "Slovenia",
+    code: "SI",
+    minGrade: 0,
+    maxGrade: 5,
+    grades: [3, 3.5, 4, 4.5, 5],
+    gradeConverter: new SloveniaGradeConverter()
   },
 ].sort((a, b) => a.label.localeCompare(b.label));;
 
