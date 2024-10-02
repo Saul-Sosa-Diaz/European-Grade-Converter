@@ -7,7 +7,7 @@ export class CzechRepublicGradeConverter implements ICountryConverter {
     if (grade >= 7) return "2 (Dobře)";
     if (grade >= 6) return "2.5 (Uspokojivě)";
     if (grade >= 5) return "3 (Dostatečně)";
-    return "0";
+    return "Fail";
   }
 
   convertToSpain(grade: number): string {

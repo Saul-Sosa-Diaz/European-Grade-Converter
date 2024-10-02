@@ -23,6 +23,8 @@ export default function Home() {
           </ToConvertContextProvider>
         </div>
       </div>
+
+      
       <footer className="flex justify-content-center bg-indigo-600 absolute bottom-0 block w-screen ">
         <p className="text-white">
           If you find an error or have a suggestion, please inform 

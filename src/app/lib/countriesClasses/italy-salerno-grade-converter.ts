@@ -22,7 +22,7 @@ export class ItalySalernoGradeConverter implements ICountryConverter {
       }
     }
 
-    return "0";
+    return "Fail";
   }
   convertToSpain(grade: number): string {
     if (grade === 31) return "10";

@@ -13,6 +13,7 @@ import { ItalyBoloniaGradeConverter } from "./countriesClasses/italy-bolonia-gra
 import { PortugalGradeConverter } from "./countriesClasses/portugal-grade-converter";
 import { GermanyGradeConverter } from "./countriesClasses/germany-grade-converter";
 import { GreeceGradeConverter } from "./countriesClasses/greece-grade-converter";
+import { NorwayGradeConverter } from "./countriesClasses/norway-grade-converter";
 
 
 export interface Country {
@@ -69,7 +70,6 @@ export const COUNTRIES: Country[]= [
     key: "1",
     code: "FR",
     label: "France",
-    data: "France document",
     minGrade: 0,
     maxGrade: 20,
     gradeConverter: new FranceGradeConverter(),
@@ -80,7 +80,6 @@ export const COUNTRIES: Country[]= [
     key: "2",
     code: "ES",
     label: "Spain",
-    data: "Spain Document",
     minGrade: 0,
     maxGrade: 10,
     gradeConverter: new SpainGradeConverter(),
@@ -186,6 +185,16 @@ export const COUNTRIES: Country[]= [
     maxGrade: 10,
     gradeConverter: new GreeceGradeConverter(),
     decimalPlaces: 2,
+  },
+  {
+    key: "13",
+    label: "Norway",
+    code: "NO",
+    minGrade: 0,
+    grades: [2, 3, 4, 5, 6],
+    maxGrade: 6,
+    gradeConverter: new NorwayGradeConverter(),
+    decimalPlaces: 0,
   },
 ].sort((a, b) => a.label.localeCompare(b.label));;
 
