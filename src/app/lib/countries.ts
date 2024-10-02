@@ -48,7 +48,7 @@ export const COUNTRIES: Country[] = [
     decimalPlaces: 0,
     children: [
       {
-        label: "Salermo",
+        label: "Salerno",
         key: "0-0",
         code: "IT",
         minGrade: 0,
