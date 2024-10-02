@@ -4,6 +4,7 @@ import { ToConvertContext } from "../context/to-convert-context";
 import { Country, COUNTRIES, findCountryByKey } from "@/src/app/lib/countries";
 import { Card } from "primereact/card";
 import CustomTreeSelect from "./customTreeSelect";
+import "@/src/app/styles/global-theme.css";
 import {
   renderOptionTemplate,
   renderSelectedItemTemplate,

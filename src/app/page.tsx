@@ -1,5 +1,7 @@
 "use client";
-import "primereact/resources/themes/bootstrap4-light-purple/theme.css";
+import "@/src/app/styles/global-theme.css";
+import "primeflex/primeflex.css";
+
 
 import CountryDropdownAndGrade from "./components/countrytreeSelectionAndDropdownGrade";
 import CountryDropdownAndGradeConversed from "./components/countryTreeSelectionSolution";

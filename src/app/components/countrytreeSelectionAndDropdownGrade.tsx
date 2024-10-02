@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useContext } from "react";
 import "@/src/app/styles/card.css";
+import "@/src/app/styles/global-theme.css";
 import { DropdownChangeEvent } from "primereact/dropdown";
 import { ToConvertContext } from "../context/to-convert-context";
 import { InputNumber } from "primereact/inputnumber";
