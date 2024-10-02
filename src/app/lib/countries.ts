@@ -50,6 +50,7 @@ export const COUNTRIES: Country[] = [
       {
         label: "Salermo",
         key: "0-0",
+        code: "IT",
         minGrade: 0,
         maxGrade: 31,
         gradeConverter: new ItalySalernoGradeConverter(),
@@ -60,6 +61,7 @@ export const COUNTRIES: Country[] = [
       {
         label: "Bolonia",
         key: "0-1",
+        code: "IT",
         minGrade: 0,
         maxGrade: 31,
         gradeConverter: new ItalyBoloniaGradeConverter(),
