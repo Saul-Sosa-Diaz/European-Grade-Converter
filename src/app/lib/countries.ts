@@ -201,7 +201,7 @@ export function findCountryByKey(key: string): Country | undefined {
     if (country.children) {
       for (const child of country.children) {
         if (child.key === key) {
-          return child; // O podrías devolver el hijo si prefieres
+          return child;
         }
       }
     }
