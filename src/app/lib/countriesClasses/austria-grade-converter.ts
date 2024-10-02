@@ -14,6 +14,6 @@ export class AustriaGradeConverter implements ICountryConverter {
     if (grade === 2) return "8";
     if (grade === 3) return "6.5";
     if (grade === 4) return "5.5";
-    return "0";
+    return "2.5";
   }
 }

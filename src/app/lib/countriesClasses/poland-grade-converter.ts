@@ -16,6 +16,6 @@ export class PolandGradeConverter implements ICountryConverter {
     if (grade === 4) return "7.5";
     if (grade === 3.5) return "6.5";
     if (grade === 3) return "5.5";
-    return "0";
+    return "2.5";
   }
 }

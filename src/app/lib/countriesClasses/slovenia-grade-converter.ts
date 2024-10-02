@@ -6,7 +6,7 @@ export class SloveniaGradeConverter implements ICountryConverter {
     if (grade >= 8) return "4 (Prav Dobro)";
     if (grade >= 7) return "3 (Dobro)";
     if (grade >= 5) return "2 (Zadostno / Zadovoljava)";
-    return "Fail";
+    return  "Fail";
   }
 
   convertToSpain(grade: number): string {
@@ -14,6 +14,6 @@ export class SloveniaGradeConverter implements ICountryConverter {
     if (grade === 4) return "8.5";
     if (grade === 3) return "7.5";
     if (grade === 2) return "6.0";
-    return "0";
+    return "2.5";
   }
 }

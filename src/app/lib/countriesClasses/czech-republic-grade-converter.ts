@@ -14,6 +14,6 @@ export class BulgariaGradeConverter implements ICountryConverter {
     if (grade === 5) return "8.5";
     if (grade === 4) return "7.5";
     if (grade === 3) return "6";
-    return "0";
+    return "2.5";
   }
 }
