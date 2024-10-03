@@ -6,7 +6,7 @@
  * @author Saul Sosa
  * @date October 20 2024
  *
- * @description This file contains the context .
+ * @description This file contains the needed context to make the grade conversion.
  */
 
 import { createContext } from 'react';
