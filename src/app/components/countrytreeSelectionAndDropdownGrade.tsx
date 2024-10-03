@@ -1,3 +1,17 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ *
+ * @author Saul Sosa
+ * @date October 20 2024
+ *
+ * @description
+ * This React component allows users to select a country and its corresponding grade.
+ * Depending on the selected country, the grade input may be a dropdown or a manual input field.
+ * It uses a global context to share the selected country and grade with other parts of the application.
+ */
+
 "use client";
 import React, { useState, useContext } from "react";
 import "@/src/app/styles/card.css";
@@ -24,19 +38,29 @@ const CountryTreeSelect: React.FC = () => {
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null); // Grade selection state
   const { setGradeToConvert, setCountryFrom } = useContext(ToConvertContext); // Global context for grade selection
 
+  /**
+   * Handler function for changing the selected country.
+   * Resets the grade selection and updates the country in both local state and global context.
+   * @param e - Dropdown change event
+   */
   const handleCountryChange = (e: DropdownChangeEvent) => {
     const selectedKeyCountryValue = e.value;
     if (selectedKeyCountryValue) {
-      const NEW_COUNTRY = findCountryByKey(selectedKeyCountryValue);
-      setSelectedGrade(null);
-      setGradeToConvert(null);
-      setSelectedKeyCountry(selectedKeyCountryValue);
-      console.log(NEW_COUNTRY);
-      setSelectedCountry(NEW_COUNTRY);
-      setCountryFrom(NEW_COUNTRY);
+      const NEW_COUNTRY = findCountryByKey(selectedKeyCountryValue); // Find the full country object by key
+      setSelectedGrade(null); // Reset selected grade
+      setGradeToConvert(null); // Reset global grade
+      setSelectedKeyCountry(selectedKeyCountryValue); // Update selected country key
+      console.log(NEW_COUNTRY); // Log the selected country for debugging
+      setSelectedCountry(NEW_COUNTRY); // Update selected country object
+      setCountryFrom(NEW_COUNTRY); // Set the selected country in global context
     }
   };
 
+  /**
+   * Handler function for changing the selected grade.
+   * Updates the grade in both local state and global context.
+   * @param e - Dropdown change event
+   */
   const handleGradeChange = (e: DropdownChangeEvent) => {
     const selectedGradeValue = e.value as number;
     setSelectedGrade(selectedGradeValue);
