@@ -1,6 +1,5 @@
 "use client";
-import "@/src/app/styles/global-theme.css";
-import "primeflex/primeflex.css";
+
 
 
 import CountryDropdownAndGrade from "./components/countrytreeSelectionAndDropdownGrade";

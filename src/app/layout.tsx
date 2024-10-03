@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "/node_modules/primeflex/primeflex.css";
+import "@/src/app/styles/global-theme.css";
+import "primeflex/primeflex.css";
 
 export const metadata: Metadata = {
   title: "University Grade Conversion tool",
