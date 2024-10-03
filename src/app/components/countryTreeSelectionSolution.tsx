@@ -85,7 +85,7 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
   return (
     <div className="flex flex-column gap-3 w-20rem">
       {/* Country TreeSelect */}
-      <CustomTreeSelect<string>
+      <CustomTreeSelect<Country>
         filter={true} // Enable filtering for searching countries
         value={keyCountryTo} // Currently selected country key
         onChange={(e) => setCountryTo(e.value)} // Update selected country key

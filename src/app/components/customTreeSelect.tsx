@@ -13,18 +13,18 @@ import React from "react";
 import { ChevronDownIcon } from "primereact/icons/chevrondown";
 import { ChevronRightIcon } from "primereact/icons/chevronright";
 import { TreeSelect } from "primereact/treeselect";
-import { Country } from "../lib/countries";
 
 /**
  * Props interface for the reusable TreeSelect component.
  * @template T - Generic type to allow flexibility in the component, supporting different data types like Country.
  */
 interface CustomTreeSelectProps<T> {
-  value: T | null | string; // Currently selected value (can be a generic type or a string)
+  value: string; // Currently selected value (can be a generic type or a string)
   options: T[]; // Array of options to be displayed in the dropdown
   optionLabel: string; // Label field from options to display as the option name
   placeholder: string; // Placeholder text to display when no option is selected
   onChange: (e: DropdownChangeEvent) => void; // Callback function triggered when an option is selected
+  nodeTemplate?: (option: T) => React.ReactNode; // Custom template to display options in the dropdown
   valueTemplate?: (option: any, props: any) => React.ReactNode; // Custom template to display the selected value
   itemTemplate?: (option: T) => React.ReactNode; // Custom template to display options in the dropdown
   panelFooterTemplate?: () => React.ReactNode; // Template for the footer section of the dropdown panel
