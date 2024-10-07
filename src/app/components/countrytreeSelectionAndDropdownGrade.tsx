@@ -126,11 +126,6 @@ const CountryTreeSelect: React.FC = () => {
           optionLabel="value" // Label for the grade options
         />
       )}
-
-      {/* Conditionally render additional information if available */}
-      {selectedCountry && selectedCountry.aditionalInfo && (
-        <div>{selectedCountry.aditionalInfo}</div>
-      )}
     </div>
   );
 };

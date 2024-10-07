@@ -34,6 +34,7 @@ export interface Country {
   aditionalInfo?: string;
   children?: Country[];
   url?: string;
+  document_url?: string;
 }
 
 
@@ -77,7 +78,12 @@ export const COUNTRIES: Country[] = [
             code: "IT",
             minGrade: 0,
             maxGrade: 31,
+            aditionalInfo:
+              "Insert a number between 0 and 30. Type '30 cum Laude' as '30L'",
             gradeConverter: new ItalyBoloniaScienceGradeConverter(),
+            url: "https://www.unibo.it/it/studiare/guida-alla-scelta-del-corso/sistema-universitario/ects-label/tabelle-di-conversione-dei-voti-nella-scala-ects/tabelle-ects-a-a-2024-25",
+            document_url:
+              "https://www.unibo.it/it/studiare/guida-alla-scelta-del-corso/sistema-universitario/ects-label/tabelle-di-conversione-dei-voti-nella-scala-ects/tabelle-ects-a-a-2024-25/area-isced-05-2013-natural-sciences-mathematics-and-statistics/@@download/file/Unibo_ECTS_gradingtables_24-25_AreaISCED_05%20%E2%80%93%20Natural%20sciences,%20mathematics%20and%20statistics.pdf",
           },
           {
             label: "Bolonia Engineering",
@@ -85,7 +91,12 @@ export const COUNTRIES: Country[] = [
             code: "IT",
             minGrade: 0,
             maxGrade: 31,
+            aditionalInfo:
+              "Insert a number between 0 and 30. Type '30 cum Laude' as '30L'",
             gradeConverter: new ItalyBoloniaEngineeringGradeConverter(),
+            url: "https://www.unibo.it/it/studiare/guida-alla-scelta-del-corso/sistema-universitario/ects-label/tabelle-di-conversione-dei-voti-nella-scala-ects/tabelle-ects-a-a-2024-25",
+            document_url:
+              "https://www.unibo.it/it/studiare/guida-alla-scelta-del-corso/sistema-universitario/ects-label/tabelle-di-conversione-dei-voti-nella-scala-ects/tabelle-ects-a-a-2024-25/area-isced-06-2013-information-and-communication-technologies-e-area-isced-07-engineering-manufactoring-and-construction/@@download/file/Unibo_ECTS_gradingtables_24-25_AreeISCED_06%20e%2007%20%E2%80%93%20Information%20and%20comm%20tech%20and%20Engineering,%20manufactoring%20and%20co.pdf",
           },
         ],
       },
