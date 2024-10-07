@@ -7,7 +7,7 @@ interface GradeRange {
   top: number; // Nota máxima en el sistema español
 }
 
-export class ItalyBoloniaGradeConverter implements ICountryConverter {
+export class ItalyBoloniaScienceGradeConverter implements ICountryConverter {
   private gradeRanges: GradeRange[] = [
     //{ min: 30, max: 30, base: 9.5, factor: 0.5 }, // 30 a 9.5, y si es cum laude llega a 10
     { min: 28, max: 30, base: 7, top: 9, factor: 2 / 2 },

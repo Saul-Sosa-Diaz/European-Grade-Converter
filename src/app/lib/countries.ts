@@ -9,7 +9,7 @@ import { AustriaGradeConverter } from "./countriesClasses/austria-grade-converte
 import { BulgariaGradeConverter } from "./countriesClasses/czech-republic-grade-converter";
 import { CzechRepublicGradeConverter } from "./countriesClasses/bulgaria-grade-converter";
 import { ItalySalernoGradeConverter } from "./countriesClasses/italy-salerno-grade-converter";
-import { ItalyBoloniaGradeConverter } from "./countriesClasses/italy-bolonia-grade-converter";
+import { ItalyBoloniaScienceGradeConverter } from "./countriesClasses/italy-bolonia-science-grade-converter";
 import { PortugalGradeConverter } from "./countriesClasses/portugal-grade-converter";
 import { GermanyGradeConverter } from "./countriesClasses/germany-grade-converter";
 import { GreeceGradeConverter } from "./countriesClasses/greece-grade-converter";
@@ -17,6 +17,7 @@ import { NorwayGradeConverter } from "./countriesClasses/norway-grade-converter"
 import { PolandGradeConverter } from "./countriesClasses/poland-grade-converter";
 import { SloveniaGradeConverter } from "./countriesClasses/slovenia-grade-converter";
 import { SwitzerlandGradeConverter } from "./countriesClasses/switzerland-grade-converter";
+import {ItalyBoloniaEngineeringGradeConverter} from "./countriesClasses/italy-bolonia-engineering-grade-converter";
 
 
 export interface Country {
@@ -32,6 +33,7 @@ export interface Country {
   decimalPlaces?: number;
   aditionalInfo?: string;
   children?: Country[];
+  url?: string;
 }
 
 
@@ -64,10 +66,28 @@ export const COUNTRIES: Country[] = [
         code: "IT",
         minGrade: 0,
         maxGrade: 31,
-        gradeConverter: new ItalyBoloniaGradeConverter(),
+        selectable: false,
         decimalPlaces: 0,
         aditionalInfo:
           "Insert a number between 0 and 30. Type '30 cum Laude' as '30L'",
+        children: [
+          {
+            label: "Bolonia Science",
+            key: "0-1-0",
+            code: "IT",
+            minGrade: 0,
+            maxGrade: 31,
+            gradeConverter: new ItalyBoloniaScienceGradeConverter(),
+          },
+          {
+            label: "Bolonia Engineering",
+            key: "0-1-1",
+            code: "IT",
+            minGrade: 0,
+            maxGrade: 31,
+            gradeConverter: new ItalyBoloniaEngineeringGradeConverter(),
+          },
+        ],
       },
     ],
   },
@@ -231,21 +251,29 @@ export const COUNTRIES: Country[] = [
 
 
 export function findCountryByKey(key: string): Country | undefined {
-  for (const country of COUNTRIES) {
-    // Si el país coincide con el código proporcionado
+  function searchCountry(country: Country, key: string): Country | undefined {
     if (country.key === key) {
       return country;
     }
 
-    // Si el país tiene hijos, recorremos sus children
     if (country.children) {
       for (const child of country.children) {
-        if (child.key === key) {
-          return child;
+        const result = searchCountry(child, key);
+        if (result) {
+          return result;
         }
       }
     }
+
+    return undefined;
   }
-  // Si no se encontró, devolvemos undefined
+
+  for (const country of COUNTRIES) {
+    const result = searchCountry(country, key);
+    if (result) {
+      return result;
+    }
+  }
+
   return undefined;
 }
