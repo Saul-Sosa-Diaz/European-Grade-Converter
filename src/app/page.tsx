@@ -23,6 +23,10 @@ export default function Home() {
         <ToConvertContextProvider>
           <div className="flex justify-content-center flex-wrap w-screen gap-7">
             <div className="flex justify-content-center block w-screen color-primary">
+              <img
+                className="w-1"
+                src="./logo-ull.svg"
+              ></img>
               <h1 className="text-white">University Grade Conversion</h1>
             </div>
             <div className="flex gap-3 justify-content-center">
@@ -59,8 +63,7 @@ export default function Home() {
             </p>
           </footer>
         </ToConvertContextProvider>
-      )
-      }
+      )}
     </main>
   );
 }

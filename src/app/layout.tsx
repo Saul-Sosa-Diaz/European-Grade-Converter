@@ -5,6 +5,10 @@ import "primeflex/primeflex.css";
 
 export const metadata: Metadata = {
   title: "University Grade Conversion tool",
+  description: "University Grade Conversion tool",
+  icons: {
+    icon: "/favicon.ico", // /public path
+  },
 };
 
 export default function RootLayout({
