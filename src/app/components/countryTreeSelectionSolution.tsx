@@ -47,7 +47,7 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
   );
 
   // State to hold the key of the selected country
-  const [keyCountryTo, setKeyCountryTo] = useState<string | null>(countryTo.key);
+  const [keyCountryTo, setKeyCountryTo] = useState<string | null>(COUNTRIES.find((country) => country.code === "ES").key);
 
   // State to hold the calculated grade
   const [calculatedGrade, setCalculatedGrade] = useState<string | null>(null);
