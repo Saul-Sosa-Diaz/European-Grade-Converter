@@ -47,7 +47,7 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
   );
 
   // State to hold the key of the selected country
-  const [keyCountryTo, setCountryTo] = useState<string | null>(countryTo.key);
+  const [keyCountryTo, setKeyCountryTo] = useState<string | null>(countryTo.key);
 
   // State to hold the calculated grade
   const [calculatedGrade, setCalculatedGrade] = useState<string | null>(null);
@@ -79,16 +79,23 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
 
   // Update the actual country object whenever the keyCountryTo state changes
   useEffect(() => {
-    setActualCountry(findCountryByKey(keyCountryTo)); // Find and set the country by its key
+    const NEW_COUNTRY = findCountryByKey(keyCountryTo); // Find the country by its key
+    setActualCountry(NEW_COUNTRY); // Find and set the country by its key
   }, [keyCountryTo]);
 
+
+  const updateKeyCountryTo = (e) => {
+    if (e.value) {
+      setKeyCountryTo(e.value);
+    }
+  }
   return (
     <div className="flex flex-column gap-3 w-20rem">
       {/* Country TreeSelect */}
       <CustomTreeSelect<Country>
         filter={true} // Enable filtering for searching countries
         value={keyCountryTo} // Currently selected country key
-        onChange={(e) => setCountryTo(e.value)} // Update selected country key
+        onChange={(e) => {updateKeyCountryTo(e);}} // Update selected country key
         options={COUNTRIES} // List of available countries
         nodeTemplate={renderOptionTemplate} // Template to render each country option
         valueTemplate={renderSelectedItemTemplate} // Template to render the selected country
