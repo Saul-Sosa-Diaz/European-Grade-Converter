@@ -9,26 +9,35 @@ import { Card } from 'primereact/card';
 const CountryAdditionalInfo: React.FC = () => {
   const { countryFrom } = useContext(ToConvertContext); // Context for sharing grade and country globally
   return (
-    <div> 
-         {countryFrom && (countryFrom.aditionalInfo || countryFrom.url || countryFrom.document_url) && <Card>
+    <div className="text-center">
+      {countryFrom &&
+        (countryFrom.aditionalInfo ||
+          countryFrom.url ||
+          countryFrom.document_url) && (
+          <Card className="text-color-primary text-xl">
             {/* Conditionally render additional information if available */}
             {countryFrom && countryFrom.aditionalInfo && (
-                <div>{countryFrom.aditionalInfo}</div>
+              <p>{countryFrom.aditionalInfo}</p>
             )}
             {countryFrom && countryFrom.url && (
-                <div>
+              <p>
                 You can find more information about the grading system in{" "}
                 <a href={countryFrom.url}>{countryFrom.label}</a>
-                </div>
+                <br />
+              </p>
             )}
             {countryFrom && countryFrom.url && (
-                <div>
+              <p>
                 If you want to see the specific document of conversions you can
                 download it in{" "}
-                <a href={countryFrom.document_url}>{countryFrom.label} document</a>
-                </div>
+                <a href={countryFrom.document_url}>
+                  {countryFrom.label} document
+                </a>
+                <br />
+              </p>
             )}
-        </Card>}
+          </Card>
+        )}
     </div>
   );
 };
