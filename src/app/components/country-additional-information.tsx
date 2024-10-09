@@ -9,7 +9,7 @@ import { Card } from 'primereact/card';
 const CountryAdditionalInfo: React.FC = () => {
   const { countryFrom } = useContext(ToConvertContext); // Context for sharing grade and country globally
   return (
-    <div className="text-center p-6">
+    <div className="text-center">
       {countryFrom &&
         (countryFrom.aditionalInfo ||
           countryFrom.url ||
