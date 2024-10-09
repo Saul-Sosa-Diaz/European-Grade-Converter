@@ -7,10 +7,10 @@ import CountryDropdownAndGradeConversed from "./components/countryTreeSelectionS
 import { ToConvertContextProvider } from "./context/to-convert-context";
 import CountryAdditionalInfo from "./components/country-additional-information";
 import Header from "./components/header";
-import 'primeicons/primeicons.css';
+import "primeicons/primeicons.css";
 import Footer from "./components/footer";
 
-export default function Home() { 
+export default function Home() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -26,12 +26,13 @@ export default function Home() {
         <ToConvertContextProvider>
           <Header />
           <div className="flex flex-column justify-content-center w-screen h-full sm:gap-3">
-            <div className="flex flex-row align-items-center justify-content-center w-screen sm:gap-3 mt-8">
+            <div className="flex flex-column md:flex-row align-items-center justify-content-center w-screen gap-3 mt-4">
               <CountryDropdownAndGrade />
-              <span className="pi pi-arrow-right"></span>
+              <span className="pi pi-arrow-right hidden md:block"></span>
+              <span className="pi pi-arrow-down block md:hidden"></span>
               <CountryDropdownAndGradeConversed />
             </div>
-            <div className="flex justify-content-center mt-8">
+            <div className="flex justify-content-center">
               <CountryAdditionalInfo />
             </div>
           </div>
