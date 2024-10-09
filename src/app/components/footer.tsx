@@ -1,6 +1,6 @@
 const Footer: React.FC = () => {
   return (
-    <footer className="flex justify-content-center block sm:w-screen color-primary">
+    <footer className="flex justify-content-center block sm:w-screen color-primary  md:absolute bottom-0">
       <p className="w-11 text-white text-center line-height-3">
         If you find an error or have a suggestion, please inform
         <strong>
