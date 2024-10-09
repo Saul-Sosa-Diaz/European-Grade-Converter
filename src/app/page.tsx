@@ -36,7 +36,7 @@ export default function Home() {
               <CountryAdditionalInfo />
             </div>
           </div>
-          <Footer />
+            <Footer />
         </ToConvertContextProvider>
       )}
     </main>

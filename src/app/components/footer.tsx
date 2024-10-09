@@ -1,6 +1,6 @@
 const Footer: React.FC = () => {
   return (
-    <footer className="flex justify-content-center block sm:w-screen color-primary  md:absolute bottom-0">
+    <footer className="hidden md:flex justify-content-center w-screen absolute bottom-0 color-primary">
       <p className="w-11 text-white text-center line-height-3">
         If you find an error or have a suggestion, please inform
         <strong>
@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
         . This project is being supervised by{" "}
         <strong>
           Prof. Juan José Salazar González (
-          <a className="color-primary" href="mailto:jjsalaza@ull.edu.es">
+          <a href="mailto:jjsalaza@ull.edu.es">
             jjsalaza@ull.edu.es
           </a>
           )
