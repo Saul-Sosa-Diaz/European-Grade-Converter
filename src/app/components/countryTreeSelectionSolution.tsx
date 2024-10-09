@@ -116,8 +116,8 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
 
       {/* Display the calculated grade if available */}
       {calculatedGrade && (
-        <div className="card w-100">
-          <Card className="flex justify-content-center align-items-center">
+        <div className="card w-full">
+          <Card className="flex justify-content-center align-items-center h-3rem">
             <p className="m-0 text-xl">{calculatedGrade}</p>{" "}
             {/* Render the calculated grade */}
           </Card>
