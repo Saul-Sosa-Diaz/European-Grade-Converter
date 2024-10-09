@@ -25,8 +25,8 @@ export default function Home() {
       {isClient && (
         <ToConvertContextProvider>
           <Header />
-          <div className="flex flex-column justify-content-center w-screen h-full sm:gap-3">
-            <div className="flex flex-column md:flex-row align-items-center justify-content-center w-screen gap-3 mt-4">
+          <div className="flex flex-column justify-content-center w-screen sm:gap-3">
+            <div className="flex flex-column md:flex-row align-items-center justify-content-center h- w-screen gap-3 mt-4">
               <CountryDropdownAndGrade />
               <span className="pi pi-arrow-right hidden md:block"></span>
               <span className="pi pi-arrow-down block md:hidden"></span>
