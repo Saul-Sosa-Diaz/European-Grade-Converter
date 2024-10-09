@@ -7,6 +7,7 @@ import CountryDropdownAndGradeConversed from "./components/countryTreeSelectionS
 import { ToConvertContextProvider } from "./context/to-convert-context";
 import CountryAdditionalInfo from "./components/country-additional-information";
 import Header from "./components/header";
+import 'primeicons/primeicons.css';
 import Footer from "./components/footer";
 
 export default function Home() { 
@@ -23,16 +24,11 @@ export default function Home() {
     >
       {isClient && (
         <ToConvertContextProvider>
-          <div className="flex justify-content-center flex-wrap w-screen gap-7">
+          <div className="flex justify-content-center  flex-wrap w-screen gap-7">
             <Header />
-            <div
-              className="flex Class	Description sm:gap-3 justify-content-center"
-            >
+            <div className="flex align-items-center sm:gap-3 ">
               <CountryDropdownAndGrade />
-              <img
-                className="w-1"
-                src="https://openclipart.org/image/2400px/svg_to_png/200343/primary-line-line-arrow-end.png"
-              ></img>
+              <span className="pi pi-arrow-right"></span>
               <CountryDropdownAndGradeConversed />
             </div>
             <CountryAdditionalInfo />
