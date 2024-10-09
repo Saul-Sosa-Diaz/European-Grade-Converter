@@ -24,16 +24,17 @@ export default function Home() {
     >
       {isClient && (
         <ToConvertContextProvider>
-          <div className="flex justify-content-center  flex-wrap w-screen gap-7">
-            <Header />
-            <div className="flex align-items-center sm:gap-3 ">
+          <Header />
+          <div className="flex flex-column justify-content-center w-screen h-full sm:gap-3">
+            <div className="flex flex-row align-items-center justify-content-center w-screen sm:gap-3 mt-8">
               <CountryDropdownAndGrade />
               <span className="pi pi-arrow-right"></span>
               <CountryDropdownAndGradeConversed />
             </div>
-            <CountryAdditionalInfo />
+            <div className="flex justify-content-center mt-8">
+              <CountryAdditionalInfo />
+            </div>
           </div>
-
           <Footer />
         </ToConvertContextProvider>
       )}
