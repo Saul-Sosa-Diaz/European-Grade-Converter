@@ -22,7 +22,9 @@ const CountryAdditionalInfo: React.FC = () => {
             {countryFrom && countryFrom.url && (
               <p>
                 You can find more information about the grading system in{" "}
-                <a href={countryFrom.url}>{countryFrom.label}</a>
+                <a href={countryFrom.url} target="_blank">
+                  {countryFrom.label}
+                </a>
                 <br />
               </p>
             )}
@@ -30,7 +32,7 @@ const CountryAdditionalInfo: React.FC = () => {
               <p>
                 If you want to see the specific document of conversions you can
                 download it in{" "}
-                <a href={countryFrom.document_url}>
+                <a href={countryFrom.document_url} target="_blank">
                   {countryFrom.label} document
                 </a>
                 <br />

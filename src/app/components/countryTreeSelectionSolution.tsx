@@ -90,12 +90,14 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
     }
   }
   return (
-    <div className="flex flex-column gap-3 w-20rem">
+    <div className="flex flex-column sm:gap-3 sm:w-20rem">
       {/* Country TreeSelect */}
       <CustomTreeSelect<Country>
         filter={true} // Enable filtering for searching countries
         value={keyCountryTo} // Currently selected country key
-        onChange={(e) => {updateKeyCountryTo(e);}} // Update selected country key
+        onChange={(e) => {
+          updateKeyCountryTo(e);
+        }} // Update selected country key
         options={COUNTRIES} // List of available countries
         nodeTemplate={renderOptionTemplate} // Template to render each country option
         valueTemplate={renderSelectedItemTemplate} // Template to render the selected country
