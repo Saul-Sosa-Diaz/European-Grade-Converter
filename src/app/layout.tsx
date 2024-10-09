@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "primereact/resources/themes/md-light-deeppurple/theme.css";
-
 import "primeflex/primeflex.css";
 
 export const metadata: Metadata = {
@@ -18,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className=" m-0">{children}</body>
+      <body className="m-0">{children}</body>
     </html>
   );
 }
