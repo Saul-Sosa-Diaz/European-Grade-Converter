@@ -13,3 +13,6 @@ Este proyecto es un conversor de notas diseñado para facilitar la conversión d
 - **Next.js:** Framework de React para aplicaciones web modernas.
 - **TypeScript:** Lenguaje que añade tipado estático a JavaScript, mejorando la seguridad del código.
 - **Prime react:** Componentes prefabricados para interfaces de usuario.
+
+## Problemas encontrados: 
+FOUC (Flash of Unstyled Content) en la carga de la página. Se solucionó con la implementación de un componente de carga.
