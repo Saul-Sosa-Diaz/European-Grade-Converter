@@ -19,7 +19,7 @@ const ToConvertContextProvider = ({ children }) => {
     const [countryFrom, setCountryFrom] = useState(undefined);
     return (
       <ToConvertContext.Provider value={{ gradeToConvert, setGradeToConvert, countryFrom, setCountryFrom }}>
-        {...children}
+        {children}
       </ToConvertContext.Provider>
     );
 };

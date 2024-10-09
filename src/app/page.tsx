@@ -19,24 +19,26 @@ export default function Home() {
 
   return (
     <main
-      className="w-screen text-font-primary"
+      className="w-screen h-screen text-font-primary"
       style={{ margin: "0px 00px 0px 0px" }}
     >
       {isClient && (
         <ToConvertContextProvider>
-          <Header />
-          <div className="flex flex-column w-screen sm:gap-3">
-            <div className="flex flex-column md:flex-row align-items-center justify-content-center h- w-screen gap-3 md:mt-8 mt-4">
-              <CountryDropdownAndGrade />
-              <span className="pi pi-arrow-right hidden md:block"></span>
-              <span className="pi pi-arrow-down block md:hidden"></span>
-              <CountryDropdownAndGradeConversed />
+          <div className="flex flex-column h-full">
+            <Header />
+            <div className="flex flex-column w-screen sm:gap-3 h-full">
+              <div className="flex flex-column md:flex-row align-items-center justify-content-center h- w-screen gap-3 md:mt-8 mt-4">
+                <CountryDropdownAndGrade />
+                <span className="pi pi-arrow-right hidden md:block"></span>
+                <span className="pi pi-arrow-down block md:hidden"></span>
+                <CountryDropdownAndGradeConversed />
+              </div>
+              <div className="flex justify-content-center">
+                <CountryAdditionalInfo />
+              </div>
             </div>
-            <div className="flex justify-content-center">
-              <CountryAdditionalInfo />
-            </div>
+            <Footer />
           </div>
-          <Footer />
         </ToConvertContextProvider>
       )}
     </main>
