@@ -10,12 +10,13 @@ export class DenmarkGradeConverter implements ICountryConverter {
     return "Fail";
   }
 
-  convertToSpain(grade: number): string {
-    if (grade >= 12) return "9.5";
-    if (grade >= 10) return "8.5";
-    if (grade >= 7) return "7.5";
-    if (grade >= 4) return "6.5";
-    if (grade >= 2) return "5.5";
+  convertToSpain(grade: string): string {
+    const NewGrade = parseFloat(grade);
+    if (NewGrade >= 12) return "9.5";
+    if (NewGrade >= 10) return "8.5";
+    if (NewGrade >= 7) return "7.5";
+    if (NewGrade >= 4) return "6.5";
+    if (NewGrade >= 2) return "5.5";
     return "2.5";
   }
 }

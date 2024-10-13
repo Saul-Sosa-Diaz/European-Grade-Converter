@@ -28,20 +28,23 @@ export class GreeceGradeConverter implements ICountryConverter {
     for (const range of this.gradeRanges) {
       if (grade >= range.base && grade <= range.top) {
         return (
-          (range.min + (grade - range.base) * range.factor).toFixed(2) + "(" + range.name + ")"
+          (range.min + (grade - range.base) * range.factor).toFixed(2) +
+          "(" +
+          range.name +
+          ")"
         );
       }
     }
     return "0";
   }
 
-  convertToSpain(grade: number): string {
+  convertToSpain(grade: string): string {
+    const NewGrade = parseFloat(grade);
     for (const range of this.gradeRanges) {
-      if (grade >= range.min && grade <= range.max) {
-        return (range.base + (grade - range.min) / range.factor).toFixed(2);
+      if (NewGrade >= range.min && NewGrade <= range.max) {
+        return (range.base + (NewGrade - range.min) / range.factor).toFixed(2);
       }
     }
     return "0";
   }
 }
-     

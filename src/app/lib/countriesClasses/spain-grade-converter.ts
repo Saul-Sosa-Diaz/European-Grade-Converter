@@ -11,7 +11,8 @@ export class SpainGradeConverter implements ICountryConverter {
     }
     return grade.toString();
   }
-  convertToSpain(grade: number): string {
-    return grade.toString();
+  convertToSpain(grade: string): string {
+    const NewGrade = parseFloat(grade);
+    return NewGrade.toString();
   }
 }

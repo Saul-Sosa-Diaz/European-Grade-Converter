@@ -23,7 +23,7 @@ export interface ICountryConverter {
    * @param grade - The grade to convert.
    * @returns The converted grade.
    */
-  convertToSpain(grade: number): string; // Convert to Spanish system
+  convertToSpain(grade: string): string; // Convert to Spanish system
   /**
    * This function converts a grade to the destination country's system.
    * @param grade - The grade to convert.
@@ -45,14 +45,14 @@ export interface IGradeConverter {
    * @param countryTo - The country to which the grade is converted.
    * @returns The converted grade.
    */
-  convert(grade: number, countryFrom: Country, countryTo: Country): string;
+  convert(grade: string, countryFrom: Country, countryTo: Country): string;
 }
 /**
  * The `GeneralGradeConverter` class manages the grade conversion process.
  * @class
  */
 export class GeneralGradeConverter implements IGradeConverter {
-  convert(grade: number, countryFrom: Country, countryTo: Country): string {
+  convert(grade: string, countryFrom: Country, countryTo: Country): string {
     const fromConverter = countryFrom.gradeConverter;
     const toConverter = countryTo.gradeConverter;
     const gradeInSpain = fromConverter.convertToSpain(grade); // Converting to the Spanish system

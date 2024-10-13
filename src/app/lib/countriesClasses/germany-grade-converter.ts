@@ -15,28 +15,27 @@ export class GermanyGradeConverter implements ICountryConverter {
     { min: 1.5, max: 2.4, base: 7.5, top: 8.9, factor: 0.15 }, // 7.5 - 8.9
     { min: 2.5, max: 3.4, base: 6.0, top: 7.9, factor: 0.15 }, // 6.0 - 7.4
     { min: 3.5, max: 4.0, base: 5.0, top: 5.9, factor: 0.18 }, // 5.0 - 5.9
-    { min: 4.1, max: 5.0, base: 0, top: 4.9, factor: 0.50 }, // 0 - 4.9
+    { min: 4.1, max: 5.0, base: 0, top: 4.9, factor: 0.5 }, // 0 - 4.9
   ];
 
   convertToDestinationCountry(grade: number): string {
     for (const range of this.gradeRanges) {
-      if (
-        grade >= range.base &&
-        grade <= range.top
-      ) {
-        return (range.max - (grade - range.base) / range.factor / 10).toFixed(2);
+      if (grade >= range.base && grade <= range.top) {
+        return (range.max - (grade - range.base) / range.factor / 10).toFixed(
+          2
+        );
       }
     }
     return "0";
   }
 
-  convertToSpain(grade: number): string {
+  convertToSpain(grade: string): string {
+    const NewGrade = parseFloat(grade);
     for (const range of this.gradeRanges) {
-      if (grade >= range.min && grade <= range.max) {
-        return (range.top - (grade - range.min) * range.factor * 10).toFixed(2);
+      if (NewGrade >= range.min && NewGrade <= range.max) {
+        return (range.top - (NewGrade - range.min) * range.factor * 10).toFixed(2);
       }
     }
     return "0";
   }
 }
-     

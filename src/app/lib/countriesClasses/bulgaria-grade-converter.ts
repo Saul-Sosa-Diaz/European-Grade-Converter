@@ -10,12 +10,13 @@ export class CzechRepublicGradeConverter implements ICountryConverter {
     return "Fail";
   }
 
-  convertToSpain(grade: number): string {
-    if (grade === 1) return "9.5";
-    if (grade === 1.5) return "8.5";
-    if (grade === 2) return "7.5";
-    if (grade === 2.5) return "6.5";
-    if (grade === 3) return "5.5";
+  convertToSpain(grade: string): string {
+    const NewGrade = parseFloat(grade);
+    if (NewGrade === 1) return "9.5";
+    if (NewGrade === 1.5) return "8.5";
+    if (NewGrade === 2) return "7.5";
+    if (NewGrade === 2.5) return "6.5";
+    if (NewGrade === 3) return "5.5";
     return "2.5";
   }
 }
