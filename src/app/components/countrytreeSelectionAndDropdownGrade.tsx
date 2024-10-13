@@ -79,19 +79,24 @@ const CountryTreeSelect: React.FC = () => {
    * @param {DropdownChangeEvent | React.ChangeEvent<HTMLInputElement>} e - The event containing the selected grade.
    */
   const handleGradeChange = (e: DropdownChangeEvent | React.ChangeEvent<HTMLInputElement>) => {
-    const selectedGradeValue = 'value' in e ? e.value : e.target.value;
-    setInputTextvalue(selectedGradeValue);
+    let selectedGradeValue = 'value' in e ? e.value : e.target.value;
+    selectedGradeValue = selectedGradeValue.replace(" ", "");
+    const CLEAR_SELECTED_GRADE_VALUE = selectedGradeValue.replace(selectedCountry.suffix, "");
+    const toshow = selectedCountry.suffix ? selectedCountry.suffix : "";
+    setInputTextvalue(CLEAR_SELECTED_GRADE_VALUE + toshow);
+    
     if (selectedCountry.input) {
       if (
         selectedCountry.validGrades.find(
-          (grade) => grade === String(selectedGradeValue)
+          (grade) => grade === String(CLEAR_SELECTED_GRADE_VALUE)
         )
       ) {
         setInvalidGrade(false);
-        setSelectedGrade(selectedGradeValue); // Update selected grade in local state
-        setGradeToConvert(selectedGradeValue); // Update grade in global context
-      } else if (!selectedGradeValue) {
+        setSelectedGrade(CLEAR_SELECTED_GRADE_VALUE); // Update selected grade in local state
+        setGradeToConvert(CLEAR_SELECTED_GRADE_VALUE); // Update grade in global context
+      } else if (!CLEAR_SELECTED_GRADE_VALUE) {
         setSelectedGrade(null);
+        setInvalidGrade(false);
         setGradeToConvert(null);
       } else {
         setInvalidGrade(true);
@@ -99,8 +104,8 @@ const CountryTreeSelect: React.FC = () => {
         setGradeToConvert(null); // Update grade in global context
       }
     } else {
-      setSelectedGrade(selectedGradeValue); // Update selected grade in local state
-      setGradeToConvert(selectedGradeValue); // Update grade in global context
+      setSelectedGrade(CLEAR_SELECTED_GRADE_VALUE); // Update selected grade in local state
+      setGradeToConvert(CLEAR_SELECTED_GRADE_VALUE); // Update grade in global context
     }
   
   };
@@ -144,9 +149,7 @@ const CountryTreeSelect: React.FC = () => {
         selectedCountry.validGrades &&
         selectedCountry.input && (
           <InputText
-            value={
-              selectedCountry.suffix ? inputTextValue + selectedCountry.suffix : inputTextValue
-            } // The selected grade
+            value={inputTextValue} // The selected grade
             invalid={invalidGrade} // Invalid state for grade input
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleGradeChange(e)
