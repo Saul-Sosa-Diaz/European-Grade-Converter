@@ -16,7 +16,7 @@ export class ItalyBoloniaEngineeringGradeConverter implements ICountryConverter 
     { min: 18, max: 19, base: 5, top: 5.99, factor: 0.99 / 2 },
     { min: 0, max: 17, base: 0, top: 4.99, factor: 4.99 / 18 }, // De 0 a 5 (5 puntos distribuidos en 18 unidades)
   ];
-  convertToDestinationCountry(grade: number): string {
+  convertToDestinationCountry(grade): string {
     if (grade > 9) return "30 Cum Laude";
     for (const range of this.gradeRanges) {
       if (grade >= range.base && grade <= range.top) {
@@ -26,8 +26,9 @@ export class ItalyBoloniaEngineeringGradeConverter implements ICountryConverter 
 
     return "Fail";
   }
-  convertToSpain(grade: number): string {
-    if (grade === 31) return "10";
+  convertToSpain(grade: number | string): string {
+    if ( typeof grade === 'string' && grade === "30L") return "10";
+    grade = typeof grade === 'string' ? parseFloat(grade) : grade;
     for (const range of this.gradeRanges) {
       if (grade >= range.min && grade <= range.max) {
         return (range.base + (grade - range.min) * range.factor).toFixed(2);

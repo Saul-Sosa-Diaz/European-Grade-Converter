@@ -28,6 +28,7 @@ export interface Country {
   minGrade: number;
   maxGrade: number;
   gradeConverter?: ICountryConverter;
+  validGrades?: string[];
   suffix?: string;
   grades?: number[];
   decimalPlaces?: number;
@@ -57,6 +58,10 @@ export const COUNTRIES: Country[] = [
         minGrade: 0,
         maxGrade: 31,
         gradeConverter: new ItalySalernoGradeConverter(),
+        validGrades: Array(31)
+          .fill(0)
+          .map((_, i) => String(i))
+          .concat("30L"),
         decimalPlaces: 0,
         aditionalInfo:
           "Insert an integer number between 0 and 30. To write Cum Laude, write 30L",
@@ -69,6 +74,10 @@ export const COUNTRIES: Country[] = [
         maxGrade: 31,
         selectable: false,
         decimalPlaces: 0,
+        validGrades: Array(31)
+          .fill(0)
+          .map((_, i) => String(i))
+          .concat("30L"),
         aditionalInfo:
           "Insert a number between 0 and 30. Type '30 cum Laude' as '30L'",
         children: [
@@ -78,6 +87,10 @@ export const COUNTRIES: Country[] = [
             code: "IT",
             minGrade: 0,
             maxGrade: 31,
+            validGrades: Array(31)
+              .fill(0)
+              .map((_, i) => String(i))
+              .concat("30L"),
             aditionalInfo:
               "Insert a number between 0 and 30. Type '30 cum Laude' as '30L'",
             gradeConverter: new ItalyBoloniaScienceGradeConverter(),
@@ -91,6 +104,10 @@ export const COUNTRIES: Country[] = [
             code: "IT",
             minGrade: 0,
             maxGrade: 31,
+            validGrades: Array(30)
+              .fill(0)
+              .map((_, i) => String(i))
+              .concat("30L"),
             aditionalInfo:
               "Insert a number between 0 and 30. Type '30 cum Laude' as '30L'",
             gradeConverter: new ItalyBoloniaEngineeringGradeConverter(),

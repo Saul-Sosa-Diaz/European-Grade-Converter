@@ -24,8 +24,9 @@ export class ItalyBoloniaScienceGradeConverter implements ICountryConverter {
 
     return "Fail";
   }
-  convertToSpain(grade: number): string {
-    if (grade === 31) return "10";
+  convertToSpain(grade: number | string): string {
+    if (typeof grade === "string" && grade === "30L") return "10";
+    grade = typeof grade === "string" ? parseFloat(grade) : grade;
     for (const range of this.gradeRanges) {
       if (grade >= range.min && grade <= range.max) {
         return (range.base + (grade - range.min) * range.factor).toFixed(2);

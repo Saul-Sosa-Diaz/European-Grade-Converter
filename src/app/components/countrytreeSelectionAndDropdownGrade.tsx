@@ -27,6 +27,7 @@ import {
   renderSelectedItemTemplate,
   renderOptionTemplate,
 } from "./treeSelectTemplates";
+import { InputText } from "primereact/inputtext";
 
 /**
  * CountryTreeSelect component.
@@ -44,8 +45,10 @@ const CountryTreeSelect: React.FC = () => {
   const [selectedKeyCountry, setSelectedKeyCountry] = useState<string | null>(
     null
   ); // State for selected country key
+  const [inputTextValue] = useState<string | null>(null); // State for input text value
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null); // State for selected country object
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null); // State for selected grade value
+  const [invalidGrade, setInvalidGrade] = useState<boolean>(false); // State for invalid grade input
 
   // Context from ToConvertContext
   const { setGradeToConvert, setCountryFrom } = useContext(ToConvertContext); // Context for sharing grade and country globally
@@ -75,10 +78,29 @@ const CountryTreeSelect: React.FC = () => {
    * @param {DropdownChangeEvent} e - The dropdown change event containing the selected grade.
    */
   const handleGradeChange = (e: DropdownChangeEvent) => {
-    const selectedGradeValue = e.value as number;
-    setSelectedGrade(selectedGradeValue); // Update selected grade in local state
-    setGradeToConvert(selectedGradeValue); // Update grade in global context
+    const selectedGradeValue = e.value;
+    console.log(selectedCountry.validGrades);
+    console.log(
+      selectedCountry.validGrades.find((grade) => grade === selectedGradeValue)
+    );
+    console.log(selectedGradeValue);
+    if (
+      selectedCountry.validGrades.find((grade) => grade === selectedGradeValue)
+    ) {
+      setInvalidGrade(false);
+      setSelectedGrade(selectedGradeValue); // Update selected grade in local state
+      setGradeToConvert(selectedGradeValue); // Update grade in global context
+    } else if (!selectedGradeValue) {
+      setSelectedGrade(null);
+      setGradeToConvert(null);
+    } else {
+      setInvalidGrade(true);
+      setSelectedGrade(null); // Update selected grade in local state
+      setGradeToConvert(null); // Update grade in global context
+    }
+    
   };
+  
 
   return (
     <div className="flex flex-column gap-3 w-20rem">
@@ -103,18 +125,18 @@ const CountryTreeSelect: React.FC = () => {
         }
         filter={true} // Enables filtering for the country dropdown
       />
-
-      {/* Conditionally render input for grade, either number input or dropdown based on country */}
-      {selectedCountry && !selectedCountry.grades && (
-        <InputNumber
-          value={selectedGrade ? Number(selectedGrade) : null} // The selected grade value
-          onValueChange={(e) => handleGradeChange(e)} // Event handler for grade change
-          min={selectedCountry.minGrade} // Minimum grade for manual input
-          max={selectedCountry.maxGrade} // Maximum grade for manual input
-          maxFractionDigits={selectedCountry.decimalPlaces} // Max number of decimal places allowed
-          suffix={selectedCountry.suffix} // Suffix for grade (e.g., "%")
-        />
-      )}
+      {selectedCountry &&
+        !selectedCountry.grades &&
+        !selectedCountry.validGrades && (
+          <InputNumber
+            value={selectedGrade ? Number(selectedGrade) : null} // The selected grade value
+            onValueChange={(e) => handleGradeChange(e)} // Event handler for grade change
+            min={selectedCountry.minGrade} // Minimum grade for manual input
+            max={selectedCountry.maxGrade} // Maximum grade for manual input
+            maxFractionDigits={selectedCountry.decimalPlaces} // Max number of decimal places allowed
+            suffix={selectedCountry.suffix} // Suffix for grade (e.g., "%")
+          />
+        )}
 
       {selectedCountry && selectedCountry.grades && (
         <Dropdown
@@ -123,6 +145,15 @@ const CountryTreeSelect: React.FC = () => {
           options={selectedCountry.grades} // List of grades to display in dropdown
           placeholder="Select a Grade" // Placeholder text for grade dropdown
           optionLabel="value" // Label for the grade options
+        />
+      )}
+      {/* Conditionally render input for grade, either number input or dropdown based on country */}
+      {selectedCountry && selectedCountry.validGrades && (
+        <InputText
+          value={inputTextValue} // The selected grade
+          invalid={invalidGrade} // Invalid state for grade input
+          onChange={(e) => handleGradeChange(e.target)} // Event handler for grade selection
+          placeholder="Select a Grade" // Placeholder text for grade dropdown
         />
       )}
     </div>
