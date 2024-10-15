@@ -18,8 +18,6 @@ import { PolandGradeConverter } from "./countriesClasses/poland-grade-converter"
 import { SloveniaGradeConverter } from "./countriesClasses/slovenia-grade-converter";
 import { SwitzerlandGradeConverter } from "./countriesClasses/switzerland-grade-converter";
 import {ItalyBoloniaEngineeringGradeConverter} from "./countriesClasses/italy-bolonia-engineering-grade-converter";
-import { url } from "inspector";
-
 
 export interface Country {
   label: string;
@@ -42,7 +40,7 @@ function generateGrades(
   paso: number
 ): string[] {
   const resultado: string[] = [];
-  for (let i = inicio; i <= fin + paso; i += paso) {
+  for (let i = inicio; i <= fin; i += paso) {
     // Redondeamos el número a dos decimales
     resultado.push(String(parseFloat(i.toFixed(2))));
   }
