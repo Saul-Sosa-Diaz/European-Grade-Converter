@@ -264,10 +264,9 @@ export const COUNTRIES: Country[] = [
     label: "Slovenia",
     code: "SI",
     input: false,
-    validGrades: ["3", "3.5", "4", "4.5", "5"],
+    validGrades: generateGrades(1, 10, 1),
     gradeConverter: new SloveniaGradeConverter(),
-    document_url:
-      "https://www.fdv.uni-lj.si/en/study/exchange-programmes/international-office/study-information/grading-system",
+    document_url: "https://www.fzv.um.si/en/grading-system-slovenia",
   },
   {
     key: "16",
