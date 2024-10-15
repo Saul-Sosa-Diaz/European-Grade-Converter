@@ -6,7 +6,7 @@ export class AustriaGradeConverter implements ICountryConverter {
     if (grade >= 7) return "2 (Sehr gut)";
     if (grade >= 6) return "3 (Gut)";
     if (grade >= 5) return "4 (Befriedigend)";
-    return "Fail";
+    return "0 (Fail)";
   }
 
   convertToSpain(grade: string): string {
@@ -15,6 +15,6 @@ export class AustriaGradeConverter implements ICountryConverter {
     if (NewGrade === 2) return "8";
     if (NewGrade === 3) return "6.5";
     if (NewGrade === 4) return "5.5";
-    return "2.5";
+    return "0";
   }
 }

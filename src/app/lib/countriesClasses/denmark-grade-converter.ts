@@ -17,6 +17,7 @@ export class DenmarkGradeConverter implements ICountryConverter {
     if (NewGrade >= 7) return "7.5";
     if (NewGrade >= 4) return "6.5";
     if (NewGrade >= 2) return "5.5";
-    return "2.5";
+    if (NewGrade >= 0) return "4.5"
+    return "0";
   }
 }
