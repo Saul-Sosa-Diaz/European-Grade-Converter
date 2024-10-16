@@ -64,6 +64,7 @@ const CountryTreeSelect: React.FC = () => {
       setInvalidGrade(false); // Reset invalid grade state
       setSelectedGrade(null); // Reset selected grade in local state
       setGradeToConvert(null); // Reset grade in global context
+
       setSelectedKeyCountry(selectedKeyCountryValue); // Update selected country key
       setSelectedCountry(NEW_COUNTRY); // Update selected country object in local state
       setCountryFrom(NEW_COUNTRY); // Update country in global context

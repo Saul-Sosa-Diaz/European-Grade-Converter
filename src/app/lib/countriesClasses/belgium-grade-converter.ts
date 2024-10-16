@@ -10,7 +10,7 @@ interface GradeRange {
 }
 export class BelgiumGradeConverter implements ICountryConverter {
   private gradeRanges: GradeRange[] = [
-    { min: 18, max: 20, base: 9, top: 10, name: "Excellent", factor: 3 }, // 18 - 20 3 puntos a repartir en 2
+    { min: 18, max: 20, base: 9, top: 10, name: "Excellent", factor: 2 }, // 18 - 20 2 puntos a repartir en 1
     {
       min: 15,
       max: 17,
@@ -18,15 +18,15 @@ export class BelgiumGradeConverter implements ICountryConverter {
       top: 8.99,
       name: "Very good",
       factor: 3 / 0.99,
-    }, // 18 - 20 1 puntos a repartir en 3
-    { min: 13, max: 14, base: 7, top: 7.99, name: "Good", factor: 2 / 0.99 }, // 5.0 - 6.99 2 puntos a repartir en 1.5 punto
+    },
+    { min: 13, max: 14, base: 7, top: 7.99, name: "Good", factor: 2 / 0.99}, // 5.0 - 6.99 2 puntos a repartir en 0.99 punto
     {
       min: 11,
       max: 12,
       base: 6,
       top: 6.99,
       name: "Satisfactory",
-      factor: 2 / 0.99,
+      factor: 3 / 0.99,
     }, // 5.0 - 6.99 2 puntos a repartir en 1.5 punto
     {
       min: 10,
@@ -34,15 +34,15 @@ export class BelgiumGradeConverter implements ICountryConverter {
       base: 5,
       top: 5.99,
       name: "Sufficient",
-      factor: 1 / 0.99,
+      factor: 1,
     },
     {
       min: 8,
       max: 9,
       base: 4.5,
-      top: 4.99,
+      top: 4.5,
       name: "Fx Fail",
-      factor: 2 / 0.49,
+      factor: 1/0.001,
     },
     { min: 0.1, max: 7, base: 0.1, top: 4.5, name: "Fail", factor: 8/4.5 }, // 0 - 7
   ];
@@ -66,6 +66,7 @@ export class BelgiumGradeConverter implements ICountryConverter {
     for (const range of this.gradeRanges) {
       if (NewGrade >= range.min && NewGrade <= range.max) {
         return (range.base + (NewGrade - range.min) / range.factor).toFixed(2);
+        // 9 + (20 - 18) / 3
       }
     }
     return "0";

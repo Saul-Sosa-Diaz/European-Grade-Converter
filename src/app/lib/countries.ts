@@ -161,7 +161,7 @@ export const COUNTRIES: Country[] = [
     label: "Belgium",
     code: "BE",
     input: true,
-    validGrades: generateGrades(0, 20, 0.01),
+    validGrades: generateGrades(0, 20, 1),
     gradeConverter: new BelgiumGradeConverter(),
     aditionalInfo:
       "Insert a number between 0 and 20, with a maximum of 2 decimal places",
