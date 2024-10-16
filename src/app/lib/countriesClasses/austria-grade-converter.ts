@@ -3,10 +3,10 @@ import { ICountryConverter } from "@/src/app/lib/interfaces/i-grade-converter";
 export class AustriaGradeConverter implements ICountryConverter {
   convertToDestinationCountry(grade: number): string {
     if (grade >= 9) return "1 (Sehr gut)";
-    if (grade >= 7) return "2 (Gut)";
-    if (grade >= 6) return "3 (Befriedigend)";
+    if (grade >= 8) return "2 (Gut)";
+    if (grade >= 7) return "3 (Befriedigend)";
     if (grade >= 5) return "4 (Genügend)";
-    return "0 (Nicht genügend)";
+    return "5 (Nicht genügend)";
   }
 
   convertToSpain(grade: string): string {
