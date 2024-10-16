@@ -191,7 +191,13 @@ export const COUNTRIES: Country[] = [
     label: "Austria",
     code: "AT",
     input: false,
-    validGrades: ["4", "3", "2", "1"],
+    validGrades: [
+      "5 (Nicht genügend)",
+      "4 (Genügend)",
+      "3 (Befriedigend)",
+      "2 (Gut)",
+      "1 (Sehr gut)",
+    ],
     gradeConverter: new AustriaGradeConverter(),
     document_url:
       "https://www.ul.ie/sites/default/files/global/Description_of_the_Austrian_grading_system.pdf",

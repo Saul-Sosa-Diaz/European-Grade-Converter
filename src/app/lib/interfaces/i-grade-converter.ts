@@ -55,6 +55,7 @@ export class GeneralGradeConverter implements IGradeConverter {
   convert(grade: string, countryFrom: Country, countryTo: Country): string {
     const fromConverter = countryFrom.gradeConverter;
     const toConverter = countryTo.gradeConverter;
+    grade = grade.replace(/\(.*?\)/g, "");
     const gradeInSpain = fromConverter.convertToSpain(grade); // Converting to the Spanish system
     return toConverter.convertToDestinationCountry(Number(gradeInSpain)); // Convert to the target country's system
   }
