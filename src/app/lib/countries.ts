@@ -42,7 +42,8 @@ function generateGrades(
   const resultado: string[] = [];
   for (let i = inicio; i <= fin; i += paso) {
     // Redondeamos el número a dos decimales
-    resultado.push(String(parseFloat(i.toFixed(2))));
+    i = parseFloat(i.toFixed(2));
+    resultado.push(String(i));
   }
   return resultado;
 }

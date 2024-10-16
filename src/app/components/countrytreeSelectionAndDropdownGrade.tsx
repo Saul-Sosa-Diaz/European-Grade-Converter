@@ -44,7 +44,6 @@ const CountryTreeSelect: React.FC = () => {
   const [selectedKeyCountry, setSelectedKeyCountry] = useState<string | null>(
     null
   ); // State for selected country key
-  const [inputTextValue, setInputTextvalue] = useState<string | null>(""); // State for input text value
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null); // State for selected country object
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null); // State for selected grade value
   const [invalidGrade, setInvalidGrade] = useState<boolean>(false); // State for invalid grade input
@@ -63,7 +62,6 @@ const CountryTreeSelect: React.FC = () => {
     if (selectedKeyCountryValue) {
       const NEW_COUNTRY = findCountryByKey(selectedKeyCountryValue); // Find country object by key
       setInvalidGrade(false); // Reset invalid grade state
-      setInputTextvalue(""); // Reset input text value
       setSelectedGrade(null); // Reset selected grade in local state
       setGradeToConvert(null); // Reset grade in global context
       setSelectedKeyCountry(selectedKeyCountryValue); // Update selected country key
