@@ -10,7 +10,7 @@ interface GradeRange {
 }
 export class BelgiumGradeConverter implements ICountryConverter {
   private gradeRanges: GradeRange[] = [
-    { min: 18, max: 20, base: 9, top: 10, name: "Excellent", factor: 2 }, // 18 - 20 2 puntos a repartir en 1
+    { min: 18, max: 20, base: 9, top: 10, name: "Excellent", factor: 2 }, // 18 - 20 2 puntos a repartir en 1 consodero que acaba justo en 10 y no en 10.99
     {
       min: 15,
       max: 17,
@@ -19,7 +19,7 @@ export class BelgiumGradeConverter implements ICountryConverter {
       name: "Very good",
       factor: 3 / 0.99,
     },
-    { min: 13, max: 14, base: 7, top: 7.99, name: "Good", factor: 2 / 0.99}, // 5.0 - 6.99 2 puntos a repartir en 0.99 punto
+    { min: 13, max: 14, base: 7, top: 7.99, name: "Good", factor: 2 / 0.99}, // 2 puntos a repartir en 0.99 punto considero que acaba en 7.99 y no en 7, por eso le pongo 2 puntos
     {
       min: 11,
       max: 12,
@@ -27,7 +27,7 @@ export class BelgiumGradeConverter implements ICountryConverter {
       top: 6.99,
       name: "Satisfactory",
       factor: 3 / 0.99,
-    }, // 5.0 - 6.99 2 puntos a repartir en 1.5 punto
+    },
     {
       min: 10,
       max: 10,
