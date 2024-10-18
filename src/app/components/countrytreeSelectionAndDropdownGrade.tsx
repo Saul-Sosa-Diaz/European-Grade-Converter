@@ -22,6 +22,7 @@ import { ToConvertContext } from "../context/to-convert-context";
 import { Dropdown } from "primereact/dropdown";
 import { Country, COUNTRIES, findCountryByKey } from "@/src/app/lib/countries";
 import CustomTreeSelect from "./customTreeSelect";
+import { customParseFloat } from "@/src/app/lib/utils";
 import {
   renderSelectedItemTemplate,
   renderOptionTemplate,
@@ -47,6 +48,7 @@ const CountryTreeSelect: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null); // State for selected country object
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null); // State for selected grade value
   const [invalidGrade, setInvalidGrade] = useState<boolean>(false); // State for invalid grade input
+  const [inputtext, setInputText] = useState<string | null>(null);
 
   // Context from ToConvertContext
   const { setGradeToConvert, setCountryFrom } = useContext(ToConvertContext); // Context for sharing grade and country globally
@@ -61,10 +63,10 @@ const CountryTreeSelect: React.FC = () => {
     const selectedKeyCountryValue = e.value;
     if (selectedKeyCountryValue) {
       const NEW_COUNTRY = findCountryByKey(selectedKeyCountryValue); // Find country object by key
+      setInputText(null);
       setInvalidGrade(false); // Reset invalid grade state
       setSelectedGrade(null); // Reset selected grade in local state
       setGradeToConvert(null); // Reset grade in global context
-
       setSelectedKeyCountry(selectedKeyCountryValue); // Update selected country key
       setSelectedCountry(NEW_COUNTRY); // Update selected country object in local state
       setCountryFrom(NEW_COUNTRY); // Update country in global context
@@ -77,21 +79,34 @@ const CountryTreeSelect: React.FC = () => {
    *
    * @param {DropdownChangeEvent | React.ChangeEvent<HTMLInputElement>} e - The event containing the selected grade.
    */
-  const handleGradeChange = (e: DropdownChangeEvent | React.ChangeEvent<HTMLInputElement>) => {
-    let selectedGradeValue = 'value' in e ? e.value : e.target.value;
-    
+  const handleGradeChange = (
+    e: DropdownChangeEvent | React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let selectedGradeValue = "value" in e ? e.value : e.target.value;
+
     if (selectedCountry.input) {
       selectedGradeValue = selectedGradeValue.replace(" ", "");
-      const CLEAR_SELECTED_GRADE_VALUE = selectedGradeValue.replace(selectedCountry.suffix, "");
+      selectedGradeValue = selectedGradeValue.replace(",", ".");
+      selectedGradeValue = selectedGradeValue.replace(
+        selectedCountry.suffix,
+        ""
+      );
+      const parseGradeValue = String(
+        customParseFloat(selectedGradeValue)
+      );
+      if (parseGradeValue !== "NaN") {
+        selectedGradeValue = parseGradeValue;
+      }
+     
       if (
         selectedCountry.validGrades.find(
-          (grade) => grade === String(CLEAR_SELECTED_GRADE_VALUE)
+          (grade) => grade === String(selectedGradeValue)
         )
       ) {
         setInvalidGrade(false);
-        setSelectedGrade(CLEAR_SELECTED_GRADE_VALUE); // Update selected grade in local state
-        setGradeToConvert(CLEAR_SELECTED_GRADE_VALUE); // Update grade in global context
-      } else if (!CLEAR_SELECTED_GRADE_VALUE) {
+        setSelectedGrade(selectedGradeValue); // Update selected grade in local state
+        setGradeToConvert(selectedGradeValue); // Update grade in global context
+      } else if (!selectedGradeValue) {
         setSelectedGrade(null);
         setInvalidGrade(false);
         setGradeToConvert(null);
@@ -104,9 +119,7 @@ const CountryTreeSelect: React.FC = () => {
       setSelectedGrade(selectedGradeValue); // Update selected grade in local state
       setGradeToConvert(selectedGradeValue); // Update grade in global context
     }
-  
   };
-  
 
   return (
     <div className="flex flex-column gap-3 w-20rem">
@@ -146,6 +159,7 @@ const CountryTreeSelect: React.FC = () => {
         selectedCountry.validGrades &&
         selectedCountry.input && (
           <InputText
+            value={inputtext}
             invalid={invalidGrade} // Invalid state for grade input
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleGradeChange(e)
