@@ -16,3 +16,5 @@ Este proyecto es un conversor de notas diseñado para facilitar la conversión d
 
 ## Problemas encontrados: 
 FOUC (Flash of Unstyled Content) en la carga de la página. Se solucionó con la implementación de un componente de carga.
+
+UK una E es F

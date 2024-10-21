@@ -108,7 +108,7 @@ export const COUNTRIES: Country[] = [
       },
     ],
   },
-  {
+  { // check
     key: "1",
     code: "FR",
     label: "France",
@@ -120,7 +120,7 @@ export const COUNTRIES: Country[] = [
     document_url: "https://www.ensta-bretagne.fr/en/ects-grading-system",
     url: "https://www.studying-in-france.org/french-grading-system/",
   },
-  {
+  { // check
     key: "2",
     code: "ES",
     label: "Spain",
@@ -132,7 +132,7 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.uam.es/Economicas/documento/1446782389126/Equivalencias_ECTS.pdf?blobheader=application/pdf",
   },
-  {
+  { // check TO DO IMPLEMENT LIKE THE OTHERS COUNTRIES
     key: "3",
     label: "Ireland",
     input: true,
@@ -144,7 +144,7 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.irelandassignmenthelp.com/blogs/grading-system-ireland/",
   },
-  {
+  { // checked
     key: "4",
     label: "United Kingdom",
     code: "GB",
@@ -156,7 +156,7 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.mastersportal.com/articles/3207/understanding-european-grading-systems.html",
   },
-  {
+  { // check
     key: "5",
     label: "Belgium",
     code: "BE",
@@ -167,7 +167,7 @@ export const COUNTRIES: Country[] = [
       "Insert a number between 0 and 20.",
     document_url: "https://www.ap.be/en/ects-grading-scale",
   },
-  {
+  { // check
     key: "6",
     label: "Portugal",
     code: "PT",
@@ -187,7 +187,7 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.dtu.dk/english/education/student-guide/studying-at-dtu/grade-translation",
   },
-  {
+  { // check
     key: "8",
     label: "Austria",
     code: "AT",
@@ -203,7 +203,7 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.ul.ie/sites/default/files/global/Description_of_the_Austrian_grading_system.pdf",
   },
-  {
+  { // check
     key: "9",
     label: "Bulgaria",
     code: "BG",
@@ -224,7 +224,7 @@ export const COUNTRIES: Country[] = [
       "https://en.wikipedia.org/wiki/Academic_grading_in_the_Czech_Republic",
     url: "https://fsv.cuni.cz/en/study/study-regulations/grading-system",
   },
-  {
+  { // check
     key: "11",
     label: "Germany",
     code: "DE",
@@ -235,7 +235,7 @@ export const COUNTRIES: Country[] = [
       "Insert a number between 1 and 5, with a maximum of 2 decimal",
     document_url: "https://www.studying-in-germany.org/german-grading-system/",
   },
-  {
+  { // check
     key: "12",
     label: "Greece",
     code: "GR",

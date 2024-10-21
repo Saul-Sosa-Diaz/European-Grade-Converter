@@ -1,38 +1,70 @@
 import { ICountryConverter } from "@/src/app/lib/interfaces/i-grade-converter";
-type GradeRange = {
+interface GradeRange {
   min: number;
   max: number;
-  base: number;
-};
+  base: number; // Nota base en el sistema español o italiano
+  factor?: number; // Factor para ajustar dentro del rango
+  name?: string; // Descripción opcional del rango
+  top: number; // Nota máxima del rango
+}
 export class UnitedKingdomGradeConverter implements ICountryConverter {
   private gradeRanges: GradeRange[] = [
-    { min: 40, max: 49, base: 5 },
-    { min: 50, max: 54, base: 6 },
-    { min: 55, max: 59, base: 7 },
-    { min: 60, max: 69, base: 8 },
-    { min: 70, max: 99, base: 9 },
+    {
+      min: 70,
+      max: 100,
+      base: 9,
+      top: 10,
+      name: "First-Class Degree",
+      factor: 30,
+    },
+    {
+      min: 60,
+      max: 69,
+      base: 8,
+      top: 8.99,
+      name: "Upper Second-Class Degree",
+      factor: 10,
+    },
+    {
+      min: 50,
+      max: 59,
+      base: 7,
+      top: 7.99,
+      name: "Lower Second-Class Degree",
+      factor: 10,
+    }, // 2 puntos a repartir en 0.99 punto considero que acaba en 7.99 y no en 7, por eso le pongo 2 puntos
+    {
+      min: 40,
+      max: 49,
+      base: 6,
+      top: 6.99,
+      name: "Third Class Degree",
+      factor: 10,
+    },
+    { min: 0, max: 39, base: 0.1, top: 4.9, name: "Fail", factor: 40 / 4.9 },
   ];
+
   convertToDestinationCountry(grade: number): string {
-    const RANGE = this.gradeRanges.find(
-      (r) => grade >= r.base && grade <= r.base + 1
-    );
-    if (!RANGE) return "Fail (0%-39%)";
-    const RESULT = (
-      RANGE.min +
-      (grade - RANGE.base) * (RANGE.max + 1 - RANGE.min)
-    ).toFixed(2);
-    return ` ${RESULT}%`;
+    for (const range of this.gradeRanges) {
+      if (grade >= range.base && grade <= range.top) {
+        return (
+          (range.min + (grade - range.base) * range.factor).toFixed(2) +
+          "(" +
+          range.name +
+          ")"
+        );
+      }
+    }
+    return "0";
   }
+
   convertToSpain(grade: string): string {
     const NewGrade = parseFloat(grade);
-    if (NewGrade === this.gradeRanges[this.gradeRanges.length - 1].max + 1)
-      return "10"; // if the grade is 100, return 10
-    const RANGE = this.gradeRanges.find(
-      (r) => NewGrade >= r.min && NewGrade <= r.max
-    ); // Find the range of the grade
-    if (!RANGE) return "0"; // if the range is not found, return 0
-    const result =
-      RANGE.base + (NewGrade - RANGE.min) / (RANGE.max + 1 - RANGE.min);
-    return result.toFixed(2);
+    for (const range of this.gradeRanges) {
+      if (NewGrade >= range.min && NewGrade <= range.max) {
+        return (range.base + (NewGrade - range.min) / range.factor).toFixed(2);
+      }
+    }
+    return "0";
   }
 }
