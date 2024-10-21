@@ -6,8 +6,8 @@ import { SpainGradeConverter } from "@/src/app/lib/countriesClasses/spain-grade-
 import { UnitedKingdomGradeConverter } from "./countriesClasses/united-kingdom-grade-converter";
 import { BelgiumGradeConverter } from "./countriesClasses/belgium-grade-converter";
 import { AustriaGradeConverter } from "./countriesClasses/austria-grade-converter";
-import { BulgariaGradeConverter } from "./countriesClasses/czech-republic-grade-converter";
-import { CzechRepublicGradeConverter } from "./countriesClasses/bulgaria-grade-converter";
+import { BulgariaGradeConverter } from "./countriesClasses/bulgaria-grade-converter";
+import { CzechRepublicGradeConverter } from "./countriesClasses/czech-republic-grade-converter";
 import { ItalySalernoGradeConverter } from "./countriesClasses/italy-salerno-grade-converter";
 import { ItalyBoloniaScienceGradeConverter } from "./countriesClasses/italy-bolonia-science-grade-converter";
 import { PortugalGradeConverter } from "./countriesClasses/portugal-grade-converter";
@@ -213,12 +213,12 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://btu.bg/index.php/en/education-m-bg-en/erasmus-plus-m-en/erasmus-grading-systems-m-en",
   },
-  {
+  { // check
     key: "10",
     label: "Czech Republic",
     code: "CZ",
     input: false,
-    validGrades: ["3", "2.5", "2", "1.5", "1"],
+    validGrades: ["4", "3", "2.5", "2", "1.5", "1"],
     gradeConverter: new CzechRepublicGradeConverter(),
     document_url:
       "https://en.wikipedia.org/wiki/Academic_grading_in_the_Czech_Republic",
@@ -251,7 +251,7 @@ export const COUNTRIES: Country[] = [
     label: "Norway",
     code: "NO",
     input: false,
-    validGrades: ["2", "3", "4", "5", "6"],
+    validGrades: ["A", "B", "C", "D", "E", "F"],
     gradeConverter: new NorwayGradeConverter(),
     document_url: "https://en.wikipedia.org/wiki/Academic_grading_in_Norway",
   },

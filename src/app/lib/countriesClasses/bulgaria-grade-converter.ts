@@ -1,22 +1,20 @@
 import { ICountryConverter } from "@/src/app/lib/interfaces/i-grade-converter";
 
-export class CzechRepublicGradeConverter implements ICountryConverter {
+export class BulgariaGradeConverter implements ICountryConverter {
   convertToDestinationCountry(grade: number): string {
-    if (grade >= 9) return "1 (Výborně)";
-    if (grade >= 8) return "1.5 (Velmi dobře)";
-    if (grade >= 7) return "2 (Dobře)";
-    if (grade >= 6) return "2.5 (Uspokojivě)";
-    if (grade >= 5) return "3 (Dostatečně)";
+    if (grade >= 9) return "6 (Otlichen)";
+    if (grade >= 8) return "5 (Mnogo Dobur)";
+    if (grade >= 7) return "4 (Dobur)";
+    if (grade >= 5) return "3 (Sreden)";
     return "Fail";
   }
 
   convertToSpain(grade: string): string {
     const NewGrade = parseFloat(grade);
-    if (NewGrade === 1) return "9.5";
-    if (NewGrade === 1.5) return "8.5";
-    if (NewGrade === 2) return "7.5";
-    if (NewGrade === 2.5) return "6.5";
-    if (NewGrade === 3) return "5.5";
+    if (NewGrade === 6) return "9.5";
+    if (NewGrade === 5) return "8.5";
+    if (NewGrade === 4) return "7.5";
+    if (NewGrade === 3) return "6";
     return "2.5";
   }
 }

@@ -9,7 +9,14 @@ export class SpainGradeConverter implements ICountryConverter {
       }
       return result;
     }
-    return grade.toString();
+    if (grade < 7.0) {
+      return grade.toString() + " (Aprobado)";
+    }
+    if (grade < 9.0) {
+      return grade.toString() + " (Notable)";
+    }
+
+    return grade.toString() + " (Sobresaliente)";
   }
   convertToSpain(grade: string): string {
     return grade.toString();
