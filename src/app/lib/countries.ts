@@ -164,7 +164,7 @@ export const COUNTRIES: Country[] = [
     validGrades: generateGrades(0, 20, 1),
     gradeConverter: new BelgiumGradeConverter(),
     aditionalInfo:
-      "Insert a number between 0 and 20, with a maximum of 2 decimal places",
+      "Insert a number between 0 and 20.",
     document_url: "https://www.ap.be/en/ects-grading-scale",
   },
   {
@@ -174,7 +174,7 @@ export const COUNTRIES: Country[] = [
     input: true,
     validGrades: generateGrades(0, 20, 0.1),
     gradeConverter: new PortugalGradeConverter(),
-    aditionalInfo: "Insert a number with a maximum of 2 decimal places",
+    aditionalInfo: "Insert a number between 0 and 20, with a maximum of 1 decimal",
     document_url: "https://www.uc.pt/en/ects/info_inst/ma",
   },
   {

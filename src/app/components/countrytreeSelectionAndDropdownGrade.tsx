@@ -48,7 +48,7 @@ const CountryTreeSelect: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null); // State for selected country object
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null); // State for selected grade value
   const [invalidGrade, setInvalidGrade] = useState<boolean>(false); // State for invalid grade input
-  const [inputtext, setInputText] = useState<string | null>(null);
+  const [inputtext, setInputText] = useState<string>("");
 
   // Context from ToConvertContext
   const { setGradeToConvert, setCountryFrom } = useContext(ToConvertContext); // Context for sharing grade and country globally
@@ -63,7 +63,7 @@ const CountryTreeSelect: React.FC = () => {
     const selectedKeyCountryValue = e.value;
     if (selectedKeyCountryValue) {
       const NEW_COUNTRY = findCountryByKey(selectedKeyCountryValue); // Find country object by key
-      setInputText(null);
+      setInputText("");
       setInvalidGrade(false); // Reset invalid grade state
       setSelectedGrade(null); // Reset selected grade in local state
       setGradeToConvert(null); // Reset grade in global context
@@ -83,7 +83,7 @@ const CountryTreeSelect: React.FC = () => {
     e: DropdownChangeEvent | React.ChangeEvent<HTMLInputElement>
   ) => {
     let selectedGradeValue = "value" in e ? e.value : e.target.value;
-
+    setInputText(selectedGradeValue);
     if (selectedCountry.input) {
       selectedGradeValue = selectedGradeValue.replace(" ", "");
       selectedGradeValue = selectedGradeValue.replace(",", ".");
