@@ -108,7 +108,8 @@ export const COUNTRIES: Country[] = [
       },
     ],
   },
-  { // check
+  {
+    // check
     key: "1",
     code: "FR",
     label: "France",
@@ -120,7 +121,8 @@ export const COUNTRIES: Country[] = [
     document_url: "https://www.ensta-bretagne.fr/en/ects-grading-system",
     url: "https://www.studying-in-france.org/french-grading-system/",
   },
-  { // check
+  {
+    // check
     key: "2",
     code: "ES",
     label: "Spain",
@@ -132,7 +134,8 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.uam.es/Economicas/documento/1446782389126/Equivalencias_ECTS.pdf?blobheader=application/pdf",
   },
-  { // check TO DO IMPLEMENT LIKE THE OTHERS COUNTRIES
+  {
+    // check TO DO IMPLEMENT LIKE THE OTHERS COUNTRIES
     key: "3",
     label: "Ireland",
     input: true,
@@ -144,7 +147,8 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.irelandassignmenthelp.com/blogs/grading-system-ireland/",
   },
-  { // checked
+  {
+    // checked
     key: "4",
     label: "United Kingdom",
     code: "GB",
@@ -156,28 +160,31 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.mastersportal.com/articles/3207/understanding-european-grading-systems.html",
   },
-  { // check
+  {
+    // check
     key: "5",
     label: "Belgium",
     code: "BE",
     input: true,
     validGrades: generateGrades(0, 20, 1),
     gradeConverter: new BelgiumGradeConverter(),
-    aditionalInfo:
-      "Insert a number between 0 and 20.",
+    aditionalInfo: "Insert a number between 0 and 20.",
     document_url: "https://www.ap.be/en/ects-grading-scale",
   },
-  { // check
+  {
+    // check
     key: "6",
     label: "Portugal",
     code: "PT",
     input: true,
     validGrades: generateGrades(0, 20, 0.1),
     gradeConverter: new PortugalGradeConverter(),
-    aditionalInfo: "Insert a number between 0 and 20, with a maximum of 1 decimal",
+    aditionalInfo:
+      "Insert a number between 0 and 20, with a maximum of 1 decimal",
     document_url: "https://www.uc.pt/en/ects/info_inst/ma",
   },
-  { // check
+  {
+    // check
     key: "7",
     label: "Denmark",
     code: "DK",
@@ -187,7 +194,8 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.dtu.dk/english/education/student-guide/studying-at-dtu/grade-translation",
   },
-  { // check
+  {
+    // check
     key: "8",
     label: "Austria",
     code: "AT",
@@ -203,7 +211,8 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://www.ul.ie/sites/default/files/global/Description_of_the_Austrian_grading_system.pdf",
   },
-  { // check
+  {
+    // check TODO IMPLEMENT FAILS
     key: "9",
     label: "Bulgaria",
     code: "BG",
@@ -213,7 +222,8 @@ export const COUNTRIES: Country[] = [
     document_url:
       "https://btu.bg/index.php/en/education-m-bg-en/erasmus-plus-m-en/erasmus-grading-systems-m-en",
   },
-  { // check
+  {
+    // check
     key: "10",
     label: "Czech Republic",
     code: "CZ",
@@ -224,7 +234,8 @@ export const COUNTRIES: Country[] = [
       "https://en.wikipedia.org/wiki/Academic_grading_in_the_Czech_Republic",
     url: "https://fsv.cuni.cz/en/study/study-regulations/grading-system",
   },
-  { // check
+  {
+    // check
     key: "11",
     label: "Germany",
     code: "DE",
@@ -235,7 +246,8 @@ export const COUNTRIES: Country[] = [
       "Insert a number between 1 and 5, with a maximum of 2 decimal",
     document_url: "https://www.studying-in-germany.org/german-grading-system/",
   },
-  { // check
+  {
+    // check
     key: "12",
     label: "Greece",
     code: "GR",
@@ -247,6 +259,7 @@ export const COUNTRIES: Country[] = [
     document_url: "https://physics.uoi.gr/en/ects-conversion-table/",
   },
   {
+    // check
     key: "13",
     label: "Norway",
     code: "NO",
@@ -260,7 +273,14 @@ export const COUNTRIES: Country[] = [
     label: "Poland",
     code: "PL",
     input: false,
-    validGrades: ["3", "3.5", "4", "4.5", "5"],
+    validGrades: [
+      "2 (fail - niedostateczny)",
+      "3 (Satisfactory - dostateczny)",
+      "3+ (Better than satisfactory)",
+      "4 (Good - dobry)",
+      "4+ (Better than good)",
+      "5 (Very good- bardzo dobry)",
+    ],
     gradeConverter: new PolandGradeConverter(),
     document_url: "https://www.umk.pl/en/erasmus/life/guide/grading/",
   },
