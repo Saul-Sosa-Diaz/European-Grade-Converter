@@ -177,12 +177,12 @@ export const COUNTRIES: Country[] = [
     aditionalInfo: "Insert a number between 0 and 20, with a maximum of 1 decimal",
     document_url: "https://www.uc.pt/en/ects/info_inst/ma",
   },
-  {
+  { // check
     key: "7",
     label: "Denmark",
     code: "DK",
     input: false,
-    validGrades: ["0", "2", "4", "7", "10", "12"],
+    validGrades: ["-3", "00", "02", "4", "7", "10", "12"],
     gradeConverter: new DenmarkGradeConverter(),
     document_url:
       "https://www.dtu.dk/english/education/student-guide/studying-at-dtu/grade-translation",

@@ -7,7 +7,8 @@ export class DenmarkGradeConverter implements ICountryConverter {
     if (grade >= 7) return "7";
     if (grade >= 6) return "4";
     if (grade >= 5) return "2";
-    return "Fail";
+    if (grade >= 2) return "00";
+    return "-3";
   }
 
   convertToSpain(grade: string): string {
@@ -18,6 +19,6 @@ export class DenmarkGradeConverter implements ICountryConverter {
     if (NewGrade >= 4) return "6.5";
     if (NewGrade >= 2) return "5.5";
     if (NewGrade >= 0) return "4.5"
-    return "0";
+    return "2";
   }
 }
