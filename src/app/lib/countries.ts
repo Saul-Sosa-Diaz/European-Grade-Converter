@@ -269,6 +269,7 @@ export const COUNTRIES: Country[] = [
     document_url: "https://en.wikipedia.org/wiki/Academic_grading_in_Norway",
   },
   {
+    // check
     key: "14",
     label: "Poland",
     code: "PL",
@@ -285,6 +286,7 @@ export const COUNTRIES: Country[] = [
     document_url: "https://www.umk.pl/en/erasmus/life/guide/grading/",
   },
   {
+    // check
     key: "15",
     label: "Slovenia",
     code: "SI",
@@ -293,13 +295,26 @@ export const COUNTRIES: Country[] = [
     gradeConverter: new SloveniaGradeConverter(),
     document_url: "https://www.fzv.um.si/en/grading-system-slovenia",
   },
-  {
+  { // check
     key: "16",
     label: "Switzerland",
     code: "CH",
-    input: false,
-    validGrades: ["4", "4.5", "5", "5.5", "6"],
+    input: true,
+    validGrades: [
+      "1",
+      "2",
+      "2.5",
+      "3",
+      "3.5",
+      "4",
+      ...generateGrades(4.25, 4.5, 0.01),
+      ...generateGrades(4.75, 5, 0.01),
+      ...generateGrades(5.25, 5.5, 0.01),
+      ...generateGrades(5.75, 6, 0.01),
+    ],
     gradeConverter: new SwitzerlandGradeConverter(),
+    aditionalInfo:
+      "The grading scale goes from 1.0 to 6.0 in quarter grade (0.25) steps. The pass grade is 4.0, the maximum grade is 6.0.",
     document_url:
       "https://ethz.ch/content/dam/ethz/main/education/rechtliches-abschluesse/grading.pdf",
   },
