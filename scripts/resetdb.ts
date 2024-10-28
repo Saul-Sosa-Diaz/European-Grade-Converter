@@ -26,20 +26,9 @@ export async function run() {
 }
 
 export async function write() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    await client.db("GradeConversion").collection("countries").deleteMany({});
-    await client
-      .db("GradeConversion")
-      .collection("countries")
-      .insertMany(COUNTRIES);
-  } finally {
-    await client.close();
-  }
 }
 
-async function read() {
+export async function read() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
@@ -53,6 +42,3 @@ async function read() {
     await client.close();
   }
 }
-
-await write();
-await read();
