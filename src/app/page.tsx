@@ -10,11 +10,17 @@ import Header from "./components/header";
 import "primeicons/primeicons.css";
 import Footer from "./components/footer";
 
+
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
+    async function runer() {
+      await fetch("/api/connectdb").then((res) => res.json()).then((data) => { setData(data); });
+    }
     setIsClient(true);
+    runer();
   }, []);
 
   return (
@@ -36,6 +42,7 @@ export default function Home() {
               <div className="flex justify-content-center">
                 <CountryAdditionalInfo />
               </div>
+              {data && data.message && (data.message)}
             </div>
             <Footer />
           </div>
@@ -44,3 +51,4 @@ export default function Home() {
     </main>
   );
 }
+
