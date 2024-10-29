@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "primereact/resources/themes/md-light-deeppurple/theme.css";
 import "primeflex/primeflex.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "University Grade Conversion tool",
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="m-0 overflow-visible">{children}</body>
+      <Analytics />
     </html>
   );
 }
