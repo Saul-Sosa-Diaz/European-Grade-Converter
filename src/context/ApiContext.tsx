@@ -6,14 +6,13 @@ export const ApiContext = React.createContext(null);
 
 type ApiProviderProps = {
   children: React.ReactNode;
-  offline?: boolean;
+
 };
 
 export const ApiProvider = ({
   children,
-  offline = false,
 }: ApiProviderProps) => {
-  const api = createApi({ offline });
+  const api = createApi();
 
   return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
 };

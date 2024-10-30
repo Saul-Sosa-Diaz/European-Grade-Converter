@@ -2,12 +2,8 @@
 import { createApiFake } from "./createApiFake";
 import { createCountryRepository } from "./repositories/countryRepository";
 
-type CreateApiProps = {
-  offline?: boolean;
-};
-
-export function createApi({ offline = false }: CreateApiProps) {
-  if (offline) return createApiFake();
+export function createApi() {
+  if (process.env.DEBUG) return createApiFake();
 
   const COUNTRIES_REPOSITORY = createCountryRepository();
 
