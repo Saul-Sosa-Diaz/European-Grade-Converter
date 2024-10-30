@@ -8,21 +8,14 @@ import CountryAdditionalInfo from "../../components/country-additional-informati
 import Footer from "../../components/footer";
 import CountryDropdownAndGrade from "../../components/countrytreeSelectionAndDropdownGrade";
 import CountryDropdownAndGradeConversed from "../../components/countryTreeSelectionSolution";
+import { useGetCountries } from "@/src/hooks/useGeCountries";
 
 export function Home() {
   const [isClient, setIsClient] = useState(false);
-  const [data, setData] = useState(null);
+  const {countries, isLoading} = useGetCountries();
 
   useEffect(() => {
-    async function runer() {
-      await fetch("/api/connectdb")
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data);
-        });
-    }
     setIsClient(true);
-    runer();
   }, []);
 
   return (
@@ -44,7 +37,7 @@ export function Home() {
               <div className="flex justify-content-center">
                 <CountryAdditionalInfo />
               </div>
-              {data && data.message && data.message}
+              {countries && JSON.stringify(countries)}
             </div>
             <Footer />
           </div>

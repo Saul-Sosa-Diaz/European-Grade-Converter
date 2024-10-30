@@ -15,7 +15,7 @@
 
 import React, { useState, useContext, useEffect } from "react";
 import { ToConvertContext } from "../context/to-convert-context"; // Context for sharing grade and country information globally
-import { Country, COUNTRIES, findCountryByKey } from "@/src/lib/countries"; // Country-related utilities
+import { Country, COUNTRIES, findCountryByKey } from "@/src/fixture/countries"; // Country-related utilities
 import { Card } from "primereact/card"; // PrimeReact Card component for displaying the calculated grade
 import CustomTreeSelect from "./customTreeSelect"; // Custom TreeSelect component for selecting countries
 import "@/src/styles/global-theme.css"; // Global theme styles

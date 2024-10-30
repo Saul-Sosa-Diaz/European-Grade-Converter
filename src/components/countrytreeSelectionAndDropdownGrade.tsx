@@ -20,7 +20,7 @@ import "@/src/styles/global-theme.css";
 import { DropdownChangeEvent } from "primereact/dropdown";
 import { ToConvertContext } from "../context/to-convert-context";
 import { Dropdown } from "primereact/dropdown";
-import { Country, COUNTRIES, findCountryByKey } from "@/src/lib/countries";
+import { Country, COUNTRIES, findCountryByKey } from "@/src/fixture/countries";
 import CustomTreeSelect from "./customTreeSelect";
 import { customParseFloat } from "@/src/lib/utils";
 import {

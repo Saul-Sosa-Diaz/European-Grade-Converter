@@ -9,7 +9,7 @@
  * @description This file contains the country templates used to render the selected item and options.
  */
 
-import { Country } from "@/src/lib/countries";
+import { Country } from "@/src/fixture/countries";
 
 /**
  * Template for rendering the selected country, this is used when the is country is already selected.
