@@ -20,7 +20,6 @@ export async function GET() {
       .collection("countries")
       .find({})
       .toArray();
-    console.log(countries);
     return Response.json({ countries });
   } catch (error) {
     return Response.json({ error });

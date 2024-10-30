@@ -8,12 +8,11 @@ import CountryAdditionalInfo from "../../components/country-additional-informati
 import Footer from "../../components/footer";
 import CountryDropdownAndGrade from "../../components/countrytreeSelectionAndDropdownGrade";
 import CountryDropdownAndGradeConversed from "../../components/countryTreeSelectionSolution";
-import { useGetCountries } from "@/src/hooks/useGeCountries";
+import { useGetCountries } from "@/src/hooks/useGetCountries";
 
 export function Home() {
   const [isClient, setIsClient] = useState(false);
-  const {countries, isLoading} = useGetCountries();
-
+  const {countries} = useGetCountries();
   useEffect(() => {
     setIsClient(true);
   }, []);

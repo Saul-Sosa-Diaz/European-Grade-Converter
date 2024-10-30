@@ -11,13 +11,11 @@ export class PolandGradeConverter implements ICountryConverter {
   }
 
   convertToSpain(grade: string): string {
-    console.log(grade);
     if (grade === "5") return "9.5";
     if (grade === "4+") return "8.5";
     if (grade === "4") return "7.5";
     if (grade === "3+") return "6.5";
     if (grade === "3") return "5.5";
-    console.log("2.5");
     return "2.5";
   }
 }
