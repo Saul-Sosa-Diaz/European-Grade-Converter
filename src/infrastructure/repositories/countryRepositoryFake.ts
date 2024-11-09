@@ -1,4 +1,5 @@
-import { COUNTRIES } from '../../fixture/countries';
+import { COUNTRIES } from "../fixture/countries";
+
 
 export function createProductsRepositoryFake() {
   return {

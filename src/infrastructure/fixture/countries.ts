@@ -3,36 +3,23 @@ import { FranceGradeConverter } from "@/src/lib/countriesClasses/france-grade-co
 import { DenmarkGradeConverter } from "@/src/lib/countriesClasses/denmark-grade-converter";
 import { IrelandGradeConverter } from "@/src/lib/countriesClasses/ireland-grade-converter";
 import { SpainGradeConverter } from "@/src/lib/countriesClasses/spain-grade-converter";
-import { UnitedKingdomGradeConverter } from "../lib/countriesClasses/united-kingdom-grade-converter";
-import { BelgiumGradeConverter } from "../lib/countriesClasses/belgium-grade-converter";
-import { AustriaGradeConverter } from "../lib/countriesClasses/austria-grade-converter";
-import { BulgariaGradeConverter } from "../lib/countriesClasses/bulgaria-grade-converter";
-import { CzechRepublicGradeConverter } from "../lib/countriesClasses/czech-republic-grade-converter";
-import { ItalySalernoGradeConverter } from "../lib/countriesClasses/italy-salerno-grade-converter";
-import { ItalyBoloniaScienceGradeConverter } from "../lib/countriesClasses/italy-bolonia-science-grade-converter";
-import { PortugalGradeConverter } from "../lib/countriesClasses/portugal-grade-converter";
-import { GermanyGradeConverter } from "../lib/countriesClasses/germany-grade-converter";
-import { GreeceGradeConverter } from "../lib/countriesClasses/greece-grade-converter";
-import { NorwayGradeConverter } from "../lib/countriesClasses/norway-grade-converter";
-import { PolandGradeConverter } from "../lib/countriesClasses/poland-grade-converter";
-import { SloveniaGradeConverter } from "../lib/countriesClasses/slovenia-grade-converter";
-import { SwitzerlandGradeConverter } from "../lib/countriesClasses/switzerland-grade-converter";
-import { ItalyBoloniaEngineeringGradeConverter } from "../lib/countriesClasses/italy-bolonia-engineering-grade-converter";
+import { UnitedKingdomGradeConverter } from "@/src/lib/countriesClasses/united-kingdom-grade-converter";
+import { BelgiumGradeConverter } from "@/src/lib/countriesClasses/belgium-grade-converter";
+import { AustriaGradeConverter } from "@/src/lib/countriesClasses/austria-grade-converter";
+import { BulgariaGradeConverter } from "@/src/lib/countriesClasses/bulgaria-grade-converter";
+import { CzechRepublicGradeConverter } from "@/src/lib/countriesClasses/czech-republic-grade-converter";
+import { ItalySalernoGradeConverter } from "@/src/lib/countriesClasses/italy-salerno-grade-converter";
+import { ItalyBoloniaScienceGradeConverter } from "@/src/lib/countriesClasses/italy-bolonia-science-grade-converter";
+import { PortugalGradeConverter } from "@/src/lib/countriesClasses/portugal-grade-converter";
+import { GermanyGradeConverter } from "@/src/lib/countriesClasses/germany-grade-converter";
+import { GreeceGradeConverter } from "@/src/lib/countriesClasses/greece-grade-converter";
+import { NorwayGradeConverter } from "@/src/lib/countriesClasses/norway-grade-converter";
+import { PolandGradeConverter } from "@/src/lib/countriesClasses/poland-grade-converter";
+import { SloveniaGradeConverter } from "@/src/lib/countriesClasses/slovenia-grade-converter";
+import { SwitzerlandGradeConverter } from "@/src/lib/countriesClasses/switzerland-grade-converter";
+import { ItalyBoloniaEngineeringGradeConverter } from "@/src/lib/countriesClasses/italy-bolonia-engineering-grade-converter";
+import { Country } from "@/src/domain/countries/country";
 
-export interface Country {
-  label: string;
-  code?: string;
-  key: string;
-  selectable?: boolean;
-  gradeConverter?: ICountryConverter;
-  validGrades?: string[];
-  suffix?: string;
-  input?: boolean;
-  aditionalInfo?: string;
-  children?: Country[];
-  document_url?: string;
-  url?: string;
-}
 
 function generateGrades(inicio: number, fin: number, paso: number): string[] {
   const resultado: string[] = [];

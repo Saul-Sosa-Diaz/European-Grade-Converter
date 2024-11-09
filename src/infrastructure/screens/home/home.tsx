@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import "@/src/styles/global-theme.css";
-import { ToConvertContextProvider } from "../../context/to-convert-context";
-import Header from "../../components/header";
-import CountryAdditionalInfo from "../../components/country-additional-information";
-import Footer from "../../components/footer";
-import CountryDropdownAndGrade from "../../components/countrytreeSelectionAndDropdownGrade";
-import CountryDropdownAndGradeConversed from "../../components/countryTreeSelectionSolution";
+
 import { useGetCountries } from "@/src/hooks/useGetCountries";
+import { ToConvertContextProvider } from "@/src/context/to-convert-context";
+import Header from "./components/header";
+import CountryAdditionalInfo from "./components/country-additional-information";
+import CountryDropdownAndGradeConversed from "./components/countryTreeSelectionSolution";
+import CountryDropdownAndGrade from "./components/countrytreeSelectionAndDropdownGrade";
+import Footer from "./components/footer";
 
 export function Home() {
   const [isClient, setIsClient] = useState(false);

@@ -1,4 +1,4 @@
-import { LINKS } from "@/src/lib/constants/links";
+import { LINKS } from "@/src/constants/links";
 
 const Header: React.FC = () => {
   return (

@@ -2,8 +2,9 @@
 
 import React, { useContext } from "react";
 import "@/src/styles/global-theme.css";
-import { ToConvertContext } from "../context/to-convert-context";
+
 import { Card } from "primereact/card";
+import { ToConvertContext } from "@/src/context/to-convert-context";
 
 const CountryAdditionalInfo: React.FC = () => {
   const { countryFrom } = useContext(ToConvertContext); // Context for sharing grade and country globally

@@ -18,9 +18,7 @@ import React, { useState, useContext } from "react";
 import "@/src/styles/card.css";
 import "@/src/styles/global-theme.css";
 import { DropdownChangeEvent } from "primereact/dropdown";
-import { ToConvertContext } from "../context/to-convert-context";
 import { Dropdown } from "primereact/dropdown";
-import { Country, COUNTRIES, findCountryByKey } from "@/src/fixture/countries";
 import CustomTreeSelect from "./customTreeSelect";
 import { customParseFloat } from "@/src/lib/utils";
 import {
@@ -28,6 +26,9 @@ import {
   renderOptionTemplate,
 } from "./treeSelectTemplates";
 import { InputText } from "primereact/inputtext";
+import { ToConvertContext } from "@/src/context/to-convert-context";
+import { Country } from "@/src/domain/countries/country";
+import { COUNTRIES, findCountryByKey } from "@/src/infrastructure/fixture/countries";
 
 /**
  * CountryTreeSelect component.
