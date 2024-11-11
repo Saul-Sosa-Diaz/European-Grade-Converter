@@ -13,7 +13,7 @@
 
 "use client";
 
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "primereact/card"; // PrimeReact Card component for displaying the calculated grade
 import CustomTreeSelect from "./customTreeSelect"; // Custom TreeSelect component for selecting countries
 import "@/src/styles/global-theme.css"; // Global theme styles
@@ -22,7 +22,7 @@ import {
   renderSelectedItemTemplate,
 } from "./treeSelectTemplates"; // Helper functions to render the TreeSelect
 import { GeneralGradeConverter } from "@/src/lib/interfaces/i-grade-converter"; // Utility for converting grades between different countries
-import { ToConvertContext } from "@/src/context/to-convert-context";
+import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
 import { Country } from "@/src/domain/countries/country";
 import { COUNTRIES, findCountryByKey } from "@/src/infrastructure/fixture/countries";
 
@@ -40,7 +40,7 @@ import { COUNTRIES, findCountryByKey } from "@/src/infrastructure/fixture/countr
  */
 const CountryTreeSelectAndGradeConversed: React.FC = () => {
   // Access the grade and origin country from the global context
-  const { gradeToConvert, countryFrom } = useContext(ToConvertContext);
+  const { gradeToConvert, countryFrom } = useGradeConverterContext();
 
   // State to hold the currently selected destination country
   const [countryTo, setActualCountry] = useState<Country | null>(

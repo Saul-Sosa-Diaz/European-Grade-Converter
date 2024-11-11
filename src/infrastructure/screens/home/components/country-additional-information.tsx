@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useContext } from "react";
 import "@/src/styles/global-theme.css";
 
 import { Card } from "primereact/card";
-import { ToConvertContext } from "@/src/context/to-convert-context";
+import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
 
 const CountryAdditionalInfo: React.FC = () => {
-  const { countryFrom } = useContext(ToConvertContext); // Context for sharing grade and country globally
+  const { countryFrom } = useGradeConverterContext(); // Context for sharing grade and country globally
   return (
     <div className="flex align-items-center justify-content-center text-center ">
       {countryFrom &&

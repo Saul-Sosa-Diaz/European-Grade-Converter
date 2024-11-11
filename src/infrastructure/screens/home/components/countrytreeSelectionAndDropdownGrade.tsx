@@ -14,7 +14,7 @@
 
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "@/src/styles/card.css";
 import "@/src/styles/global-theme.css";
 import { DropdownChangeEvent } from "primereact/dropdown";
@@ -26,7 +26,7 @@ import {
   renderOptionTemplate,
 } from "./treeSelectTemplates";
 import { InputText } from "primereact/inputtext";
-import { ToConvertContext } from "@/src/context/to-convert-context";
+import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
 import { Country } from "@/src/domain/countries/country";
 import { COUNTRIES, findCountryByKey } from "@/src/infrastructure/fixture/countries";
 
@@ -36,7 +36,7 @@ import { COUNTRIES, findCountryByKey } from "@/src/infrastructure/fixture/countr
  *
  * - The country is selected from a tree dropdown.
  * - Depending on the country, the grade can either be manually entered or selected from a dropdown.
- * - The selected country and grade are shared via a global context (ToConvertContext) for other parts of the app.
+ * - The selected country and grade are shared via a global context  for other parts of the app.
  *
  * @component
  * @returns {JSX.Element} The rendered CountryTreeSelect component.
@@ -52,7 +52,7 @@ const CountryTreeSelect: React.FC = () => {
   const [inputtext, setInputText] = useState<string>("");
 
   // Context from ToConvertContext
-  const { setGradeToConvert, setCountryFrom } = useContext(ToConvertContext); // Context for sharing grade and country globally
+  const { setGradeToConvert, setCountryFrom } = useGradeConverterContext();
 
   /**
    * Handler function for when a country is selected from the dropdown.
