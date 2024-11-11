@@ -5,8 +5,6 @@ import "@/src/styles/global-theme.css";
 
 import Header from "./components/header";
 import CountryAdditionalInfo from "./components/country-additional-information";
-import CountryDropdownAndGradeConversed from "./components/countryTreeSelectionSolution";
-import CountryDropdownAndGrade from "./components/countrytreeSelectionAndDropdownGrade";
 import Footer from "./components/footer";
 import { CalculatedGradeComponent } from "./components/CalculatedGradeComponent/CalculatedGradeComponent";
 import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.tsx/CountryToTreeSelectComponent";
