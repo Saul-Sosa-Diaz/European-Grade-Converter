@@ -18,7 +18,7 @@ const GradeConverterContext = createContext(null);
 export const GradeConverterContextProvider = ({ children }) => {
   const [gradeToConvert, setGradeToConvert] = useState(undefined);
   const [countryFrom, setCountryFrom] = useState(undefined);
-  const [countryTo, setCountryTo] = useState(COUNTRIES.find((country) => country.code === "ES"));
+  const [countryTo, setCountryTo] = useState(COUNTRIES.find((country) => country.code === "ES")); // TODO: Change to DB
   return (
     <GradeConverterContext.Provider value={{ gradeToConvert, setGradeToConvert, countryFrom, setCountryFrom, countryTo, setCountryTo }}>
       {children}
