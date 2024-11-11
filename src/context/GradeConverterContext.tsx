@@ -11,14 +11,16 @@
 
 import { createContext, useContext } from 'react';
 import { useState } from 'react';
+import { COUNTRIES } from '../infrastructure/fixture/countries';
 
 const GradeConverterContext = createContext(null);
 
 export const GradeConverterContextProvider = ({ children }) => {
   const [gradeToConvert, setGradeToConvert] = useState(undefined);
   const [countryFrom, setCountryFrom] = useState(undefined);
+  const [countryTo, setCountryTo] = useState(COUNTRIES.find((country) => country.code === "ES"));
   return (
-    <GradeConverterContext.Provider value={{ gradeToConvert, setGradeToConvert, countryFrom, setCountryFrom }}>
+    <GradeConverterContext.Provider value={{ gradeToConvert, setGradeToConvert, countryFrom, setCountryFrom, countryTo, setCountryTo }}>
       {children}
     </GradeConverterContext.Provider>
   );

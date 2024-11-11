@@ -14,17 +14,16 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card } from "primereact/card"; // PrimeReact Card component for displaying the calculated grade
 import CustomTreeSelect from "./customTreeSelect"; // Custom TreeSelect component for selecting countries
 import "@/src/styles/global-theme.css"; // Global theme styles
 import {
   renderOptionTemplate,
   renderSelectedItemTemplate,
 } from "./treeSelectTemplates"; // Helper functions to render the TreeSelect
-import { GeneralGradeConverter } from "@/src/lib/interfaces/i-grade-converter"; // Utility for converting grades between different countries
-import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
 import { Country } from "@/src/domain/countries/country";
 import { COUNTRIES, findCountryByKey } from "@/src/infrastructure/fixture/countries";
+import { CalculatedGradeComponent } from "./calculatedGradeComponent/calculatedGradeComponent";
+import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
 
 /**
  * CountryTreeSelectAndGradeConversed component.
@@ -38,52 +37,19 @@ import { COUNTRIES, findCountryByKey } from "@/src/infrastructure/fixture/countr
  * @component
  * @returns {JSX.Element} The rendered CountryTreeSelectAndGradeConversed component.
  */
-const CountryTreeSelectAndGradeConversed: React.FC = () => {
-  // Access the grade and origin country from the global context
-  const { gradeToConvert, countryFrom } = useGradeConverterContext();
-
-  // State to hold the currently selected destination country
-  const [countryTo, setActualCountry] = useState<Country | null>(
-    COUNTRIES.find((country) => country.code === "ES") // Default to Spain as the initial country
-  );
+export const CountryTreeSelectAndGradeConversed  = () => {
+  const { setCountryTo, countryTo } = useGradeConverterContext(); // Access the global context to set the destination country
 
   // State to hold the key of the selected country
   const [keyCountryTo, setKeyCountryTo] = useState<string | null>(
     COUNTRIES.find((country) => country.code === "ES").key
   );
 
-  // State to hold the calculated grade
-  const [calculatedGrade, setCalculatedGrade] = useState<string | null>(null);
-
-  /**
-   * Calculate the grade based on the selected country's grading system.
-   * - If the user has selected a country and provided a grade to convert, the grade is converted.
-   * - The conversion is done using the `GeneralGradeConverter` utility.
-   */
-  const calculateGrade = () => {
-    const GRADE_CONVERSOR = new GeneralGradeConverter(); // Initialize the grade converter
-    if (!gradeToConvert) {
-      setCalculatedGrade(null); // Clear the calculated grade if no grade is provided
-    } else if (keyCountryTo && gradeToConvert) {
-      // Convert the grade based on the origin and destination countries' grading systems
-      const CONVERTED_GRADE = GRADE_CONVERSOR.convert(
-        gradeToConvert,
-        countryFrom,
-        countryTo
-      );
-      setCalculatedGrade(CONVERTED_GRADE); // Update the state with the converted grade
-    }
-  };
-
-  // Recalculate the grade whenever the destination country, the grade to convert, or the origin country changes
-  useEffect(() => {
-    calculateGrade();
-  }, [keyCountryTo, gradeToConvert, countryFrom, calculateGrade]);
 
   // Update the actual country object whenever the keyCountryTo state changes
   useEffect(() => {
     const NEW_COUNTRY = findCountryByKey(keyCountryTo); // Find the country by its key
-    setActualCountry(NEW_COUNTRY); // Find and set the country by its key
+    setCountryTo(NEW_COUNTRY); // Update the destination country in the global context
   }, [keyCountryTo]);
 
   const updateKeyCountryTo = (e) => {
@@ -93,7 +59,6 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
   };
   return (
     <div className="flex flex-column gap-3 w-20rem">
-      {/* Country TreeSelect */}
       <CustomTreeSelect<Country>
         filter={true} // Enable filtering for searching countries
         value={keyCountryTo} // Currently selected country key
@@ -115,16 +80,7 @@ const CountryTreeSelectAndGradeConversed: React.FC = () => {
           )
         }
       />
-
-      {/* Display the calculated grade if available */}
-      {calculatedGrade && (
-        <div className="card w-full">
-          <Card className="flex justify-content-center align-items-center h-3rem">
-            <p className="m-0 text-xl">{calculatedGrade}</p>{" "}
-            {/* Render the calculated grade */}
-          </Card>
-        </div>
-      )}
+      <CalculatedGradeComponent />
     </div>
   );
 };
