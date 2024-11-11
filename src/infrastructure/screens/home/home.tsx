@@ -9,7 +9,9 @@ import CountryDropdownAndGradeConversed from "./components/countryTreeSelectionS
 import CountryDropdownAndGrade from "./components/countrytreeSelectionAndDropdownGrade";
 import Footer from "./components/footer";
 import { CalculatedGradeComponent } from "./components/CalculatedGradeComponent/CalculatedGradeComponent";
-import { CountryToTreeSelect } from "./components/CountryToTreSelectComponent.tsx/CountryToTreeSelectComponent";
+import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.tsx/CountryToTreeSelectComponent";
+import { InputGrade } from "./components/InputGradeComponent/InputGradeComponent";
+import { CountryFromTreeSelect } from "./components/CountryFromTreeSelectorComponent/CountryFromTreeSelectComponent";
 
 export function Home() {
   const [isClient, setIsClient] = useState(false);
@@ -28,7 +30,10 @@ export function Home() {
           <Header />
           <div className="flex flex-column w-screen sm:gap-3 h-full">
             <div className="flex flex-column md:flex-row align-items-center justify-content-center h- w-screen gap-3 md:mt-8 mt-4">
-              <CountryDropdownAndGrade />
+              <div className="flex flex-column gap-3 w-20rem">
+                <CountryFromTreeSelect />
+                <InputGrade />
+              </div>
               <span className="pi pi-arrow-right hidden md:block"></span>
               <span className="pi pi-arrow-down block md:hidden"></span>
               <div className="flex flex-column gap-3 w-20rem">
