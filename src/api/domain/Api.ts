@@ -1,5 +1,5 @@
-import { CountriesRepository } from "@/src/domain/countries/countryrepository";
+import { CountriesRepository } from '@/domain/countries/countryrepository'
 
 export interface Api {
-    Countries: CountriesRepository
+  Countries: CountriesRepository
 }

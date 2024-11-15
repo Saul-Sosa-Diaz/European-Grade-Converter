@@ -1,8 +1,8 @@
-import { Country } from "@/src/domain/countries/country";
+import { Country } from "@/domain/countries/country";
 import { CustomTreeSelect } from "../customTreeSelect";
-import { COUNTRIES, findCountryByKey } from "@/src/infrastructure/fixture/countries";
+import { COUNTRIES, findCountryByKey } from "@/infrastructure/fixture/countries";
 import { useState } from "react";
-import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
+import { useGradeConverterContext } from "@/context/GradeConverterContext";
 import { renderOptionTemplate, renderSelectedItemTemplate } from "../treeSelectTemplates";
 import { DropdownChangeEvent } from "primereact/dropdown";
 

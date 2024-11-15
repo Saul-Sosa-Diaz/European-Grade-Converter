@@ -1,5 +1,5 @@
-import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
-import { customParseFloat } from "@/src/lib/utils";
+import { useGradeConverterContext } from "@/context/GradeConverterContext";
+import { customParseFloat } from "@/lib/utils";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";

@@ -1,12 +1,12 @@
-import { useApi } from "@/src/context/ApiContext";
-import { useQuery } from "@tanstack/react-query";
+import { useApi } from '@/context/ApiContext'
+import { useQuery } from '@tanstack/react-query'
 
 export const useGetCountries = () => {
-  const api = useApi();
+  const api = useApi()
   const { data, isLoading } = useQuery({
-    queryKey: ["countries"],
+    queryKey: ['countries'],
     queryFn: async () => await api.getCountries(),
-  });
+  })
 
-  return { countries: data, isLoading };
-};
+  return { countries: data, isLoading }
+}

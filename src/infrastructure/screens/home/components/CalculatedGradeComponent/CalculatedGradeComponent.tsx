@@ -1,5 +1,5 @@
-import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
-import { GeneralGradeConverter } from "@/src/lib/interfaces/i-grade-converter";
+import { useGradeConverterContext } from "@/context/GradeConverterContext";
+import { GeneralGradeConverter } from "@/lib/interfaces/i-grade-converter";
 import { Card } from "primereact/card";
 import { useCallback, useEffect, useState } from "react";
 

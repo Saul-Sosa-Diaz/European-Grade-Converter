@@ -1,7 +1,7 @@
 "use client";
-import { ApiProvider } from "@/src/context/ApiContext";
-import { GradeConverterContextProvider } from "@/src/context/GradeConverterContext";
-import { Home as HomeScreen } from "@/src/infrastructure/screens/home";
+import { ApiProvider } from "@/context/ApiContext";
+import { GradeConverterContextProvider } from "@/context/GradeConverterContext";
+import { Home as HomeScreen } from "@/infrastructure/screens/home";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 export default function App() {

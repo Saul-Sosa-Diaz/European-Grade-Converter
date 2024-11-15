@@ -1,5 +1,5 @@
 "use client"
-import { createApi } from "@/src/api/createApi";
+import { createApi } from "@/api/createApi";
 import React from "react";
 
 export const ApiContext = React.createContext(null);

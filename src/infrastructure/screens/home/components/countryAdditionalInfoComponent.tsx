@@ -1,9 +1,9 @@
 "use client";
 
-import "@/src/styles/global-theme.css";
+import "@/styles/global-theme.css";
 
 import { Card } from "primereact/card";
-import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
+import { useGradeConverterContext } from "@/context/GradeConverterContext";
 
 export const CountryAdditionalInfo = () => {
   const { countryFrom } = useGradeConverterContext(); // Context for sharing grade and country globally

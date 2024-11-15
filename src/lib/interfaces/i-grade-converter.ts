@@ -9,8 +9,7 @@
  * @description This file contains the interfaces for implementing the note conversion class structure, using the strategy pattern.
  */
 
-import { Country } from "@/src/domain/countries/country";
-
+import { Country } from '@/domain/countries/country'
 
 /**
  * Interface for countries to force each country to switch to the Spanish system and to their own.
@@ -24,13 +23,13 @@ export interface ICountryConverter {
    * @param grade - The grade to convert.
    * @returns The converted grade.
    */
-  convertToSpain(grade: string): string; // Convert to Spanish system
+  convertToSpain(grade: string): string // Convert to Spanish system
   /**
    * This function converts a grade to the destination country's system.
    * @param grade - The grade to convert.
    * @returns The converted grade.
    */
-  convertToDestinationCountry(grade: number): string; // Conevrt to destination country system
+  convertToDestinationCountry(grade: number): string // Conevrt to destination country system
 }
 
 /**
@@ -46,7 +45,7 @@ export interface IGradeConverter {
    * @param countryTo - The country to which the grade is converted.
    * @returns The converted grade.
    */
-  convert(grade: string, countryFrom: Country, countryTo: Country): string;
+  convert(grade: string, countryFrom: Country, countryTo: Country): string
 }
 /**
  * The `GeneralGradeConverter` class manages the grade conversion process.
@@ -54,11 +53,11 @@ export interface IGradeConverter {
  */
 export class GeneralGradeConverter implements IGradeConverter {
   convert(grade: string, countryFrom: Country, countryTo: Country): string {
-    const fromConverter = countryFrom.gradeConverter;
-    const toConverter = countryTo.gradeConverter;
-    grade = grade.replace(/\(.*?\)/g, "");
-    grade = grade.replace(" ", "");
-    const gradeInSpain = fromConverter.convertToSpain(grade); // Converting to the Spanish system
-    return toConverter.convertToDestinationCountry(Number(gradeInSpain)); // Convert to the target country's system
+    const fromConverter = countryFrom.gradeConverter
+    const toConverter = countryTo.gradeConverter
+    grade = grade.replace(/\(.*?\)/g, '')
+    grade = grade.replace(' ', '')
+    const gradeInSpain = fromConverter.convertToSpain(grade) // Converting to the Spanish system
+    return toConverter.convertToDestinationCountry(Number(gradeInSpain)) // Convert to the target country's system
   }
 }

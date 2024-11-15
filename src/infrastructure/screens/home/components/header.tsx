@@ -1,6 +1,6 @@
-import { LINKS } from "@/src/constants/links";
+import { LINKS } from "@/constants/links";
 
-export const Header  = () => {
+export const Header = () => {
   return (
     <header className="h-5rem flex align-items-center justify-content-center relative w-screen p-2 color-primary">
       <a className="absolute left-0" href={LINKS.ullHomePage}>
