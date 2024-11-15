@@ -1,7 +1,7 @@
 import { useGradeConverterContext } from "@/context/GradeConverterContext";
 import { GeneralGradeConverter } from "@/lib/interfaces/i-grade-converter";
-import { Card } from "primereact/card";
 import { useCallback, useEffect, useState } from "react";
+import { GradeStyled, StyledCard } from "./CalculatedGradeComponent.styles";
 
 export const CalculatedGradeComponent = () => {
     // Access the grade and origin country from the global context
@@ -33,11 +33,9 @@ export const CalculatedGradeComponent = () => {
     return (
         <>
             {calculatedGrade && (
-                <div className="card w-full">
-                    <Card className="flex justify-content-center align-items-center h-3rem">
-                        <p className="m-0 text-xl">{calculatedGrade}</p>{" "}
-                    </Card>
-                </div>
+                <StyledCard>
+                    <GradeStyled>{calculatedGrade}</GradeStyled>{" "}
+                </StyledCard>
             )}
         </>
     );

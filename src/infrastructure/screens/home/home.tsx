@@ -16,7 +16,7 @@ export function Home() {
   useEffect(() => {
     setIsClient(true);
   }, []);
-
+  // TODO: GIVE A VISUAL FEEDBACK WITH COLORS IN GRADE
   return (
     <HomeScreenMain>
       {isClient && (

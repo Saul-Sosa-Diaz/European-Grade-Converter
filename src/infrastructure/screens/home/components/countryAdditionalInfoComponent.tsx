@@ -13,7 +13,7 @@ export const CountryAdditionalInfo = () => {
         (countryFrom.aditionalInfo ||
           countryFrom.url ||
           countryFrom.document_url) && (
-          <Card className="text-color-primary md:text-xl m-3 mb-6">
+        <Card className="text-color-primary md:text-xl m-3 mb-6 w-full">
             {/* Conditionally render additional information if available */}
             {countryFrom && countryFrom.aditionalInfo && (
               <p className="px-1">{countryFrom.aditionalInfo}.</p>

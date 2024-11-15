@@ -15,9 +15,9 @@ export const ConversorContainer = styled('div', {
     alignItems: 'center',
     justifyContent: 'center',
     gap: '24px',
-    width: '100vw',
+    width: '80%',
     height: 'auto', 
-    marginTop: '24px',
+    marginTop: '50px',
     '@media (min-width: 768px)': {
         flexDirection: 'row',
     },
@@ -35,7 +35,7 @@ export const CountryAndGradeContainer = styled('div', {
 });
 
 export const ContryAditionalInfoContainer = styled('div', {
-    width: '100%',
+    width: '80%',
     flex: '1',
 
 });
