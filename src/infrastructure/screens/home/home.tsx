@@ -10,7 +10,8 @@ import { CalculatedGradeComponent } from "./components/CalculatedGradeComponent/
 import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.tsx/CountryToTreeSelectComponent";
 import { InputGrade } from "./components/InputGradeComponent/InputGradeComponent";
 import { CountryFromTreeSelect } from "./components/CountryFromTreeSelectorComponent/CountryFromTreeSelectComponent";
-import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/countryAdditionalInfoComponent";
+import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/CountryAdditionalInfoComponent";
+// TODO: FIX SWITZELAND
 
 export function Home() {
   const [isClient, setIsClient] = useState(false);
