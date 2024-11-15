@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import "@/src/styles/global-theme.css";
 
-import Header from "./components/header";
-import CountryAdditionalInfo from "./components/country-additional-information";
-import Footer from "./components/footer";
+import { Header } from "./components/header";
+import { CountryAdditionalInfo } from "./components/countryAdditionalInfoComponent";
+import { Footer } from "./components/footer";
 import { CalculatedGradeComponent } from "./components/CalculatedGradeComponent/CalculatedGradeComponent";
 import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.tsx/CountryToTreeSelectComponent";
 import { InputGrade } from "./components/InputGradeComponent/InputGradeComponent";
@@ -32,8 +32,8 @@ export function Home() {
                 <CountryFromTreeSelect />
                 <InputGrade />
               </div>
-              <span className="pi pi-arrow-right hidden md:block"></span>
-              <span className="pi pi-arrow-down block md:hidden"></span>
+              <span className="pi pi-arrow-right hidden md:block" />
+              <span className="pi pi-arrow-down block md:hidden" />
               <div className="flex flex-column gap-3 w-20rem">
                 <CountryToTreeSelect />
                 <CalculatedGradeComponent />

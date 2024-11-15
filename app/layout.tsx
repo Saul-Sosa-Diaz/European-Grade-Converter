@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "primereact/resources/themes/md-light-deeppurple/theme.css";
 import "primeflex/primeflex.css";
+import 'primeicons/primeicons.css';
 
 export const metadata: Metadata = {
   title: "University Grade Conversion tool",

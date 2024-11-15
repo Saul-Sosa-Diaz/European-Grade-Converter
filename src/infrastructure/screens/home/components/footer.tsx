@@ -1,4 +1,4 @@
-const Footer: React.FC = () => {
+export const Footer = () => {
   return (
     <footer className="flex block justify-content-center w-screen sticky bottom-0 color-primary">
       <p className="w-11 text-white text-center line-height-3">
@@ -20,4 +20,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+

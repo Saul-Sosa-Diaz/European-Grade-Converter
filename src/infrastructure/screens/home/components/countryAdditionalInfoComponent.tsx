@@ -5,7 +5,7 @@ import "@/src/styles/global-theme.css";
 import { Card } from "primereact/card";
 import { useGradeConverterContext } from "@/src/context/GradeConverterContext";
 
-const CountryAdditionalInfo: React.FC = () => {
+export const CountryAdditionalInfo = () => {
   const { countryFrom } = useGradeConverterContext(); // Context for sharing grade and country globally
   return (
     <div className="flex align-items-center justify-content-center text-center ">
@@ -45,4 +45,3 @@ const CountryAdditionalInfo: React.FC = () => {
   );
 };
 
-export default CountryAdditionalInfo;

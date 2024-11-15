@@ -1,5 +1,5 @@
 import { Country } from "@/src/domain/countries/country";
-import CustomTreeSelect from "../customTreeSelect";
+import { CustomTreeSelect } from "../customTreeSelect";
 import { COUNTRIES, findCountryByKey } from "@/src/infrastructure/fixture/countries";
 import { useEffect, useState } from "react";
 import { useGradeConverterContext } from "@/src/context/GradeConverterContext";

@@ -36,7 +36,7 @@ interface CustomTreeSelectProps<T> {
  * Generic TreeSelect component that can be reused for country or grade selection.
  * @template T - Supports different data types for flexibility in different dropdown use cases (e.g., countries or grades).
  */
-const CustomTreeSelect = <T,>({
+export const CustomTreeSelect = <T,>({
   value, // Selected value
   options, // Array of options to select from
   optionLabel, // Label field to display as the name of the options
@@ -72,5 +72,3 @@ const CustomTreeSelect = <T,>({
     />
   );
 };
-
-export default CustomTreeSelect;
