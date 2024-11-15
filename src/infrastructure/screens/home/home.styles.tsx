@@ -5,6 +5,8 @@ export const HomeScreenMain = styled('div', {
     flexDirection: 'column',
     alignItems: 'center',
     height: '100vh',
+    width: '100vw',
+    margin: '0px 00px 0px 0px',
 })
 
 export const ConversorContainer = styled('div', {
@@ -14,12 +16,12 @@ export const ConversorContainer = styled('div', {
     justifyContent: 'center',
     gap: '24px',
     width: '100vw',
-    height: '40%', 
+    height: 'auto', 
+    marginTop: '24px',
     '@media (min-width: 768px)': {
         flexDirection: 'row',
     },
 });
-
 
 
 export const CountryAndGradeContainer = styled('div', {
@@ -30,4 +32,10 @@ export const CountryAndGradeContainer = styled('div', {
     '@media (min-width: 768px)': {
         width: '20%',
     },
+});
+
+export const ContryAditionalInfoContainer = styled('div', {
+    width: '100%',
+    flex: '1',
+
 });
