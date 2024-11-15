@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from "react";
 
 import { Header } from "./components/header";
-import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/CountryAdditionalInfoComponent";
+
 import { HomeScreenMain, CountryAndGradeContainer, ConversorContainer, ContryAditionalInfoContainer } from './home.styles'
 import { Footer } from "./components/footer";
 import { CalculatedGradeComponent } from "./components/CalculatedGradeComponent/CalculatedGradeComponent";
 import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.tsx/CountryToTreeSelectComponent";
 import { InputGrade } from "./components/InputGradeComponent/InputGradeComponent";
 import { CountryFromTreeSelect } from "./components/CountryFromTreeSelectorComponent/CountryFromTreeSelectComponent";
+import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/countryAdditionalInfoComponent";
 
 export function Home() {
   const [isClient, setIsClient] = useState(false);
