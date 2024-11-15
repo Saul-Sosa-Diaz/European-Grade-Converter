@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 import { Header } from "./components/header";
 
-import { HomeScreenMain, CountryAndGradeContainer, ConversorContainer, ContryAditionalInfoContainer } from './home.styles'
+import { HomeScreenMain, CountryAndGradeContainer, ConversorContainer, ContryAditionalInfoContainer, ArrowRight, ArrowDown } from './home.styles'
 import { Footer } from "./components/footer";
 import { CalculatedGradeComponent } from "./components/CalculatedGradeComponent/CalculatedGradeComponent";
 import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.tsx/CountryToTreeSelectComponent";
@@ -28,8 +28,8 @@ export function Home() {
               <CountryFromTreeSelect />
               <InputGrade />
             </CountryAndGradeContainer>
-            <span className="pi pi-arrow-right hidden md:block" />
-            <span className="pi pi-arrow-down block md:hidden" />
+            <ArrowRight className="pi pi-arrow-right" />
+            <ArrowDown className="pi pi-arrow-down" />
             <CountryAndGradeContainer>
               <CountryToTreeSelect />
               <CalculatedGradeComponent />

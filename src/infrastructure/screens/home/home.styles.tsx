@@ -17,13 +17,26 @@ export const ConversorContainer = styled('div', {
     justifyContent: 'center',
     gap: '24px',
     width: '80%',
-    height: 'auto', 
+    height: 'auto',
     marginTop: '50px',
     '@media (min-width: 768px)': {
         flexDirection: 'row',
     },
 });
 
+export const ArrowDown = styled('span', {
+    display: 'none',
+    '@md': {
+        display: 'inline-block',
+    },
+});
+
+export const ArrowRight = styled('span', {
+    display: 'block',
+    '@md': {
+        display: 'none',
+    },
+});
 
 export const CountryAndGradeContainer = styled('div', {
     display: 'flex',
