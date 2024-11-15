@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Header } from "./components/header";
-import { CountryAdditionalInfo } from "./components/countryAdditionalInfoComponent";
+import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/CountryAdditionalInfoComponent";
 import { HomeScreenMain, CountryAndGradeContainer, ConversorContainer, ContryAditionalInfoContainer } from './home.styles'
 import { Footer } from "./components/footer";
 import { CalculatedGradeComponent } from "./components/CalculatedGradeComponent/CalculatedGradeComponent";

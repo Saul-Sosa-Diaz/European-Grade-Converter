@@ -11,6 +11,7 @@ export const HomeScreenMain = styled('div', {
 
 export const ConversorContainer = styled('div', {
     display: 'flex',
+
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -26,9 +27,10 @@ export const ConversorContainer = styled('div', {
 
 export const CountryAndGradeContainer = styled('div', {
     display: 'flex',
+    flex: "1",
     flexDirection: 'column',
     gap: '24px',
-    width: '80%',
+    width: '100%',
     '@media (min-width: 768px)': {
         width: '20%',
     },
