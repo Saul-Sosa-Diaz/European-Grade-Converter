@@ -1,12 +1,12 @@
 "use client"
 import { createApi } from "@/api/createApi";
+import { Api } from "@/api/domain/Api";
 import React from "react";
 
 export const ApiContext = React.createContext(null);
 
 type ApiProviderProps = {
   children: React.ReactNode;
-
 };
 
 export const ApiProvider = ({
@@ -17,7 +17,7 @@ export const ApiProvider = ({
   return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
 };
 
-export const useApi = () => {
+export const useApi = (): Api => {
   const context = React.useContext(ApiContext);
 
   if (context === null) {

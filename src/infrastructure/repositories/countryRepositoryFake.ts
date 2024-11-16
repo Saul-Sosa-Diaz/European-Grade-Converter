@@ -1,8 +1,7 @@
 import { COUNTRIES } from "../fixture/countries";
-
-
-export function createProductsRepositoryFake() {
+import { CountriesRepository } from '@/domain/countries/countryRepository'
+export function createProductsRepositoryFake(): CountriesRepository {
   return {
     getCountries: async () => COUNTRIES,
-  };
+  }
 }

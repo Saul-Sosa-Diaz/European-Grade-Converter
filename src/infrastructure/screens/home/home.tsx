@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-
 import { Header } from "./components/header";
 
 import { HomeScreenMain, CountryAndGradeContainer, ConversorContainer, ContryAditionalInfoContainer, ArrowRight, ArrowDown } from './home.styles'
@@ -14,6 +13,7 @@ import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/C
 // TODO: FIX SWITZELAND
 
 export function Home() {
+  
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
