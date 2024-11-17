@@ -1,8 +1,5 @@
-
 import { InputText } from "primereact/inputtext";
-import { classNames } from "primereact/utils";
 import { FormEvent } from "react";
-
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { Card } from "primereact/card";
@@ -15,7 +12,6 @@ export const Login = () => {
         const formData = new FormData(event.currentTarget);
         const USERNAME = formData.get('username');
         const PASSWORD = formData.get('password');
-        console.log('credentials   ', USERNAME as string, PASSWORD as string);
         Auth.signIn({ username: USERNAME as string, password: PASSWORD as string })
     }
     return (

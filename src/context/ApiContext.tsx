@@ -6,13 +6,16 @@ import React from "react";
 export const ApiContext = React.createContext(null);
 
 type ApiProviderProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+  offline?: boolean
+}
+
 
 export const ApiProvider = ({
   children,
+  offline = false,
 }: ApiProviderProps) => {
-  const api = createApi();
+  const api = createApi({ offline });
 
   return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
 };
