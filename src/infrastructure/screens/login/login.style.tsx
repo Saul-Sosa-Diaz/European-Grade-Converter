@@ -16,7 +16,7 @@ export const StyledCard = styled(Card, {
     margin: 'auto',
     padding: '0',
     textAlign: 'center',
-    height: '50%',
+    height: '400px',
     '& .p-card-content': {
     },
 })
