@@ -1,0 +1,1 @@
+export const MAX_AGE_SESSION = 10 * 60 // 10 minutes

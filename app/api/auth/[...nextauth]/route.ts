@@ -1,3 +1,4 @@
+import { MAX_AGE_SESSION } from '@/constants/session'
 import { MongoClient, ServerApiVersion } from 'mongodb'
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
@@ -8,6 +9,7 @@ const handler = NextAuth({
   },
   session: {
     strategy: 'jwt',
+    maxAge: MAX_AGE_SESSION,
   },
   providers: [
     Credentials({
