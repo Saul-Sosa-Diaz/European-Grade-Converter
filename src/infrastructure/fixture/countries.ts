@@ -1,4 +1,3 @@
-import { ICountryConverter } from '@/lib/interfaces/i-grade-converter'
 import { FranceGradeConverter } from '@/lib/countriesClasses/france-grade-converter'
 import { DenmarkGradeConverter } from '@/lib/countriesClasses/denmark-grade-converter'
 import { IrelandGradeConverter } from '@/lib/countriesClasses/ireland-grade-converter'

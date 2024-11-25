@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "primereact/resources/themes/md-light-deeppurple/theme.css";
 import "primeflex/primeflex.css";
 import "primeicons/primeicons.css";
+import { ApiProvider } from "@/context/ApiContext";
+import LoadingStyles from "@/infrastructure/screens/components/LoadingStyles";
 
 export const metadata: Metadata = {
   title: "University Grade Conversion tool",
@@ -16,9 +18,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-      <body className="m-0 overflow-visible">{children}</body>
+      <ApiProvider offline={true}>
+          <body className="m-0 overflow-visible">{<LoadingStyles>{children}</LoadingStyles>}</body>
+      </ApiProvider>
     </html>
   );
 }

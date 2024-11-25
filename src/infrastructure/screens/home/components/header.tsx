@@ -1,9 +1,9 @@
-import { LINKS } from "@/constants/links";
+import { Urls } from "@/constants/links";
 
 export const Header = () => {
   return (
     <header className="h-5rem flex align-items-center justify-content-center relative w-screen p-2 color-primary">
-      <a className="absolute left-0" href={LINKS.ullHomePage}>
+      <a className="absolute left-0" href={Urls.ullHomePage}>
         <img
           className="hidden md:block md:w-15rem ml-2"
           src="./logo-ull.svg"

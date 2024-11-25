@@ -1,14 +1,15 @@
-export function createCountryRepository() {
-  return {
-    getCountries: async (params) => {
-      const { countries } = await fetch("/api/countries", {
-        method: "get",
-        body: JSON.stringify(params),
-      }).then((response) => {
-        return response.json();
-      });
+import { CountriesRepository } from '@/domain/countries/countryRepository'
 
-      return countries;
+export function createCountryRepository(): CountriesRepository {
+  return {
+    getCountries: async () => {
+      const { countries } = await fetch('/api/countries', {
+        method: 'get',
+      }).then((response) => {
+        return response.json()
+      })
+
+      return countries
     },
-  };
+  }
 }
