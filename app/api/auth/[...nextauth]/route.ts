@@ -1,20 +1,21 @@
 import { MongoClient, ServerApiVersion } from 'mongodb'
 import NextAuth from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
+import Credentials from 'next-auth/providers/credentials'
 
 const handler = NextAuth({
   pages: {
     signIn: '/login',
   },
+  session: {
+    strategy: 'jwt',
+  },
   providers: [
-    CredentialsProvider({
-      type: 'credentials',
+    Credentials({
       credentials: {
         username: { label: 'Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        console.log('credentials', credentials)
+      async authorize(credentials) {
         try {
           const client = new MongoClient(process.env.MONGODB_URI, {
             serverApi: {
