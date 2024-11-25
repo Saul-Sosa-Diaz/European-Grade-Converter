@@ -1,51 +1,31 @@
-import { InputText } from "primereact/inputtext";
-import { FormEvent } from "react";
-import { Password } from 'primereact/password';
-import { Button } from 'primereact/button';
-import { Card } from "primereact/card";
+
+
 import { useApi } from "@/context/ApiContext";
+import { Formik } from "formik";
+
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { HeaderCard, LoginContainer, StyledCard, StyledForm, StyledPassword } from "./login.style";
 
 export const Login = () => {
-    const { Auth } = useApi();
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const USERNAME = formData.get('username');
-        const PASSWORD = formData.get('password');
-        Auth.signIn({ username: USERNAME as string, password: PASSWORD as string })
-    }
-    return (
-        <div className="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen">
-            <Card unstyled>
-                <div className="text-align vertical-align-top mb-5">
-                    <h1>Sign in to continue</h1>
-                </div>
-                <div>
-                    <form onSubmit={handleSubmit}>
-                        <InputText
-                            name="username"
-                            required
-                            type="text"
-                            placeholder="Username"
-                        />
-                        <div className="mb-5">
-                            <Password
-                                name="password"
-                                required
-                                placeholder="Password"
-                                feedback={false}
-                                unstyled
-                                toggleMask
-                            ></Password>
-                        </div>
-                        <Button
-                            label="Login"
-                            type="submit"
-                            className="w-full p-3 text-xl"
-                        ></Button>
-                    </form>
-                </div>
-            </Card>
-        </div>
-    );
+  const { Auth } = useApi();
+
+  return (
+    <LoginContainer>
+      <StyledCard header={<HeaderCard>Login</HeaderCard>}>
+        <Formik
+          initialValues={{ username: "", password: "" }}
+          onSubmit={async ({ username, password }) => {
+            Auth.signIn({ username, password });
+          }}
+        >
+          <StyledForm>
+            <InputText placeholder="username" name="username" type="text" />
+            <StyledPassword toggleMask feedback={false} tabIndex={1} placeholder="password" name="password" type="password" />
+            <Button type="submit" label="Submit" rounded />
+          </StyledForm>
+        </Formik>
+      </StyledCard>
+    </LoginContainer>
+  );
 };
