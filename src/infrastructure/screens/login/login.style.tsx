@@ -15,9 +15,20 @@ export const StyledCard = styled(Card, {
     width: '20%',
     margin: 'auto',
     padding: '0',
+    textAlign: 'center',
     height: '50%',
     '& .p-card-content': {
     },
+})
+
+export const ButtonContainer = styled('div', {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem',
+    marginTop: '3rem',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
 })
 
 export const StyledForm = styled(Form, {
