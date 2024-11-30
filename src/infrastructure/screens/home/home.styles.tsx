@@ -6,6 +6,7 @@ export const HomeScreenMain = styled('div', {
     alignItems: 'center',
     height: '100vh',
     width: '100vw',
+    fontFamily: '"ArgentumSans", sans-serif',
     margin: '0px 00px 0px 0px',
 })
 

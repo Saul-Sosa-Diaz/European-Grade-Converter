@@ -14,11 +14,11 @@ export const StyledCard = styled(Card, {
     '& .p-card-footer': {
         padding: '0',
     },
-    height: "52px"
+
 });
 
 export const GradeStyled = styled('p', {
-    fontSize: '2.4vh',
+    fontSize: '1.3rem',
     margin: '0',
     padding: '0',
     textAlign: 'center',
