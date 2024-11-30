@@ -12,7 +12,6 @@ export const HomeScreenMain = styled('div', {
 
 export const ConversorContainer = styled('div', {
     display: 'flex',
-
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -26,16 +25,16 @@ export const ConversorContainer = styled('div', {
 });
 
 export const ArrowDown = styled('span', {
-    display: 'none',
-    '@md': {
-        display: 'inline-block',
+    display: 'block',
+    '@media (min-width: 768px)': {
+        display: 'none',
     },
 });
 
 export const ArrowRight = styled('span', {
-    display: 'block',
-    '@md': {
-        display: 'none',
+    display: 'none',
+    '@media (min-width: 768px)': {
+        display: 'block',
     },
 });
 
