@@ -1,4 +1,4 @@
-import { CountriesRepository } from '@/domain/countries/countryRepository'
+import { CountriesRepository } from '@/domain/auth/countryRepository'
 
 export function createCountryRepository(): CountriesRepository {
   return {
