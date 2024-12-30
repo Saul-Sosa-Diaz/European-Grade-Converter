@@ -3,7 +3,8 @@ CREATE SCHEMA public;
 
 CREATE TABLE COUNTRY (
     countryID SERIAL UNIQUE,
-    countryName VARCHAR(255),
+    countryName VARCHAR(255) NOT NULL,
+	countryCode VARCHAR(4) NOT NULL,
     PRIMARY KEY (countryID)
 );
 
@@ -11,25 +12,29 @@ CREATE TABLE UNIVERSITY (
     universityID SERIAL UNIQUE,
     countryID INT NOT NULL REFERENCES COUNTRY(countryID)  ON DELETE CASCADE ON UPDATE CASCADE,
 	universityName VARCHAR(255),
-    PRIMARY KEY (universityID, countryID)
+    PRIMARY KEY (universityID)
 );
 
+CREATE TYPE EVALUATION_TYPE AS ENUM(
+  'continuous',
+  'discrete'
+);
 
 CREATE TABLE EVALUATION_SYSTEM (
     evaluationSystemID SERIAL,
-    countryID INT NOT NULL REFERENCES COUNTRY(countryID) ON DELETE CASCADE ON UPDATE CASCADE,
 	universityID INT NOT NULL REFERENCES UNIVERSITY(universityID) ON DELETE CASCADE ON UPDATE CASCADE,
+	evaluationType EVALUATION_TYPE not NULL,
     PRIMARY KEY (evaluationSystemID)
 );
-
 
 CREATE TABLE GRADE_CONVERSION (
     gradeConversionID SERIAL,
     evaluationSystemID INT NOT NULL REFERENCES EVALUATION_SYSTEM(evaluationSystemID) ON DELETE CASCADE ON UPDATE CASCADE,
-	gradeMin FLOAT,
-	gradeMax FLOAT, 
-	base FLOAT,
-	factor FLOAT,
-	top FLOAT,
+	gradeMin NUMERIC(5,2),
+	gradeMax NUMERIC(5,2), 
+	base NUMERIC(5,2),
+	factor NUMERIC(5,2),
+	top NUMERIC(5,2),
+	gradeName VARCHAR(255),
     PRIMARY KEY (gradeConversionID)
 );
