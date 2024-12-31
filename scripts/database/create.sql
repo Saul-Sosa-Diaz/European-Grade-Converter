@@ -30,11 +30,11 @@ CREATE TABLE EVALUATION_SYSTEM (
 CREATE TABLE GRADE_CONVERSION (
     gradeConversionID SERIAL,
     evaluationSystemID INT NOT NULL REFERENCES EVALUATION_SYSTEM(evaluationSystemID) ON DELETE CASCADE ON UPDATE CASCADE,
-	gradeMin NUMERIC(5,2),
-	gradeMax NUMERIC(5,2), 
-	base NUMERIC(5,2),
-	factor NUMERIC(5,2),
-	top NUMERIC(5,2),
+	gradeMin NUMERIC(5,2) NOT NULL,
+	gradeMax NUMERIC(5,2) NOT NULL, 
+	baseEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
+	topEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
+	factor NUMERIC(5,2) NOT NULL,
 	gradeName VARCHAR(255),
     PRIMARY KEY (gradeConversionID)
 );
