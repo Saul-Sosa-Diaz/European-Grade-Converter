@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "University Grade Conversion tool",
   description: "University Grade Conversion tool",
   icons: {
-    icon: "./favicon.ico", // public path
+    icon: "./favicon.ico",
   },
 };
 

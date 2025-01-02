@@ -24,9 +24,7 @@ CREATE TABLE EVALUATION_SYSTEM (
     evaluationSystemID SERIAL,
 	universityID INT NOT NULL REFERENCES UNIVERSITY(universityID) ON DELETE CASCADE ON UPDATE CASCADE,
 	evaluationType EVALUATION_TYPE not NULL,
-    minGrade NUMERIC(5,2) NOT NULL,
-    maxGrade NUMERIC(5,2) NOT NULL,
-    step NUMERIC(5,2),
+    validGrades TEXT [],
     PRIMARY KEY (evaluationSystemID)
 );
 

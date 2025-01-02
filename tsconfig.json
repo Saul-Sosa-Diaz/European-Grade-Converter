@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "scripts/countries.ts"
+    "scripts/countries.ts",
+    "scripts/validGrades.mjs"
   ],
   "exclude": ["node_modules"]
 }

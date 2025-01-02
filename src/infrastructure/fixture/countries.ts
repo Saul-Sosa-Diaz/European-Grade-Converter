@@ -18,16 +18,7 @@ import { SloveniaGradeConverter } from '@/lib/countriesClasses/slovenia-grade-co
 import { SwitzerlandGradeConverter } from '@/lib/countriesClasses/switzerland-grade-converter'
 import { ItalyBoloniaEngineeringGradeConverter } from '@/lib/countriesClasses/italy-bolonia-engineering-grade-converter'
 import { Country } from '@/domain/countries/country'
-
-function generateGrades(inicio: number, fin: number, paso: number): string[] {
-  const resultado: string[] = []
-  for (let i = inicio; i <= fin; i += paso) {
-    // Redondeamos el número a dos decimales
-    i = parseFloat(i.toFixed(2))
-    resultado.push(String(i))
-  }
-  return resultado
-}
+import { generateGrades } from '../../../scripts/validGrades.mjs'
 
 // Hacer uno para los hoja y otro para los padres
 
