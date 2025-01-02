@@ -24,14 +24,16 @@ CREATE TABLE EVALUATION_SYSTEM (
     evaluationSystemID SERIAL,
 	universityID INT NOT NULL REFERENCES UNIVERSITY(universityID) ON DELETE CASCADE ON UPDATE CASCADE,
 	evaluationType EVALUATION_TYPE not NULL,
+    minGrade NUMERIC(5,2) NOT NULL,
+    maxGrade NUMERIC(5,2) NOT NULL,
     PRIMARY KEY (evaluationSystemID)
 );
 
 CREATE TABLE GRADE_CONVERSION (
     gradeConversionID SERIAL,
     evaluationSystemID INT NOT NULL REFERENCES EVALUATION_SYSTEM(evaluationSystemID) ON DELETE CASCADE ON UPDATE CASCADE,
-	gradeMin NUMERIC(5,2) NOT NULL,
-	gradeMax NUMERIC(5,2) NOT NULL, 
+	MinIntervalGrade NUMERIC(5,2) NOT NULL,
+	MaxIntervalGrade NUMERIC(5,2) NOT NULL, 
 	baseEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
 	topEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
 	factor NUMERIC(5,2) NOT NULL,

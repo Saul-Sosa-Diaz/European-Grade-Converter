@@ -2,7 +2,21 @@ INSERT INTO COUNTRY (countryName, countryCode)
 VALUES 
 	('Spain', 'ES'),
 	('France', 'FR'),
-	('Italy', 'IT')
+	('Italy', 'IT'),
+  ('Ireland', 'IE'),
+  ('United Kingdom', 'GB'),
+  ('Belgium', 'BE'),
+  ('Denmark', 'DK'),
+  ('Austria', 'AT'),
+  ('Bulgaria', 'BG'),
+  ('Czech Republic', 'CZ'),
+  ('Germany','DE'),
+  ('Greece', 'GR'),
+  ('Norway','NO'),
+  ('Poland','PL'),
+  ('Portugal','PT'),
+  ('Switzerland', 'CH'),
+  ('Slovenia', 'SI'),
 RETURNING (countryName, countryID);
 
 INSERT INTO COUNTRY (countryName, countryCode)
