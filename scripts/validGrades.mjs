@@ -1,4 +1,4 @@
-import fs from 'fs'
+
 
 export function generateGrades(start, end, step) {
   const result = []
@@ -7,20 +7,15 @@ export function generateGrades(start, end, step) {
     i = parseFloat(i.toFixed(2))
     result.push(String(i))
   }
-  console.log(result)
   return result
 }
+// import fs from 'fs'
+// const grades = generateGrades(0, 20, 0.01)
 
-const start = 0
-const end = 10
-const step = 0.01
+// // Format the results as a JSON with a specific format
+// const formattedGrades = `{"${grades.join('","')}"}`
 
-const grades = generateGrades(start, end, step)
+// // Save the results to a file
+// fs.writeFileSync('grades.txt', formattedGrades, 'utf-8')
 
-// Format the results as a JSON with a specific format
-const formattedGrades = `{"${grades.join('","')}"}`
-
-// Save the results to a file
-fs.writeFileSync('grades.txt', formattedGrades, 'utf-8')
-
-console.log('Grades have been written to grades.txt')
+// console.log('Grades have been written to grades.txt')

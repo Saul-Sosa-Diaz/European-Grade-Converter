@@ -20,8 +20,6 @@ import { ItalyBoloniaEngineeringGradeConverter } from '@/lib/countriesClasses/it
 import { Country } from '@/domain/countries/country'
 import { generateGrades } from '../../../scripts/validGrades.mjs'
 
-// Hacer uno para los hoja y otro para los padres
-
 export const COUNTRIES: Country[] = [
   {
     key: '0',
