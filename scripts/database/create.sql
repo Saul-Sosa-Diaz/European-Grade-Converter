@@ -26,6 +26,7 @@ CREATE TABLE EVALUATION_SYSTEM (
 	evaluationType EVALUATION_TYPE not NULL,
     minGrade NUMERIC(5,2) NOT NULL,
     maxGrade NUMERIC(5,2) NOT NULL,
+    step NUMERIC(5,2),
     PRIMARY KEY (evaluationSystemID)
 );
 
