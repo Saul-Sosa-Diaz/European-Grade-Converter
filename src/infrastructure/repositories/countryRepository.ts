@@ -5,11 +5,13 @@ export function createCountryRepository(): CountriesRepository {
     getCountries: async () => {
       const { countries } = await fetch('/api/countries', {
         method: 'get',
-      }).then((response) => {
-        return response.json()
       })
+        .then((response) => response.json())
+        .catch((error) => {
+          throw new Error(error)
+        })
+        return countries
 
-      return countries
     },
   }
 }
