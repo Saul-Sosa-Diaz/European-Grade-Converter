@@ -180,3 +180,152 @@ VALUES (
   10,            
   'OUTSTANDING'
 );
+
+-- Italy (Salermo) Evaluation System
+INSERT INTO EVALUATION_SYSTEM (
+   universityID, evaluationType, validGrades
+)
+VALUES (
+  3,
+  'continuous',
+  '{"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","30L"}'
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+VALUES (
+  3,               
+  0,               
+  17,               
+  0,                
+  0.278,                 
+  4.99           
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+ VALUES (
+  3,               
+  18,               
+  25,               
+  5,                
+  0.249,                 
+  6.99           
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+VALUES (
+  3, 
+  26,               
+  30,               
+  7,                
+  0.5,                 
+  9         
+);
+-- Italy (Bolonia Science) Evaluation System
+INSERT INTO EVALUATION_SYSTEM (
+   universityID, evaluationType, validGrades
+)
+VALUES (
+  4,
+  'continuous',
+  '{"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","30L"}'
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+VALUES (
+  4,               
+  0,               
+  17,               
+  0,                
+  0.278,                 
+  4.99           
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+ VALUES (
+  4,               
+  18,               
+  28,               
+  5,                
+  0.19,                 
+  6.99           
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+VALUES (
+  4, 
+  28,               
+  30,               
+  7,                
+  1,                 
+  9
+);
+-- Italy (Bolonia Engineering) Evaluation System
+INSERT INTO EVALUATION_SYSTEM (
+   universityID, evaluationType, validGrades
+)
+VALUES (
+  4,
+  'continuous',
+  '{"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","30L"}'
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+VALUES (
+  5,               
+  0,               
+  17,               
+  0,                
+  0.278,                 
+  4.99           
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+ VALUES (
+  5,               
+  18,               
+  19,               
+  5,                
+  0.495,                 
+  5.99           
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+ VALUES (
+  5,               
+  20,               
+  25,               
+  6,                
+  0.165,                 
+  6.99           
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+ VALUES (
+  5,               
+  26,               
+  28,               
+  7,                
+  0.33,                 
+  7.99           
+);
+INSERT INTO GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, factor, topEquivalentSpanishGrade
+)
+VALUES (
+  5, 
+  29,               
+  30,               
+  8,                
+  0.5,                 
+  9         
+);
