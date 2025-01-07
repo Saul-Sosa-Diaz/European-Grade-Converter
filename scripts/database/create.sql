@@ -25,6 +25,7 @@ CREATE TABLE EVALUATION_SYSTEM (
 	universityID INT NOT NULL REFERENCES UNIVERSITY(universityID) ON DELETE CASCADE ON UPDATE CASCADE,
 	evaluationType EVALUATION_TYPE not NULL,
     validGrades TEXT [],
+    evaluationSystemName VARCHAR(255),
     PRIMARY KEY (evaluationSystemID)
 );
 
