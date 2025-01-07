@@ -1,12 +1,12 @@
 import { Country } from "@/domain/countries/country";
 import { CustomTreeSelect } from "../customTreeSelect";
-import { COUNTRIES, findCountryByKey } from "@/infrastructure/fixture/countries";
+import { findCountryByKey } from "@/infrastructure/fixture/countries";
 import { useState } from "react";
 import { useGradeConverterContext } from "@/context/GradeConverterContext";
 import { renderOptionTemplate, renderSelectedItemTemplate } from "../treeSelectTemplates";
 import { DropdownChangeEvent } from "primereact/dropdown";
 
-export const CountryFromTreeSelect = () => {
+export const CountryFromTreeSelect = ({countries}) => {
     const { setGradeToConvert, setCountryFrom, countryFrom } = useGradeConverterContext();
     const [selectedKeyCountry, setSelectedKeyCountry] = useState<string | null>(null);
 
@@ -24,7 +24,7 @@ export const CountryFromTreeSelect = () => {
         <CustomTreeSelect<Country>
             value={selectedKeyCountry} // The selected country key
             onChange={(e: DropdownChangeEvent) => handleCountryChange(e)} // Event handler for country change
-            options={COUNTRIES} // TODO: List of available countries from the database
+            options={countries} // TODO: List of available countries from the database
             nodeTemplate={renderOptionTemplate} // Template for rendering country options
             valueTemplate={renderSelectedItemTemplate} // Template for rendering the selected country
             optionLabel="name" // Label to display for each country
