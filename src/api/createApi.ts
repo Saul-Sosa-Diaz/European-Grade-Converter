@@ -1,6 +1,6 @@
 import { createApiFake } from './createApiFake'
 import { createCountryRepository } from '../infrastructure/repositories/countryRepository'
-import { getCountries } from '@/application/getCountries'
+import { getCountries } from '@/application/countries/getCountries'
 import { Api } from './domain/Api'
 import { createAuthRepository } from '@/infrastructure/repositories/auth/authRepository'
 import { signIn } from '@/application/auth/signIn'
