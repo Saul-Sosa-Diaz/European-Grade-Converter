@@ -24,7 +24,7 @@ export const CountryFromTreeSelect = ({countries}) => {
         <CustomTreeSelect<Country>
             value={selectedKeyCountry} // The selected country key
             onChange={(e: DropdownChangeEvent) => handleCountryChange(e)} // Event handler for country change
-            options={countries} // TODO: List of available countries from the database
+            options={countries}
             nodeTemplate={renderOptionTemplate} // Template for rendering country options
             valueTemplate={renderSelectedItemTemplate} // Template for rendering the selected country
             optionLabel="name" // Label to display for each country

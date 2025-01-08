@@ -8,18 +8,22 @@ import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.t
 import { InputGrade } from "./components/InputGradeComponent/InputGradeComponent";
 import { CountryFromTreeSelect } from "./components/CountryFromTreeSelectorComponent/CountryFromTreeSelectComponent";
 import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/CountryAdditionalInfoComponent";
+import { useGetCountries } from "@/hooks/useGetCountries";
 // TODO: FIX SWITZELAND
 
 export function Home() {
-
+  const { countries, isLoading } = useGetCountries();
+  console.log(countries);
   // TODO: GIVE A VISUAL FEEDBACK WITH COLORS IN GRADE
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <HomeScreenMain>
-
       <Header />
       <ConversorContainer>
         <CountryAndGradeContainer>
-          <CountryFromTreeSelect />
+          <CountryFromTreeSelect countries={countries} />
           <InputGrade />
         </CountryAndGradeContainer>
         <ArrowRight className="pi pi-arrow-right" />
