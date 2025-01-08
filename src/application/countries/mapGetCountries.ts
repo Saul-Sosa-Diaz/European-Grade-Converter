@@ -1,4 +1,4 @@
-import { Country } from '@/domain/countries/country'
+import { Country, EvaluationType } from '@/domain/countries/country'
 import { APICountry, APIGetCountries } from '@/domain/countries/dto/ApiGetCountries'
 
 export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[]> => {
@@ -29,19 +29,20 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
         mappedCountries.push({
           label: country.countryname,
           code: country.countrycode,
-          key: country.countryid,
+          key: String(country.countryid),
+          evaluationType: country.evaluationtype as unknown as EvaluationType, 
           validGrades: country.validgrades,
         })
         return
       }
 
-      let children = []
+      let children: Country[] = []
       if (
         CountryIdOccurrences[countryId] > 1 &&
         UniversityIdOccurrences[country.universityid] === 1
       ) {
         // Management of single universities per country
-        children = dto
+        children  = dto
           .filter((country) => parseInt(country.countryid) === parseInt(countryId))
           .reduce((uniqueUniversities, country) => {
             // Filter unique universities based on `universityid`.
@@ -58,7 +59,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
           .map((country) => {
             if (UniversityIdOccurrences[country.universityid] > 1) {
               // Management of unique evaluation systems per university
-              const deepestChildren = dto
+              const deepestChildren: Country[] = dto
                 .filter(
                   (dtoItem) => parseInt(dtoItem.universityid) === parseInt(country.universityid),
                 )
@@ -69,6 +70,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
                       label: dtoItem.evaluationsystemname,
                       code: dtoItem.countrycode,
                       key,
+                      evaluationType: country.evaluationtype as unknown as EvaluationType,
                       validGrades: dtoItem.validgrades,
                     })
                   }
@@ -81,12 +83,13 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
                 code: country.countrycode,
                 key: `${country.countrycode}-${country.universityid}`,
                 children: deepestChildren,
-              }
+              } 
             }
             
             return {
               label: country.universityname,
               code: country.countrycode,
+              evaluationType: country.evaluationtype as unknown as EvaluationType,
               key: `${country.countrycode}-${country.universityid}`,
               validGrades: country.validgrades,
             }
@@ -98,7 +101,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
         label: country.countryname,
         code: country.countrycode,
         selectable: false,
-        key: country.countryid,
+        key: String(country.countryid),
         children: children,
       })
     })

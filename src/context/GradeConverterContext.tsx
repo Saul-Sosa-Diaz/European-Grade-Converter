@@ -9,16 +9,31 @@
  * @description This file contains the needed context to make the grade conversion.
  */
 
-import { createContext, useContext } from 'react';
+import React, { createContext, ReactNode, useContext } from 'react';
 import { useState } from 'react';
-import { COUNTRIES } from '../infrastructure/fixture/countries';
+import { Country } from '@/domain/countries/country';
 
 const GradeConverterContext = createContext(null);
 
-export const GradeConverterContextProvider = ({ children }) => {
-  const [gradeToConvert, setGradeToConvert] = useState(undefined);
-  const [countryFrom, setCountryFrom] = useState(undefined);
-  const [countryTo, setCountryTo] = useState(COUNTRIES.find((country) => country.code === "ES")); // TODO: Change to DB
+interface GradeConverterContextProviderProps {
+  children: ReactNode;
+  countries: Country[];
+}
+interface GradeConverterContextType {
+  gradeToConvert: Country | undefined;
+  setGradeToConvert: React.Dispatch<React.SetStateAction<Country | undefined>>;
+  countryFrom: Country | undefined;
+  setCountryFrom: React.Dispatch<React.SetStateAction<Country | undefined>>;
+  countryTo: Country | undefined;
+  setCountryTo: React.Dispatch<React.SetStateAction<Country | undefined>>;
+}
+
+export const GradeConverterContextProvider = ({ children, countries }: GradeConverterContextProviderProps) => {
+  const [gradeToConvert, setGradeToConvert] = useState<Country>(undefined);
+  const [countryFrom, setCountryFrom] = useState<Country>(undefined);
+  const [countryTo, setCountryTo] = useState<Country>(
+    countries.find((country) => country.code === "ES")
+  ); 
   return (
     <GradeConverterContext.Provider value={{ gradeToConvert, setGradeToConvert, countryFrom, setCountryFrom, countryTo, setCountryTo }}>
       {children}
@@ -26,7 +41,7 @@ export const GradeConverterContextProvider = ({ children }) => {
   );
 };
 
-export const useGradeConverterContext = () => {
+export const useGradeConverterContext = (): GradeConverterContextType => {
   const context = useContext(GradeConverterContext);
   if (context === undefined) {
     throw new Error('useGradeConverterContext must be used within a GradeConverterContextProvider');

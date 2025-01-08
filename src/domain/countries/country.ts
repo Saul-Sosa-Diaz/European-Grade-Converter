@@ -1,5 +1,10 @@
 import { ICountryConverter } from '@/lib/interfaces/i-grade-converter'
 
+export enum EvaluationType {
+  CONTINOUOS = 'continuous',
+  DISCRETE = 'discrete',
+}
+
 export type Country = {
   label: string
   code?: string
@@ -8,7 +13,7 @@ export type Country = {
   gradeConverter?: ICountryConverter
   validGrades?: string[]
   suffix?: string
-  input?: boolean
+  evaluationType?: EvaluationType
   aditionalInfo?: string
   children?: Country[]
   document_url?: string

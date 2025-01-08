@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <NextAuthProvider>
         <ApiProvider offline={false}>
-          <body className="m-0 overflow-visible">{<LoadingStyles>{children}</LoadingStyles>}</body>
+            <body className="m-0 overflow-visible">{<LoadingStyles>{children}</LoadingStyles>}</body>
         </ApiProvider>
       </NextAuthProvider>
     </html>

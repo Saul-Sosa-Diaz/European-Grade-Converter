@@ -1,8 +1,9 @@
 "use client";
-import { GradeConverterContextProvider } from "@/context/GradeConverterContext";
 import { Home as HomeScreen } from "@/infrastructure/screens/home";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 export default function App() {
+
   return (
     <QueryClientProvider
       client={
@@ -15,10 +16,8 @@ export default function App() {
         })
       }
     >
-      <GradeConverterContextProvider>
         <HomeScreen />
-      </GradeConverterContextProvider>
-    </QueryClientProvider>
 
+    </QueryClientProvider>
   );
 }

@@ -280,7 +280,7 @@ export const COUNTRIES: Country[] = [
   },
 ].sort((a, b) => a.label.localeCompare(b.label))
 
-export function findCountryByKey(key: string): Country | undefined {
+export function findCountryByKey(key: string, countries: Country[]): Country | undefined {
   function searchCountry(country: Country, key: string): Country | undefined {
     if (country.key === key) {
       return country
@@ -298,7 +298,7 @@ export function findCountryByKey(key: string): Country | undefined {
     return undefined
   }
 
-  for (const country of COUNTRIES) {
+  for (const country of countries) {
     const result = searchCountry(country, key)
     if (result) {
       return result
