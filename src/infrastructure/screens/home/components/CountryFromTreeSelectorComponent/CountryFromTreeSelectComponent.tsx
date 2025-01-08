@@ -13,7 +13,7 @@ export const CountryFromTreeSelect = ({countries}) => {
     const handleCountryChange = (e: DropdownChangeEvent) => {
         const selectedKeyCountryValue = e.value;
         if (selectedKeyCountryValue) {
-            const NEW_COUNTRY = findCountryByKey(selectedKeyCountryValue);
+            const NEW_COUNTRY = findCountryByKey(selectedKeyCountryValue, countries);
             setGradeToConvert(null); // Reset grade in global context
             setSelectedKeyCountry(selectedKeyCountryValue); // Update selected country key
             setCountryFrom(NEW_COUNTRY); // Update country in global context
