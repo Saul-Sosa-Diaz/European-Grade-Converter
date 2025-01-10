@@ -9,7 +9,7 @@
  * @description This file contains the interfaces for implementing the note conversion class structure, using the strategy pattern.
  */
 
-import { Country } from '@/domain/countries/country'
+import { Country } from '@/domain/country/country'
 
 /**
  * Interface for countries to force each country to switch to the Spanish system and to their own.

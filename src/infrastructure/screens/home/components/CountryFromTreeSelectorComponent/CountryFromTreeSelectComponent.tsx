@@ -1,4 +1,4 @@
-import { Country } from "@/domain/countries/country";
+import { Country } from "@/domain/country/country";
 import { CustomTreeSelect } from "../customTreeSelect";
 import { findCountryByKey } from "@/infrastructure/fixture/countries";
 import { useState } from "react";
@@ -6,7 +6,7 @@ import { useGradeConverterContext } from "@/context/GradeConverterContext";
 import { renderOptionTemplate, renderSelectedItemTemplate } from "../treeSelectTemplates";
 import { DropdownChangeEvent } from "primereact/dropdown";
 
-export const CountryFromTreeSelect = ({countries}) => {
+export const CountryFromTreeSelect = ({ countries }) => {
     const { setGradeToConvert, setCountryFrom, countryFrom } = useGradeConverterContext();
     const [selectedKeyCountry, setSelectedKeyCountry] = useState<string | null>(null);
 

@@ -1,10 +1,11 @@
 import { useGradeConverterContext } from "@/context/GradeConverterContext";
-import { EvaluationType } from "@/domain/countries/country";
+import { EvaluationType } from "@/domain/country/country";
 import { customParseFloat } from "@/lib/utils";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
 
+// TODO: DO THIS WITH DEBOUNCE
 export const InputGrade = () => {
   const { countryFrom, setGradeToConvert } = useGradeConverterContext(); // Context for sharing grade and country globally
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null); // State for selected grade value

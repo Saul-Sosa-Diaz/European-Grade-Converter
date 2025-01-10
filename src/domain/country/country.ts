@@ -14,6 +14,7 @@ export type Country = {
   validGrades?: string[]
   suffix?: string
   evaluationType?: EvaluationType
+  evaluationSystemID?: string
   aditionalInfo?: string
   children?: Country[]
   document_url?: string

@@ -9,7 +9,7 @@
  * @description This file contains the country templates used to render the selected item and options.
  */
 
-import { Country } from "@/domain/countries/country";
+import { Country } from "@/domain/country/country";
 
 
 

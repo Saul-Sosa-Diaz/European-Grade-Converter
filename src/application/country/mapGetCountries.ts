@@ -1,5 +1,5 @@
-import { Country, EvaluationType } from '@/domain/countries/country'
-import { APICountry, APIGetCountries } from '@/domain/countries/dto/ApiGetCountries'
+import { Country, EvaluationType } from '@/domain/country/country'
+import { APICountry, APIGetCountries } from '@/domain/country/dto/ApiGetCountries'
 
 export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[]> => {
   try {
@@ -30,8 +30,9 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
           label: country.countryname,
           code: country.countrycode,
           key: String(country.countryid),
-          evaluationType: country.evaluationtype as unknown as EvaluationType, 
+          evaluationType: country.evaluationtype as unknown as EvaluationType,
           validGrades: country.validgrades,
+          evaluationSystemID: country.evaluationsystemid,
         })
         return
       }
@@ -42,7 +43,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
         UniversityIdOccurrences[country.universityid] === 1
       ) {
         // Management of single universities per country
-        children  = dto
+        children = dto
           .filter((country) => parseInt(country.countryid) === parseInt(countryId))
           .reduce((uniqueUniversities, country) => {
             // Filter unique universities based on `universityid`.
@@ -71,6 +72,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
                       code: dtoItem.countrycode,
                       key,
                       evaluationType: country.evaluationtype as unknown as EvaluationType,
+                      evaluationSystemID: dtoItem.evaluationsystemid,
                       validGrades: dtoItem.validgrades,
                     })
                   }
@@ -83,14 +85,15 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
                 code: country.countrycode,
                 key: `${country.countrycode}-${country.universityid}`,
                 children: deepestChildren,
-              } 
+              }
             }
-            
+
             return {
               label: country.universityname,
               code: country.countrycode,
               evaluationType: country.evaluationtype as unknown as EvaluationType,
               key: `${country.countrycode}-${country.universityid}`,
+              evaluationSystemID: country.evaluationsystemid,
               validGrades: country.validgrades,
             }
           })

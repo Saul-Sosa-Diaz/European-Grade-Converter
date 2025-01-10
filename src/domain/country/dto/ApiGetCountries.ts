@@ -14,4 +14,5 @@ export interface APICountry {
   evaluationsystemname: string
   validgrades: string[]
   evaluationtype: APIEvaluationType
+  evaluationsystemid: string
 }

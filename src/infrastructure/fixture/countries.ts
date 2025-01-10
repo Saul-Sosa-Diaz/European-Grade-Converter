@@ -17,7 +17,7 @@ import { PolandGradeConverter } from '@/lib/countriesClasses/poland-grade-conver
 import { SloveniaGradeConverter } from '@/lib/countriesClasses/slovenia-grade-converter'
 import { SwitzerlandGradeConverter } from '@/lib/countriesClasses/switzerland-grade-converter'
 import { ItalyBoloniaEngineeringGradeConverter } from '@/lib/countriesClasses/italy-bolonia-engineering-grade-converter'
-import { Country } from '@/domain/countries/country'
+import { Country } from '@/domain/country/country'
 import { generateGrades } from '../../../scripts/validGrades.mjs'
 
 export const COUNTRIES: Country[] = [

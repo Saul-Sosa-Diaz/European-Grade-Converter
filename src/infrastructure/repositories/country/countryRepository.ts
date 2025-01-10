@@ -1,5 +1,5 @@
-import { mapApiGetcountries } from '@/application/countries/mapGetCountries'
-import { CountriesRepository } from '@/domain/countries/countryRepository'
+import { mapApiGetcountries } from '@/application/country/mapGetCountries'
+import { CountriesRepository } from '@/domain/country/countryRepository'
 
 export function createCountryRepository(): CountriesRepository {
   return {

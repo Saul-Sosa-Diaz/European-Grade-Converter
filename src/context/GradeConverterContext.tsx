@@ -11,7 +11,7 @@
 
 import React, { createContext, ReactNode, useContext } from 'react';
 import { useState } from 'react';
-import { Country } from '@/domain/countries/country';
+import { Country } from '@/domain/country/country';
 
 const GradeConverterContext = createContext(null);
 
@@ -20,7 +20,7 @@ interface GradeConverterContextProviderProps {
   countries: Country[];
 }
 interface GradeConverterContextType {
-  gradeToConvert: Country | undefined;
+  gradeToConvert: string | undefined;
   setGradeToConvert: React.Dispatch<React.SetStateAction<Country | undefined>>;
   countryFrom: Country | undefined;
   setCountryFrom: React.Dispatch<React.SetStateAction<Country | undefined>>;
@@ -29,11 +29,11 @@ interface GradeConverterContextType {
 }
 
 export const GradeConverterContextProvider = ({ children, countries }: GradeConverterContextProviderProps) => {
-  const [gradeToConvert, setGradeToConvert] = useState<Country>(undefined);
+  const [gradeToConvert, setGradeToConvert] = useState<string>("");
   const [countryFrom, setCountryFrom] = useState<Country>(undefined);
   const [countryTo, setCountryTo] = useState<Country>(
     countries.find((country) => country.code === "ES")
-  ); 
+  );
   return (
     <GradeConverterContext.Provider value={{ gradeToConvert, setGradeToConvert, countryFrom, setCountryFrom, countryTo, setCountryTo }}>
       {children}

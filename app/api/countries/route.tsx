@@ -4,7 +4,7 @@ export async function GET() {
   try {
     const databaseAdapter = createDatabaseAdapter();
     const result = await databaseAdapter.getCountries();
-    return Response.json({ countries: result.rows });
+    return Response.json({ countries: result });
   } catch (error) {
     return Response.json({ error });
   }
