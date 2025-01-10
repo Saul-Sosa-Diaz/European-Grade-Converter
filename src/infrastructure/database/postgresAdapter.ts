@@ -27,17 +27,21 @@ export class PostgresAdapter implements DatabaseAdapter {
       throw new Error('No conversion found')
     }
     const conversion = rows[0]
+    console.log('conversion', conversion)
+   const minIntervalGrade = Number(conversion.minintervalgrade)
+   const maxIntervalGrade = Number(conversion.maxintervalgrade)
+   const baseEquivalentSpanishGrade = Number(conversion.baseequivalentspanishgrade)
+   const topEquivalentSpanishGrade = Number(conversion.topequivalentspanishgrade)
     const convertedGrade =
       direction === 'toSpanish'
-        ? ((grade - conversion.MinIntervalGrade) /
-            (conversion.MaxIntervalGrade - conversion.MinIntervalGrade)) *
-            (conversion.topEquivalentSpanishGrade - conversion.baseEquivalentSpanishGrade) +
-          conversion.baseEquivalentSpanishGrade
-        : ((grade - conversion.baseEquivalentSpanishGrade) /
-            (conversion.topEquivalentSpanishGrade - conversion.baseEquivalentSpanishGrade)) *
-            (conversion.MaxIntervalGrade - conversion.MinIntervalGrade) +
-          conversion.MinIntervalGrade
-
+        ? ((grade - minIntervalGrade) / (maxIntervalGrade - minIntervalGrade)) *
+            (topEquivalentSpanishGrade - baseEquivalentSpanishGrade) +
+          baseEquivalentSpanishGrade
+        : ((grade - baseEquivalentSpanishGrade) /
+            (topEquivalentSpanishGrade - baseEquivalentSpanishGrade)) *
+            (maxIntervalGrade - minIntervalGrade) +
+          minIntervalGrade
+    console.log('convertedGrade', convertedGrade)
     return convertedGrade.toFixed(2)
   }
 }

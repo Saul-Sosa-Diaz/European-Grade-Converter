@@ -1,32 +1,28 @@
 import { useGradeConverterContext } from "@/context/GradeConverterContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GradeStyled, StyledCard } from "./CalculatedGradeComponent.styles";
 import { useConvertGrade } from "@/hooks/useConvertGrade";
 
 export const CalculatedGradeComponent = () => {
-  // Access the grade and origin country from the global context
   const { gradeToConvert, countryFrom, countryTo } = useGradeConverterContext();
-  // State to hold the calculated grade
   const [calculatedGrade, setCalculatedGrade] = useState<string | null>(null);
-  const { convertGrade } = useConvertGrade({});
-  // const calculateGrade = useCallback(() => {
-  //     const GRADE_CONVERSOR = new GeneralGradeConverter(); // Initialize the grade converter
-  //     if (!gradeToConvert) {
-  //         setCalculatedGrade(null); // Clear the calculated grade if no grade is provided
-  //     } else if (gradeToConvert) {
-  //         // Convert the grade based on the origin and destination countries' grading systems
-  //         const CONVERTED_GRADE = GRADE_CONVERSOR.convert(
-  //             gradeToConvert,
-  //             countryFrom,
-  //             countryTo
-  //         );
-  //         setCalculatedGrade(CONVERTED_GRADE); // Update the state with the converted grade
-  //     }
-  // }, [gradeToConvert, countryFrom, countryTo]);
+  const { convertedGrade } = useConvertGrade(
+    countryFrom && countryFrom.evaluationSystemID
+      ? {
+        fromEvaluationSystemID: countryFrom.evaluationSystemID,
+        toEvaluationSystemID: countryTo.evaluationSystemID,
+        grade: gradeToConvert,
+      }
+      : { fromEvaluationSystemID: null, toEvaluationSystemID: null, grade: null }
+  );
 
-  // useEffect(() => {
-  //     calculateGrade();
-  // }, [calculateGrade]);
+  useEffect(() => {
+    if (!countryFrom) return;
+    const newGrade = convertedGrade;
+    if (newGrade) {
+      setCalculatedGrade(newGrade);
+    }
+  }, [convertedGrade, countryFrom]);
 
   return (
     <>

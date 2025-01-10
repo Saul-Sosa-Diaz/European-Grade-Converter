@@ -1,13 +1,21 @@
+
 import { useApi } from '@/context/ApiContext'
 import { ConvertGrade } from '@/domain/grades/gradesRepository'
 import { useQuery } from '@tanstack/react-query'
 
-export const useConvertGrade = (params: ConvertGrade.Params) => {
-  const { Grades } = useApi()
+export const useConvertGrade = (params: ConvertGrade.Params | null) => {
+  const { Grades } = useApi();
+  const isParamsValid = !!(params && params.fromEvaluationSystemID && params.toEvaluationSystemID && params.grade);
   const { data, ...rest } = useQuery({
-    queryKey: ['convert-grade', params],
-    queryFn: async () => await Grades.convertGrade(params),
+    queryKey: ['convert-grade', params.fromEvaluationSystemID, params.grade, params.toEvaluationSystemID, isParamsValid],
+    queryFn: async () => {
+      if (!isParamsValid) {
+        return null 
+      }
+      return await Grades.convertGrade(params)
+    },
+    enabled: isParamsValid,
   })
 
-  return { countries: data, ...rest }
-}
+  return { convertedGrade: data, ...rest };
+};

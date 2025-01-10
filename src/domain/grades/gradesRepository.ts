@@ -1,8 +1,8 @@
 export namespace ConvertGrade {
   export type Params = {
-    FromEvaluationSystemID: string
-    ToEvaluationSystemID: string
-    grade: number
+    fromEvaluationSystemID: string
+    toEvaluationSystemID: string
+    grade: string
   }
   export type Response = string
   export type Request = (params: ConvertGrade.Params) => Promise<ConvertGrade.Response>
