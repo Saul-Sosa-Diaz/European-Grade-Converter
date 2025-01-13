@@ -11,6 +11,7 @@ export type Country = {
   key: string
   selectable?: boolean
   gradeConverter?: ICountryConverter
+  fixed?: number
   validGrades?: string[]
   suffix?: string
   evaluationType?: EvaluationType

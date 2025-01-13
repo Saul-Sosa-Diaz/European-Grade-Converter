@@ -3,6 +3,7 @@ export namespace ConvertGrade {
     fromEvaluationSystemID: string
     toEvaluationSystemID: string
     grade: string
+    fixed: string
   }
   export type Response = string
   export type Request = (params: ConvertGrade.Params) => Promise<ConvertGrade.Response>
