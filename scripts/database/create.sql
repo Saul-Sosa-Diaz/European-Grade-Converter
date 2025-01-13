@@ -26,6 +26,7 @@ CREATE TABLE EVALUATION_SYSTEM (
 	evaluationType EVALUATION_TYPE not NULL,
     validGrades TEXT [],
     evaluationSystemName VARCHAR(255),
+	fixed NUMERIC not null,
     PRIMARY KEY (evaluationSystemID)
 );
 
@@ -36,7 +37,7 @@ CREATE TABLE GRADE_CONVERSION (
 	MaxIntervalGrade NUMERIC(5,2) NOT NULL, 
 	baseEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
 	topEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
-	factor NUMERIC(5,2) NOT NULL,
+	factor NUMERIC(5,4) NOT NULL,
 	gradeName VARCHAR(255),
     PRIMARY KEY (gradeConversionID)
 );
