@@ -1,6 +1,6 @@
 import { Pool } from 'pg'
 import { QUERIES } from './queries'
-import { convertGradeParams, DatabaseAdapter } from '../config/databaseConfig'
+import { ConverterDirection, convertGradeParams, DatabaseAdapter } from '../config/databaseConfig'
 import { APICountry } from '@/domain/country/dto/ApiGetCountries'
 
 export class PostgresAdapter implements DatabaseAdapter {
@@ -18,22 +18,26 @@ export class PostgresAdapter implements DatabaseAdapter {
     evaluationSystemID,
     grade,
     direction,
-  }: convertGradeParams): Promise<string> {
-    const QUERY = QUERIES.CALCULATE_GRADE
+  }: convertGradeParams): Promise<number> {
+    const QUERY =
+      direction === ConverterDirection.toSpain
+        ? QUERIES.CALCULATE_GRADE_TO_SPAIN
+        : QUERIES.CALCULATE_GRADE_FROM_SPAIN
+    console.log(evaluationSystemID, grade)
     const VALUES = [evaluationSystemID, grade]
     const { rows } = await this.pool.query(QUERY, VALUES)
-
     if (rows.length === 0) {
       throw new Error('No conversion found')
     }
     const conversion = rows[0]
-    console.log('conversion', conversion)
-   const minIntervalGrade = Number(conversion.minintervalgrade)
-   const maxIntervalGrade = Number(conversion.maxintervalgrade)
-   const baseEquivalentSpanishGrade = Number(conversion.baseequivalentspanishgrade)
-   const topEquivalentSpanishGrade = Number(conversion.topequivalentspanishgrade)
+
+    const minIntervalGrade = Number(conversion.minintervalgrade)
+    const baseEquivalentSpanishGrade = Number(conversion.baseequivalentspanishgrade)
+    const topEquivalentSpanishGrade = Number(conversion.topequivalentspanishgrade)
+    const maxIntervalGrade = Number(conversion.maxintervalgrade)
+
     const convertedGrade =
-      direction === 'toSpanish'
+      direction === ConverterDirection.toSpain
         ? ((grade - minIntervalGrade) / (maxIntervalGrade - minIntervalGrade)) *
             (topEquivalentSpanishGrade - baseEquivalentSpanishGrade) +
           baseEquivalentSpanishGrade
@@ -41,7 +45,8 @@ export class PostgresAdapter implements DatabaseAdapter {
             (topEquivalentSpanishGrade - baseEquivalentSpanishGrade)) *
             (maxIntervalGrade - minIntervalGrade) +
           minIntervalGrade
+
     console.log('convertedGrade', convertedGrade)
-    return convertedGrade.toFixed(2)
+    return convertedGrade
   }
 }
