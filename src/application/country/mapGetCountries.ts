@@ -31,6 +31,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
           code: country.countrycode,
           key: String(country.countryid),
           evaluationType: country.evaluationtype as unknown as EvaluationType,
+          fixed: country.fixed,
           validGrades: country.validgrades,
           evaluationSystemID: country.evaluationsystemid,
         })
@@ -70,6 +71,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
                     uniqueSystems.push({
                       label: dtoItem.evaluationsystemname,
                       code: dtoItem.countrycode,
+                      fixed: dtoItem.fixed,
                       key,
                       evaluationType: country.evaluationtype as unknown as EvaluationType,
                       evaluationSystemID: dtoItem.evaluationsystemid,
@@ -93,6 +95,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
               code: country.countrycode,
               evaluationType: country.evaluationtype as unknown as EvaluationType,
               key: `${country.countrycode}-${country.universityid}`,
+              fixed: country.fixed,
               evaluationSystemID: country.evaluationsystemid,
               validGrades: country.validgrades,
             }
