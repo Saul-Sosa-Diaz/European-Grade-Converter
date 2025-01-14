@@ -18,6 +18,12 @@ export const CalculatedGradeComponent = () => {
   );
 
   useEffect(() => {
+    if (!gradeToConvert) {
+      setCalculatedGrade(null)
+    }
+  }, [gradeToConvert]);
+
+  useEffect(() => {
     if (!countryFrom) return;
     const newGrade = convertedGrade;
     if (newGrade) {
