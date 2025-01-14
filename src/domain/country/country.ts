@@ -1,7 +1,7 @@
 import { ICountryConverter } from '@/lib/interfaces/i-grade-converter'
 
 export enum EvaluationType {
-  CONTINOUOS = 'continuous',
+  CONTINUOUS = 'continuous',
   DISCRETE = 'discrete',
 }
 

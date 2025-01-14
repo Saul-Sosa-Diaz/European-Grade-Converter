@@ -1,7 +1,7 @@
 export type APIGetCountries = APICountry[]
 
 export enum APIEvaluationType {
-  CONTINOUOS = 'continous',
+  CONTINUOUS = 'continous',
   DISCRETE = 'discrete',
 }
 
