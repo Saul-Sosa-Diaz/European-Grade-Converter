@@ -12,9 +12,11 @@ export const CalculatedGradeComponent = () => {
         fromEvaluationSystemID: countryFrom.evaluationSystemID,
         toEvaluationSystemID: countryTo.evaluationSystemID,
         grade: gradeToConvert,
-        fixed: String(countryTo.fixed)
+        fixed: String(countryTo.fixed),
+        fromEvaluationType: countryFrom.evaluationType,
+        toEvaluationType: countryTo.evaluationType,
       }
-      : { fromEvaluationSystemID: null, toEvaluationSystemID: null, grade: null, fixed: "" }
+      : { fromEvaluationSystemID: null, toEvaluationSystemID: null, grade: null, fixed: "", fromEvaluationType: null, toEvaluationType: null }
   );
 
   useEffect(() => {

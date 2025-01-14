@@ -1,11 +1,13 @@
 import { APICountry } from '@/domain/country/dto/ApiGetCountries'
 import { PostgresAdapter } from '../database/postgresAdapter'
+import { EvaluationType } from '@/domain/country/country'
 export enum ConverterDirection {
   toSpain = 'toSpain',
 }
 
 export type convertGradeParams = {
   evaluationSystemID: string
+  evaluationType: EvaluationType
   grade: number
   direction?: ConverterDirection
 }

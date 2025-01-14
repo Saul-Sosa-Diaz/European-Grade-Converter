@@ -2,6 +2,7 @@ import { Pool } from 'pg'
 import { QUERIES } from './queries'
 import { ConverterDirection, convertGradeParams, DatabaseAdapter } from '../config/databaseConfig'
 import { APICountry } from '@/domain/country/dto/ApiGetCountries'
+import { EvaluationType } from '@/domain/country/country'
 
 export class PostgresAdapter implements DatabaseAdapter {
   private pool: Pool
@@ -16,14 +17,24 @@ export class PostgresAdapter implements DatabaseAdapter {
 
   async convertGrade({
     evaluationSystemID,
+    evaluationType,
     grade,
     direction,
   }: convertGradeParams): Promise<number> {
+    if (evaluationType === EvaluationType.CONTINUOUS) {
+      return this.continuousGradeConvert({ evaluationSystemID, grade, direction })
+    } else {
+      return this.discteteGradeConvert({ evaluationSystemID, grade, direction })
+    }
+  }
+
+  private async continuousGradeConvert({ evaluationSystemID, grade, direction }) {
+    const gradeNumber = Number(grade)
     const QUERY =
       direction === ConverterDirection.toSpain
-        ? QUERIES.CALCULATE_GRADE_TO_SPAIN
-        : QUERIES.CALCULATE_GRADE_FROM_SPAIN
-    
+        ? QUERIES.COUNTINUOUS_TO_SPAIN
+        : QUERIES.COUNTINUOUS_FROM_SPAIN
+
     const VALUES = [evaluationSystemID, grade]
     const { rows } = await this.pool.query(QUERY, VALUES)
 
@@ -39,13 +50,37 @@ export class PostgresAdapter implements DatabaseAdapter {
 
     const convertedGrade =
       direction === ConverterDirection.toSpain
-        ? ((grade - minIntervalGrade) / (maxIntervalGrade - minIntervalGrade)) *
+        ? ((gradeNumber - minIntervalGrade) / (maxIntervalGrade - minIntervalGrade)) *
             (topEquivalentSpanishGrade - baseEquivalentSpanishGrade) +
           baseEquivalentSpanishGrade
-        : ((grade - baseEquivalentSpanishGrade) /
+        : ((gradeNumber - baseEquivalentSpanishGrade) /
             (topEquivalentSpanishGrade - baseEquivalentSpanishGrade)) *
             (maxIntervalGrade - minIntervalGrade) +
           minIntervalGrade
+
+    return convertedGrade
+  }
+
+  private async discteteGradeConvert({ evaluationSystemID, grade, direction }) {
+    const QUERY =
+      direction === ConverterDirection.toSpain
+        ? QUERIES.DISCRETE_TO_SPAIN
+        : QUERIES.DISCRETE_FROM_SPAIN
+    const VALUES = [evaluationSystemID, grade]
+    const { rows } = await this.pool.query(QUERY, VALUES)
+    if (rows.length === 0) {
+      throw new Error('No conversion found')
+    }
+    const conversion = rows[0]
+
+    const baseEquivalentSpanishGrade = Number(conversion.baseequivalentspanishgrade)
+    const topEquivalentSpanishGrade = Number(conversion.topequivalentspanishgrade)
+    const gradeValue = conversion.gradevalue
+
+    const convertedGrade =
+      direction === ConverterDirection.toSpain
+        ? (baseEquivalentSpanishGrade + topEquivalentSpanishGrade) / 2
+        : gradeValue
 
     return convertedGrade
   }
