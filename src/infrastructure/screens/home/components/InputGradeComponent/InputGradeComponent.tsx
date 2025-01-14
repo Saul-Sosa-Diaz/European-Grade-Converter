@@ -17,7 +17,7 @@ export const InputGrade = () => {
   ) => {
     let selectedGradeValue = "value" in e ? e.value : e.target.value;
     setInputText(selectedGradeValue);
-    if (countryFrom.evaluationType === EvaluationType.CONTINOUOS) { // TODO: Refactor this
+    if (countryFrom.evaluationType === EvaluationType.CONTINUOUS) { // TODO: Refactor this
       selectedGradeValue = selectedGradeValue.replace(" ", "");
       selectedGradeValue = selectedGradeValue.replace(",", ".");
       selectedGradeValue = selectedGradeValue.replace(
@@ -73,7 +73,7 @@ export const InputGrade = () => {
       {
         countryFrom &&
         countryFrom.validGrades &&
-        countryFrom.evaluationType === EvaluationType.CONTINOUOS && (
+        countryFrom.evaluationType === EvaluationType.CONTINUOUS && (
           <InputText
             value={inputtext}
             invalid={invalidGrade} // Invalid state for grade input
