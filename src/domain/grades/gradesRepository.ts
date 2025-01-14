@@ -1,7 +1,11 @@
+import { EvaluationType } from "../country/country"
+
 export namespace ConvertGrade {
   export type Params = {
     fromEvaluationSystemID: string
     toEvaluationSystemID: string
+    fromEvaluationType: EvaluationType
+    toEvaluationType: EvaluationType
     grade: string
     fixed: string
   }
