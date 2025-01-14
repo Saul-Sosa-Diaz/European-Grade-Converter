@@ -57,7 +57,6 @@ export const InputGrade = () => {
     setSelectedGrade(null);
     setGradeToConvert(null);
   }, [countryFrom]);
-  console.log(EvaluationType.CONTINOUOS)
   return (
     <>
       {

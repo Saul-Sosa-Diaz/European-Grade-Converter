@@ -19,7 +19,6 @@ export function Home() {
   if (isLoading) {
     return <ProgressSpinner />
   }
-  console.log(countries)
   return (
     <GradeConverterContextProvider countries={countries}>
       <HomeScreenMain>
