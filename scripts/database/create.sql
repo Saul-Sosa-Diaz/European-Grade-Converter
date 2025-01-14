@@ -30,14 +30,22 @@ CREATE TABLE EVALUATION_SYSTEM (
     PRIMARY KEY (evaluationSystemID)
 );
 
-CREATE TABLE GRADE_CONVERSION (
+CREATE TABLE CONTINUOUS_GRADE_CONVERSION (
     gradeConversionID SERIAL,
     evaluationSystemID INT NOT NULL REFERENCES EVALUATION_SYSTEM(evaluationSystemID) ON DELETE CASCADE ON UPDATE CASCADE,
 	MinIntervalGrade NUMERIC(5,2) NOT NULL,
 	MaxIntervalGrade NUMERIC(5,2) NOT NULL, 
 	baseEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
 	topEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
-	factor NUMERIC(5,4) NOT NULL,
 	gradeName VARCHAR(255),
     PRIMARY KEY (gradeConversionID)
+);
+
+CREATE TABLE DISCRETE_GRADE_CONVERSION (
+    discreteGradeID SERIAL,
+    evaluationSystemID INT NOT NULL REFERENCES EVALUATION_SYSTEM(evaluationSystemID) ON DELETE CASCADE ON UPDATE CASCADE,
+    gradeValue VARCHAR(50) NOT NULL,
+    baseEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
+	topEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
+    PRIMARY KEY (discreteGradeID)
 );
