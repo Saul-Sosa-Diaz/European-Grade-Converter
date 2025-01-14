@@ -21,6 +21,7 @@ export const QUERIES = {
             FROM GRADE_CONVERSION gc
             WHERE gc.evaluationSystemID = $1
 			AND $2 BETWEEN gc.MinIntervalGrade AND gc.MaxIntervalGrade
+      ORDER BY gc.MinIntervalGrade DESC
         `,
   CALCULATE_GRADE_FROM_SPAIN: `
      SELECT gc.MinIntervalGrade, gc.MaxIntervalGrade,
@@ -28,5 +29,6 @@ export const QUERIES = {
             FROM GRADE_CONVERSION gc
             WHERE gc.evaluationSystemID = $1
 			AND $2 BETWEEN gc.baseEquivalentSpanishGrade AND gc.topEquivalentSpanishGrade
+      ORDER BY gc.baseEquivalentSpanishGrade DESC
         `,
 }
