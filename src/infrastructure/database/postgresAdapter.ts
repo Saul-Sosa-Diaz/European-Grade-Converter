@@ -23,9 +23,10 @@ export class PostgresAdapter implements DatabaseAdapter {
       direction === ConverterDirection.toSpain
         ? QUERIES.CALCULATE_GRADE_TO_SPAIN
         : QUERIES.CALCULATE_GRADE_FROM_SPAIN
-    console.log(evaluationSystemID, grade)
+    
     const VALUES = [evaluationSystemID, grade]
     const { rows } = await this.pool.query(QUERY, VALUES)
+
     if (rows.length === 0) {
       throw new Error('No conversion found')
     }
@@ -46,7 +47,6 @@ export class PostgresAdapter implements DatabaseAdapter {
             (maxIntervalGrade - minIntervalGrade) +
           minIntervalGrade
 
-    console.log('convertedGrade', convertedGrade)
     return convertedGrade
   }
 }
