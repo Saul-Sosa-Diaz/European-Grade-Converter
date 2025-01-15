@@ -18,7 +18,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
         UniversityIdOccurrences[country.universityid] = 1
       }
     })
-
+    
     const mappedCountries: Country[] = []
 
     Object.keys(CountryIdOccurrences).forEach((countryId) => {
@@ -111,8 +111,8 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
         children: children,
       })
     })
-
-    return mappedCountries
+    const sortedCountries = mappedCountries.sort((a, b) => a.label.localeCompare(b.label))
+    return sortedCountries
   } catch (error) {
     console.log(error)
     throw new Error(error)
