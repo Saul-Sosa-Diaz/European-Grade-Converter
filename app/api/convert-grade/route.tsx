@@ -1,4 +1,4 @@
-import { EvaluationType } from '@/domain/country/country';
+
 import { ConverterDirection, createDatabaseAdapter } from '@/infrastructure/config/databaseConfig';
 
 export async function POST(request: Request) {
@@ -13,11 +13,7 @@ export async function POST(request: Request) {
     const spainGrade = await databaseAdapter.convertGrade({ evaluationSystemID: fromEvaluationSystemID, grade: grade, direction: ConverterDirection.toSpain, evaluationType: fromEvaluationType });
     const result = await databaseAdapter.convertGrade({ evaluationSystemID: toEvaluationSystemID, grade: spainGrade, evaluationType: toEvaluationType });
 
-    if (toEvaluationType === EvaluationType.CONTINUOUS) {
-      return Response.json({ convertedGrade: result.toFixed(fixed) });
-    } else {
-      return Response.json({ convertedGrade: result });
-    }
+    return Response.json({ convertedGrade: typeof result === "string" ? result : result.toFixed(fixed) }); // If the result is a string it means that is a discrete grade
   } catch (error) {
     console.error(error);
     return Response.json({ error });
