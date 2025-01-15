@@ -216,6 +216,15 @@ VALUES (
   7,                             
   9         
 );
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+  3, 
+  '30L',                             
+  9,                           
+  10         
+);
 -- Italy (Bolonia Science) Evaluation System
 INSERT INTO EVALUATION_SYSTEM (
    universityID, evaluationSystemName, evaluationType, validGrades, fixed
@@ -256,6 +265,15 @@ VALUES (
   30,               
   7,                             
   9
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+  4, 
+  '30L',                             
+  9,                           
+  10         
 );
 -- Italy (Bolonia Engineering) Evaluation System
 INSERT INTO EVALUATION_SYSTEM (
@@ -393,4 +411,131 @@ VALUES (
    'A',               
    9,                                          
    10           
+);
+--- Austria
+INSERT INTO EVALUATION_SYSTEM (
+   universityID, evaluationSystemName, evaluationType, validGrades, fixed
+)
+VALUES (
+  9,
+  'Austria',
+  'discrete',
+  '{"1","2","3","4","5"}', 
+  0
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   7,               
+   '5',               
+   0,                                          
+   5           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   7,               
+   '4',               
+   5,                                          
+   7           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   7,               
+   '3',               
+   7,                                          
+   8           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   7,               
+   '2',               
+   8,                                          
+   9           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   7,               
+   '1',               
+   9,                                          
+   10           
+);
+--- Belgium 
+INSERT INTO EVALUATION_SYSTEM (
+   universityID, evaluationSystemName, evaluationType, validGrades, fixed
+)
+VALUES (
+  7,
+  'Belgium',
+  'continuous',
+  '{"0","1","2","3","4","5","6","7","8","9","10","11","12", "13", "14", "15", "16", "17", "18", "19", "20"}', 
+  0
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+  8,               
+  0,               
+  10,               
+  0,                               
+  5           
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+ VALUES (
+  8,               
+  10,               
+  11,               
+  5,                               
+  6          
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+ VALUES (
+  8,               
+  11,               
+  13,               
+  6,                               
+  7          
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+ VALUES (
+  8,               
+  13,               
+  15,               
+  7,                               
+  8          
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+ VALUES (
+  8,               
+  15,               
+  18,               
+  8,                               
+  9          
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+ VALUES (
+  8,               
+  18,               
+  20,               
+  9,                               
+  10          
 );
