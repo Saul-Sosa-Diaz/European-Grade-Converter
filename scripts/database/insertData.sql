@@ -313,11 +313,22 @@ INSERT INTO CONTINUOUS_GRADE_CONVERSION (
 )
 VALUES (
   5, 
-  30,               
+  29,               
   30,               
   8,                           
   9         
 );
+
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+  5, 
+  '30L',                             
+  9,                           
+  10         
+);
+
 -- Norway
 INSERT INTO EVALUATION_SYSTEM (
    universityID, evaluationSystemName, evaluationType, validGrades, fixed
