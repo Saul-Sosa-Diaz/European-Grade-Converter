@@ -30,6 +30,12 @@ export class PostgresAdapter implements DatabaseAdapter {
 
   private async continuousGradeConvert({ evaluationSystemID, grade, direction }) {
     const gradeNumber = Number(grade)
+
+    if (isNaN(gradeNumber)) {
+      // if the grade is not a number, it means that is a special grade like 30L in Italy or Matricula de Honor in Spain
+      return this.discteteGradeConvert({ evaluationSystemID, grade, direction, specialGrade: true })
+    }
+
     const QUERY =
       direction === ConverterDirection.toSpain
         ? QUERIES.COUNTINUOUS_TO_SPAIN
@@ -39,7 +45,9 @@ export class PostgresAdapter implements DatabaseAdapter {
     const { rows } = await this.pool.query(QUERY, VALUES)
 
     if (rows.length === 0) {
-      throw new Error('No conversion found')
+      // It could be a special grade that has another conversion
+      console.log('No conversion found', evaluationSystemID, grade, direction)
+      return this.discteteGradeConvert({ evaluationSystemID, grade, direction, specialGrade: true })
     }
     const conversion = rows[0]
 
@@ -61,7 +69,13 @@ export class PostgresAdapter implements DatabaseAdapter {
     return convertedGrade
   }
 
-  private async discteteGradeConvert({ evaluationSystemID, grade, direction }) {
+  private async discteteGradeConvert({
+    evaluationSystemID,
+    grade,
+    direction,
+    specialGrade = false,
+  }) {
+    console.log('Discrete grade convert', evaluationSystemID, grade, direction)
     const QUERY =
       direction === ConverterDirection.toSpain
         ? QUERIES.DISCRETE_TO_SPAIN
@@ -76,6 +90,11 @@ export class PostgresAdapter implements DatabaseAdapter {
     const baseEquivalentSpanishGrade = Number(conversion.baseequivalentspanishgrade)
     const topEquivalentSpanishGrade = Number(conversion.topequivalentspanishgrade)
     const gradeValue = conversion.gradevalue
+    console.log('Discrete grade convert', evaluationSystemID, grade, direction, conversion)
+    if (specialGrade) {
+      // special grade is a boolean that indicates if the grade is special and comes from the contiuous conversion. like in Italy with the 30L, or in Spain Matricula de Honor
+      return direction === ConverterDirection.toSpain ? topEquivalentSpanishGrade : gradeValue
+    }
 
     const convertedGrade =
       direction === ConverterDirection.toSpain
