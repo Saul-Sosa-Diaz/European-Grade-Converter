@@ -539,3 +539,59 @@ INSERT INTO CONTINUOUS_GRADE_CONVERSION (
   9,                               
   10          
 );
+--- Bulgaria
+INSERT INTO EVALUATION_SYSTEM (
+   universityID, evaluationSystemName, evaluationType, validGrades, fixed
+)
+VALUES (
+  10,
+  'Bulgaria',
+  'discrete',
+  '{"2","3","4","5"}', 
+  0
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   9,               
+   '2',               
+   0,                                          
+   5           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   9,               
+   '3',               
+   5,                                          
+   7           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   9,               
+   '4',               
+   7,                                          
+   8           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   9,               
+   '5',               
+   8,                                          
+   9           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   9,               
+   '6',               
+   9,                                          
+   10           
+);
