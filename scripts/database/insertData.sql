@@ -737,3 +737,77 @@ VALUES (
   10,            
   'Excellent'
 );
+--- Denmark
+INSERT INTO EVALUATION_SYSTEM (
+   universityID, evaluationSystemName, evaluationType, validGrades, fixed
+)
+VALUES (
+  8,
+  'Denmark',
+  'discrete',
+  '{"-3","00","02","4", "7", "10", "12"}', 
+  0
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   12,               
+   '-3',               
+   0,                                          
+   4.5           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   12,               
+   '00',               
+   4.5,                                          
+   5           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   12,               
+   '02',               
+   5,                                          
+   6           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   12,               
+   '4',               
+   6,                                          
+   7           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   12,               
+   '7',               
+   7,                                          
+   8           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   12,               
+   '10',               
+   8,                                          
+   9           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   12,               
+   '12',               
+   9,                                          
+   10           
+);
