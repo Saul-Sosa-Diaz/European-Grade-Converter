@@ -595,3 +595,68 @@ VALUES (
    9,                                          
    10           
 );
+--- Czech Republic
+INSERT INTO EVALUATION_SYSTEM (
+   universityID, evaluationSystemName, evaluationType, validGrades, fixed
+)
+VALUES (
+  11,
+  'Czech Republic',
+  'discrete',
+  '{"4","3","2.5","2", "1.5", "1"}', 
+  0
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   10,               
+   '4',               
+   0,                                          
+   5           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   10,               
+   '3',               
+   5,                                          
+   6           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   10,               
+   '2.5',               
+   6,                                          
+   7           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   10,               
+   '2',               
+   7,                                          
+   8           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   10,               
+   '1.5',               
+   8,                                          
+   9           
+);
+INSERT INTO DISCRETE_GRADE_CONVERSION (
+   evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+   10,               
+   '1',               
+   9,                                          
+   10           
+);
