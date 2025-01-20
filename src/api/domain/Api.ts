@@ -3,7 +3,7 @@ import { CountryRepository } from '@/domain/country/countryRepository'
 import { GradesRepository } from '@/domain/grades/gradesRepository'
 
 export interface Api {
-  Countries: CountryRepository
+  Country: CountryRepository
   Grades: GradesRepository
   Auth: AuthRepository
 }

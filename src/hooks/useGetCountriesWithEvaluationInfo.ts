@@ -5,7 +5,7 @@ export const useGetCountriesWithEvaluationInfo = () => {
   const { Countries } = useApi()
   const { data, ...rest } = useQuery({
     queryKey: ['countries'],
-    queryFn: async () => await Countries.getCountriesWithEvaluationInfoList(),
+    queryFn: async () => await Countries.getCountryWithEvaluationInfoList(),
   })
 
   return { countries: data, ...rest }

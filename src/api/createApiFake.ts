@@ -1,5 +1,5 @@
 import { Api } from './domain/Api'
-import { getCountries } from '../application/country/getCountriesWithEvaluationInfoList'
+import { getCountries } from '../application/country/getCountryWithEvaluationInfoList/getCountryWithEvaluationInfoList'
 import { createAuthRepositoryFake } from '@/infrastructure/repositories/auth/authRepositoryFake'
 import { signIn } from '@/application/auth/signIn'
 import { createCountryRepositoryFake } from '@/infrastructure/repositories/country/countryRepositoryFake'

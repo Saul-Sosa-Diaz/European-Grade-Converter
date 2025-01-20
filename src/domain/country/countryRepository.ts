@@ -15,6 +15,6 @@ export namespace GetCountryList {
 }
 
 export interface CountryRepository {
-  getCountriesWithEvaluationInfoList: GetCountryWithEvaluationInfoList.Request
+  getCountryWithEvaluationInfoList: GetCountryWithEvaluationInfoList.Request
   getCountryList: GetCountryList.Request
 }
