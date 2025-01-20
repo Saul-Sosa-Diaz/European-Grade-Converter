@@ -1,23 +1,20 @@
-import { ICountryConverter } from '@/lib/interfaces/i-grade-converter'
-
 export enum EvaluationType {
   CONTINUOUS = 'continuous',
   DISCRETE = 'discrete',
 }
 
-export type Country = {
+export type CountryWithEvaluationInfo = {
   label: string
   code?: string
   key: string
   selectable?: boolean
-  gradeConverter?: ICountryConverter
   fixed?: number
   validGrades?: string[]
   suffix?: string
   evaluationType?: EvaluationType
   evaluationSystemID?: string
   aditionalInfo?: string
-  children?: Country[]
+  children?: CountryWithEvaluationInfo[]
   document_url?: string
   url?: string
 }

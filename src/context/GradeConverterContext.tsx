@@ -11,27 +11,27 @@
 
 import React, { createContext, ReactNode, useContext } from 'react';
 import { useState } from 'react';
-import { Country } from '@/domain/country/country';
+import { CountryWithEvaluationInfo } from '@/domain/country/country';
 
 const GradeConverterContext = createContext(null);
 
 interface GradeConverterContextProviderProps {
   children: ReactNode;
-  countries: Country[];
+  countries: CountryWithEvaluationInfo[];
 }
 interface GradeConverterContextType {
   gradeToConvert: string | undefined;
-  setGradeToConvert: React.Dispatch<React.SetStateAction<Country | undefined>>;
-  countryFrom: Country | undefined;
-  setCountryFrom: React.Dispatch<React.SetStateAction<Country | undefined>>;
-  countryTo: Country | undefined;
-  setCountryTo: React.Dispatch<React.SetStateAction<Country | undefined>>;
+  setGradeToConvert: React.Dispatch<React.SetStateAction<CountryWithEvaluationInfo | undefined>>;
+  countryFrom: CountryWithEvaluationInfo | undefined;
+  setCountryFrom: React.Dispatch<React.SetStateAction<CountryWithEvaluationInfo | undefined>>;
+  countryTo: CountryWithEvaluationInfo | undefined;
+  setCountryTo: React.Dispatch<React.SetStateAction<CountryWithEvaluationInfo | undefined>>;
 }
 
 export const GradeConverterContextProvider = ({ children, countries }: GradeConverterContextProviderProps) => {
   const [gradeToConvert, setGradeToConvert] = useState<string>("");
-  const [countryFrom, setCountryFrom] = useState<Country>(undefined);
-  const [countryTo, setCountryTo] = useState<Country>(
+  const [countryFrom, setCountryFrom] = useState<CountryWithEvaluationInfo>(undefined);
+  const [countryTo, setCountryTo] = useState<CountryWithEvaluationInfo>(
     countries.find((country) => country.code === "ES")
   );
   return (

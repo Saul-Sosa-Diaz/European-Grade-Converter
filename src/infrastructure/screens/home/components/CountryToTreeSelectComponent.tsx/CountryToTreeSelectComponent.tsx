@@ -1,11 +1,11 @@
-import { Country } from "@/domain/country/country";
+import { CountryWithEvaluationInfo } from "@/domain/country/country";
 import { CustomTreeSelect } from "../customTreeSelect";
 import { findCountryByKey } from "@/infrastructure/fixture/countries";
 import { useEffect, useState } from "react";
 import { useGradeConverterContext } from "@/context/GradeConverterContext";
 import { renderOptionTemplate, renderSelectedItemTemplate } from "../treeSelectTemplates";
 
-export const CountryToTreeSelect = ({ countries }: { countries: Country[] }) => {
+export const CountryToTreeSelect = ({ countries }: { countries: CountryWithEvaluationInfo[] }) => {
     const { setCountryTo, countryTo } = useGradeConverterContext(); // Access the global context to set the destination country
 
     // State to hold the key of the selected country
@@ -26,7 +26,7 @@ export const CountryToTreeSelect = ({ countries }: { countries: Country[] }) => 
     };
 
     return (
-        <CustomTreeSelect<Country>
+        <CustomTreeSelect<CountryWithEvaluationInfo>
             filter={true} // Enable filtering for searching countries
             value={keyCountryTo} // Currently selected country key
             onChange={(e) => {

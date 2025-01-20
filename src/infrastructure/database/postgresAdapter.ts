@@ -10,7 +10,7 @@ export class PostgresAdapter implements DatabaseAdapter {
     this.pool = new Pool({ connectionString })
   }
 
-  getCountries(): Promise<APICountry[]> {
+  getCountriesWithEvaluationInfo(): Promise<APICountry[]> {
     const QUERY = QUERIES.GET_COUNTRIES
     return this.pool.query(QUERY).then((result) => result.rows as APICountry[])
   }

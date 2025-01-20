@@ -12,7 +12,7 @@ export type convertGradeParams = {
   direction?: ConverterDirection
 }
 export interface DatabaseAdapter {
-  getCountries(): Promise<APICountry[]>
+  getCountriesWithEvaluationInfo(): Promise<APICountry[]>
   convertGrade(params: convertGradeParams): Promise<number>
 }
 

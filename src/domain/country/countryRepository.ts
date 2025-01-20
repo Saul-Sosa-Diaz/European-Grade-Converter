@@ -1,11 +1,13 @@
-import type { Country } from './country'
+import type { CountryWithEvaluationInfo } from './country'
 
-export namespace GetCountries {
+export namespace GetCountriesWithEvaluationInfo {
   export type Params = void
-  export type Response = Country[]
-  export type Request = (params: GetCountries.Params) => Promise<GetCountries.Response>
+  export type Response = CountryWithEvaluationInfo[]
+  export type Request = (
+    params: GetCountriesWithEvaluationInfo.Params,
+  ) => Promise<GetCountriesWithEvaluationInfo.Response>
 }
 
 export interface CountriesRepository {
-  getCountries: GetCountries.Request
+  getCountriesWithEvaluationInfo: GetCountriesWithEvaluationInfo.Request
 }

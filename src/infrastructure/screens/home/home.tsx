@@ -8,13 +8,13 @@ import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.t
 import { InputGrade } from "./components/InputGradeComponent/InputGradeComponent";
 import { CountryFromTreeSelect } from "./components/CountryFromTreeSelectorComponent/CountryFromTreeSelectComponent";
 import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/CountryAdditionalInfoComponent";
-import { useGetCountries } from "@/hooks/useGetCountries";
+import { useGetCountriesWithEvaluationInfo } from "@/hooks/useGetCountriesWithEvaluationInfo";
 import { GradeConverterContextProvider } from "@/context/GradeConverterContext";
 import { ProgressSpinner } from 'primereact/progressspinner';
 // TODO: FIX SWITZELAND
 
 export function Home() {
-  const { countries, isLoading } = useGetCountries();
+  const { countries, isLoading } = useGetCountriesWithEvaluationInfo();
   // TODO: GIVE A VISUAL FEEDBACK WITH COLORS IN GRADE
   if (isLoading) {
     return <ProgressSpinner />

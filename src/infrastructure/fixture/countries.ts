@@ -17,10 +17,10 @@ import { PolandGradeConverter } from '@/lib/countriesClasses/poland-grade-conver
 import { SloveniaGradeConverter } from '@/lib/countriesClasses/slovenia-grade-converter'
 import { SwitzerlandGradeConverter } from '@/lib/countriesClasses/switzerland-grade-converter'
 import { ItalyBoloniaEngineeringGradeConverter } from '@/lib/countriesClasses/italy-bolonia-engineering-grade-converter'
-import { Country } from '@/domain/country/country'
+import { CountryWithEvaluationInfo } from '@/domain/country/country'
 import { generateGrades } from '../../../scripts/validGrades.mjs'
 
-export const COUNTRIES: Country[] = [
+export const COUNTRIES: CountryWithEvaluationInfo[] = [
   {
     key: '0',
     selectable: false,
@@ -280,8 +280,14 @@ export const COUNTRIES: Country[] = [
   },
 ].sort((a, b) => a.label.localeCompare(b.label))
 
-export function findCountryByKey(key: string, countries: Country[]): Country | undefined {
-  function searchCountry(country: Country, key: string): Country | undefined {
+export function findCountryByKey(
+  key: string,
+  countries: CountryWithEvaluationInfo[],
+): CountryWithEvaluationInfo | undefined {
+  function searchCountry(
+    country: CountryWithEvaluationInfo,
+    key: string,
+  ): CountryWithEvaluationInfo | undefined {
     if (country.key === key) {
       return country
     }

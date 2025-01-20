@@ -22,7 +22,8 @@
     "primereact": "10.8.3",
     "react": "18.3.1",
     "react-dom": "18",
-    "vercel": "39.0.2"
+    "vercel": "39.0.2",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@types/node": "20",

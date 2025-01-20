@@ -1,4 +1,4 @@
-import { Country } from "@/domain/country/country";
+import { CountryWithEvaluationInfo } from "@/domain/country/country";
 import { CustomTreeSelect } from "../customTreeSelect";
 import { findCountryByKey } from "@/infrastructure/fixture/countries";
 import { useState } from "react";
@@ -21,7 +21,7 @@ export const CountryFromTreeSelect = ({ countries }) => {
     };
 
     return (
-        <CustomTreeSelect<Country>
+        <CustomTreeSelect<CountryWithEvaluationInfo>
             value={selectedKeyCountry} // The selected country key
             onChange={(e: DropdownChangeEvent) => handleCountryChange(e)} // Event handler for country change
             options={countries}

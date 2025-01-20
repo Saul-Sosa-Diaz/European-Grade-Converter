@@ -1,7 +1,9 @@
-import { Country, EvaluationType } from '@/domain/country/country'
+import { CountryWithEvaluationInfo, EvaluationType } from '@/domain/country/country'
 import { APICountry, APIGetCountries } from '@/domain/country/dto/ApiGetCountries'
 
-export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[]> => {
+export const buildCountryEvaluationMap = async (
+  dto: APIGetCountries,
+): Promise<CountryWithEvaluationInfo[]> => {
   try {
     const CountryIdOccurrences: Record<number, number> = {}
     const UniversityIdOccurrences: Record<number, number> = {}
@@ -18,8 +20,8 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
         UniversityIdOccurrences[country.universityid] = 1
       }
     })
-    
-    const mappedCountries: Country[] = []
+
+    const mappedCountries: CountryWithEvaluationInfo[] = []
 
     Object.keys(CountryIdOccurrences).forEach((countryId) => {
       // Find the current country
@@ -38,7 +40,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
         return
       }
 
-      let children: Country[] = []
+      let children: CountryWithEvaluationInfo[] = []
       if (
         CountryIdOccurrences[countryId] > 1 &&
         UniversityIdOccurrences[country.universityid] === 1
@@ -61,7 +63,7 @@ export const mapApiGetcountries = async (dto: APIGetCountries): Promise<Country[
           .map((country) => {
             if (UniversityIdOccurrences[country.universityid] > 1) {
               // Management of unique evaluation systems per university
-              const deepestChildren: Country[] = dto
+              const deepestChildren: CountryWithEvaluationInfo[] = dto
                 .filter(
                   (dtoItem) => parseInt(dtoItem.universityid) === parseInt(country.universityid),
                 )

@@ -9,7 +9,7 @@
  * @description This file contains the interfaces for implementing the note conversion class structure, using the strategy pattern.
  */
 
-import { Country } from '@/domain/country/country'
+import { CountryWithEvaluationInfo } from '@/domain/country/country'
 
 /**
  * Interface for countries to force each country to switch to the Spanish system and to their own.
@@ -45,14 +45,22 @@ export interface IGradeConverter {
    * @param countryTo - The country to which the grade is converted.
    * @returns The converted grade.
    */
-  convert(grade: string, countryFrom: Country, countryTo: Country): string
+  convert(
+    grade: string,
+    countryFrom: CountryWithEvaluationInfo,
+    countryTo: CountryWithEvaluationInfo,
+  ): string
 }
 /**
  * The `GeneralGradeConverter` class manages the grade conversion process.
  * @class
  */
 export class GeneralGradeConverter implements IGradeConverter {
-  convert(grade: string, countryFrom: Country, countryTo: Country): string {
+  convert(
+    grade: string,
+    countryFrom: CountryWithEvaluationInfo,
+    countryTo: CountryWithEvaluationInfo,
+  ): string {
     const fromConverter = countryFrom.gradeConverter
     const toConverter = countryTo.gradeConverter
     grade = grade.replace(/\(.*?\)/g, '')

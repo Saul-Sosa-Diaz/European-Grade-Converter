@@ -3,6 +3,6 @@ import { CountriesRepository } from '@/domain/country/countryRepository'
 
 export function createCountryRepositoryFake(): CountriesRepository {
   return {
-    getCountries: async () => COUNTRIES,
+    getCountriesWithEvaluationInfo: async () => COUNTRIES,
   }
 }
