@@ -8,30 +8,30 @@ import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.t
 import { InputGrade } from "./components/InputGradeComponent/InputGradeComponent";
 import { CountryFromTreeSelect } from "./components/CountryFromTreeSelectorComponent/CountryFromTreeSelectComponent";
 import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/CountryAdditionalInfoComponent";
-import { useGetCountriesWithEvaluationInfo } from "@/hooks/useGetCountriesWithEvaluationInfo";
+import { useGetCountryWithEvaluationInfoList } from "@/hooks/useGetCountryWithEvaluationInfoList";
 import { GradeConverterContextProvider } from "@/context/GradeConverterContext";
 import { ProgressSpinner } from 'primereact/progressspinner';
 // TODO: FIX SWITZELAND
 
 export function Home() {
-  const { countries, isLoading } = useGetCountriesWithEvaluationInfo();
+  const { countryWithEvaluationInfoList, isLoading } = useGetCountryWithEvaluationInfoList();
   // TODO: GIVE A VISUAL FEEDBACK WITH COLORS IN GRADE
   if (isLoading) {
     return <ProgressSpinner />
   }
   return (
-    <GradeConverterContextProvider countries={countries}>
+    <GradeConverterContextProvider countries={countryWithEvaluationInfoList}>
       <HomeScreenMain>
         <Header />
         <ConversorContainer>
           <CountryAndGradeContainer>
-            <CountryFromTreeSelect countries={countries} />
+            <CountryFromTreeSelect countries={countryWithEvaluationInfoList} />
             <InputGrade />
           </CountryAndGradeContainer>
           <ArrowRight className="pi pi-arrow-right" />
           <ArrowDown className="pi pi-arrow-down" />
           <CountryAndGradeContainer>
-            <CountryToTreeSelect countries={countries} />
+            <CountryToTreeSelect countries={countryWithEvaluationInfoList} />
             <CalculatedGradeComponent />
           </CountryAndGradeContainer>
         </ConversorContainer>

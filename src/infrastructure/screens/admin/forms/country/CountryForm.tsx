@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { Country } from '@/domain/country/country';
 
-const CountryForm = ({ initialValues, onSubmit }) => {
-  const [formValues, setFormValues] = useState(initialValues);
+export const CountryForm = ({ initialValue, onSubmit }: { initialValue: Country, onSubmit: () => void }) => {
+  const [formValues, setFormValues] = useState(initialValue);
 
   useEffect(() => {
-    setFormValues(initialValues);
-  }, [initialValues]);
+    setFormValues(initialValue);
+  }, [initialValue]);
 
   const validationSchema = Yup.object({
     countryName: Yup.string()
@@ -28,7 +29,7 @@ const CountryForm = ({ initialValues, onSubmit }) => {
       {({ isSubmitting }) => (
         <Form>
           {/* Hidden field to edit */}
-          {formValues.countryID && <Field type="hidden" name="countryID" />}
+          {formValues.id && <Field type="hidden" name="countryID" />}
 
           <div>
             <label htmlFor="countryName">Country Name</label>
@@ -43,7 +44,7 @@ const CountryForm = ({ initialValues, onSubmit }) => {
           </div>
 
           <button type="submit" disabled={isSubmitting}>
-            {formValues.countryID ? 'Actualizar' : 'Crear'}
+            {formValues.id ? 'Actualizar' : 'Crear'}
           </button>
         </Form>
       )}
@@ -51,5 +52,3 @@ const CountryForm = ({ initialValues, onSubmit }) => {
   );
 };
 
-
-export default CountryForm;

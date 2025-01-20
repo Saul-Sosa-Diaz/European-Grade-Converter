@@ -2,7 +2,9 @@
 // import { redirect } from "next/navigation";
 // import { ProgressSpinner } from 'primereact/progressspinner';
 // import { useEffect, useState } from "react";
-import CountryForm from "./forms/country/CountryForm";
+import { useGetCountryList } from "@/hooks/useGetCountryList";
+import { CountryList } from "./components/CountryList/CountryList";
+import { ProgressSpinner } from "primereact/progressspinner";
 // TODO: UNCOMMENT THE FOLLOWING LINES
 export const Admin = () => {
   // const { data: session, status } = useSession();
@@ -27,9 +29,8 @@ export const Admin = () => {
     console.log('Datos enviados:', values);
     // Aquí puedes realizar una petición a tu backend para guardar o actualizar el país
   };
-
-  const initialValues = {countryName: 'Spain', countryCode: 'ES' };
-
+  const {countryList, isLoading} = useGetCountryList(); 
+  console.log('countryList', countryList);
   // return (
   //   <>
   //     {session && (
@@ -40,10 +41,13 @@ export const Admin = () => {
   //     )}
   //   </>
   // );
+  if (isLoading) {
+    return <ProgressSpinner />
+  }
   return (
     <>
       <h1>Admin Page</h1>
-      <CountryForm initialValues={initialValues} onSubmit={handleSubmit} />
+      <CountryList countryList={countryList} />
     </>
   );
 };

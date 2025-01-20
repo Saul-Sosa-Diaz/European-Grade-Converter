@@ -1,7 +1,7 @@
 import { Pool } from 'pg'
 import { QUERIES } from './queries'
 import { ConverterDirection, convertGradeParams, DatabaseAdapter } from '../config/databaseConfig'
-import { APICountry } from '@/domain/country/dto/ApiGetCountries'
+import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/ApiGetCountries'
 import { EvaluationType } from '@/domain/country/country'
 
 export class PostgresAdapter implements DatabaseAdapter {
@@ -10,9 +10,14 @@ export class PostgresAdapter implements DatabaseAdapter {
     this.pool = new Pool({ connectionString })
   }
 
-  getCountryWithEvaluationInfoList(): Promise<APICountry[]> {
-    const QUERY = QUERIES.GET_COUNTRIES_WITH_EVALUATION_INFO
+  async getCountryList(): Promise<APICountry[]> {
+    const QUERY = QUERIES.GET_COUNTRY_LIST
     return this.pool.query(QUERY).then((result) => result.rows as APICountry[])
+  }
+
+  async getCountryWithEvaluationInfoList(): Promise<APICountryWithEvaluationInfo[]> {
+    const QUERY = QUERIES.GET_COUNTRY_WITH_EVALUATION_INFO_LIST
+    return this.pool.query(QUERY).then((result) => result.rows as APICountryWithEvaluationInfo[])
   }
 
   async convertGrade({

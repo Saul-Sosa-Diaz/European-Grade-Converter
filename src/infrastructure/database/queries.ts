@@ -1,5 +1,9 @@
 export const QUERIES = {
-  GET_COUNTRIES_WITH_EVALUATION_INFO: `
+  GET_COUNTRY_LIST: `
+    SELECT countryID, countryCode, countryName
+    FROM COUNTRY
+  `,
+  GET_COUNTRY_WITH_EVALUATION_INFO_LIST: `
     SELECT 
       COUNTRY.countryID, 
       UNIVERSITY.universityID, 

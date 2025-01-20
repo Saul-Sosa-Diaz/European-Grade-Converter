@@ -1,14 +1,17 @@
 import { CountryWithEvaluationInfo, EvaluationType } from '@/domain/country/country'
-import { APICountry, APIGetCountries } from '@/domain/country/dto/ApiGetCountries'
+import {
+  APICountryWithEvaluationInfo,
+  APIGetCountryWithEvaluationInfoList,
+} from '@/domain/country/dto/ApiGetCountries'
 
 export const buildCountryEvaluationMap = async (
-  dto: APIGetCountries,
+  dto: APIGetCountryWithEvaluationInfoList,
 ): Promise<CountryWithEvaluationInfo[]> => {
   try {
     const CountryIdOccurrences: Record<number, number> = {}
     const UniversityIdOccurrences: Record<number, number> = {}
 
-    dto.forEach((country: APICountry) => {
+    dto.forEach((country: APICountryWithEvaluationInfo) => {
       if (CountryIdOccurrences[country.countryid]) {
         CountryIdOccurrences[country.countryid]++
       } else {

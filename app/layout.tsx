@@ -5,6 +5,7 @@ import "primeicons/primeicons.css";
 import { ApiProvider } from "@/context/ApiContext";
 import LoadingStyles from "@/infrastructure/screens/components/LoadingStyles";
 import { NextAuthProvider } from "@/context/nextAuthProvider/nextAuthProvider";
+import { QueryClientProvider } from "@/infrastructure/screens/components/QueryClientProvider";
 
 export const metadata: Metadata = {
   title: "University Grade Conversion tool",
@@ -24,7 +25,9 @@ export default function RootLayout({
     <html lang="en">
       <NextAuthProvider>
         <ApiProvider offline={false}>
+          <QueryClientProvider>
             <body className="m-0 overflow-visible">{<LoadingStyles>{children}</LoadingStyles>}</body>
+          </QueryClientProvider>
         </ApiProvider>
       </NextAuthProvider>
     </html>

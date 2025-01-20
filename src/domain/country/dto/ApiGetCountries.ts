@@ -1,11 +1,17 @@
-export type APIGetCountries = APICountry[]
+export type APIGetCountrList = APICountry[]
+export interface APICountry {
+  countryid: string
+  countrycode: string
+  countryname: string
+}
+
+export type APIGetCountryWithEvaluationInfoList = APICountryWithEvaluationInfo[]
 
 export enum APIEvaluationType {
   CONTINUOUS = 'continous',
   DISCRETE = 'discrete',
 }
-
-export interface APICountry {
+export interface APICountryWithEvaluationInfo {
   countryid: string
   countrycode: string
   countryname: string

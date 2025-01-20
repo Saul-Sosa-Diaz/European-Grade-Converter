@@ -1,10 +1,13 @@
+import { buildCountryListMap } from '@/application/country/getCountryList/mapGetCountryList'
 import { buildCountryEvaluationMap } from '@/application/country/getCountryWithEvaluationInfoList/mapGetCountryWithEvaluationInfoList'
 import { CountryRepository } from '@/domain/country/countryRepository'
 
 export function createCountryRepository(): CountryRepository {
   return {
     getCountryWithEvaluationInfoList: async () => {
-      const { countries } = await fetch('/api/countries-with-evaluation-info', { method: 'get' })
+      const { countries } = await fetch('/api/country-with-evaluation-info-list', {
+        method: 'get',
+      })
         .then((response) => response.json())
         .catch((error) => {
           throw new Error(error)
@@ -13,12 +16,14 @@ export function createCountryRepository(): CountryRepository {
       return mappedCountriesWithEvaluationInfo
     },
     getCountryList: async () => {
-      const { countries } = await fetch('/api/countries', { method: 'get' })
+      const { countries } = await fetch('/api/country-list', { method: 'get' })
         .then((response) => response.json())
         .catch((error) => {
           throw new Error(error)
         })
-      return countries
+
+        const mappedCountryList = await buildCountryListMap(countries)
+        return mappedCountryList
     }
   }
 }

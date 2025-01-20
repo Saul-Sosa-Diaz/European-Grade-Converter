@@ -1,12 +1,12 @@
 import { useApi } from '@/context/ApiContext'
 import { useQuery } from '@tanstack/react-query'
 
-export const useGetCountriesWithEvaluationInfo = () => {
+export const useGetCountryWithEvaluationInfoList = () => {
   const { Country } = useApi()
   const { data, ...rest } = useQuery({
-    queryKey: ['countries'],
+    queryKey: ['countryWithEvaluationInfoList'],
     queryFn: async () => await Country.getCountryWithEvaluationInfoList(),
   })
 
-  return { countries: data, ...rest }
+  return { countryWithEvaluationInfoList: data, ...rest }
 }
