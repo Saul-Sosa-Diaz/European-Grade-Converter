@@ -9,8 +9,16 @@ export function createCountryRepository(): CountryRepository {
         .catch((error) => {
           throw new Error(error)
         })
-      const mappedCountries = await buildCountryEvaluationMap(countries)
-      return mappedCountries
+      const mappedCountriesWithEvaluationInfo = await buildCountryEvaluationMap(countries)
+      return mappedCountriesWithEvaluationInfo
     },
+    getCountryList: async () => {
+      const { countries } = await fetch('/api/countries', { method: 'get' })
+        .then((response) => response.json())
+        .catch((error) => {
+          throw new Error(error)
+        })
+      return countries
+    }
   }
 }

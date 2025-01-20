@@ -4,7 +4,7 @@ import {
 } from '../../../domain/country/countryRepository'
 
 export function getCountryWithEvaluationInfoList(
-  countriesRepository: CountryRepository,
+  countryRepository: CountryRepository,
 ): GetCountryWithEvaluationInfoList.Request {
-  return async () => await countriesRepository.getCountryWithEvaluationInfoList()
+  return async () => await countryRepository.getCountryWithEvaluationInfoList()
 }

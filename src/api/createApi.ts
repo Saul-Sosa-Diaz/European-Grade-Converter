@@ -7,6 +7,7 @@ import { signIn } from '@/application/auth/signIn'
 import { createGradeRepository } from '@/infrastructure/repositories/grades/gradesRepository'
 import { convertGrade } from '@/application/grades/calculateConversion.ts'
 import { getCountryWithEvaluationInfoList } from '@/application/country/getCountryWithEvaluationInfoList/getCountryWithEvaluationInfoList'
+import { getCountryList } from '@/application/country/getCountryList/getCountryList'
 
 type CreateApiProps = {
   offline?: boolean
@@ -14,12 +15,13 @@ type CreateApiProps = {
 export function createApi({ offline = false }: CreateApiProps): Api {
   if (offline) return createApiFake()
 
-  const countriesRepository = createCountryRepository()
+  const countryRepository = createCountryRepository()
   const authRepository = createAuthRepository()
   const gradesRepository = createGradeRepository()
   return {
     Country: {
-      getCountryWithEvaluationInfoList: getCountryWithEvaluationInfoList(countriesRepository),
+      getCountryWithEvaluationInfoList: getCountryWithEvaluationInfoList(countryRepository),
+      getCountryList: getCountryList(countryRepository),
     },
     Grades: {
       convertGrade: convertGrade(gradesRepository),
