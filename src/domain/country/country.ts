@@ -3,6 +3,12 @@ export enum EvaluationType {
   DISCRETE = 'discrete',
 }
 
+export type Country = {
+  name: string
+  code: string
+  id: string
+}
+
 export type CountryWithEvaluationInfo = {
   label: string
   code?: string

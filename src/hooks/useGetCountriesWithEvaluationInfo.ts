@@ -3,9 +3,9 @@ import { useQuery } from '@tanstack/react-query'
 
 export const useGetCountriesWithEvaluationInfo = () => {
   const { Countries } = useApi()
-  const { data, ...rest} = useQuery({
+  const { data, ...rest } = useQuery({
     queryKey: ['countries'],
-    queryFn: async () => await Countries.getCountriesWithEvaluationInfo(),
+    queryFn: async () => await Countries.getCountriesWithEvaluationInfoList(),
   })
 
   return { countries: data, ...rest }

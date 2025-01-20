@@ -1,8 +1,8 @@
 import { COUNTRIES } from '../../fixture/countries'
-import { CountriesRepository } from '@/domain/country/countryRepository'
+import { CountryRepository } from '@/domain/country/countryRepository'
 
-export function createCountryRepositoryFake(): CountriesRepository {
+export function createCountryRepositoryFake(): CountryRepository {
   return {
-    getCountriesWithEvaluationInfo: async () => COUNTRIES,
+    getCountriesWithEvaluationInfoList: async () => COUNTRIES,
   }
 }

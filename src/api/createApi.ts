@@ -1,6 +1,6 @@
 import { createApiFake } from './createApiFake'
 import { createCountryRepository } from '../infrastructure/repositories/country/countryRepository'
-import { getCountriesWithEvaluationInfo } from '@/application/country/getCountriesWithEvaluationInfo'
+import { getCountriesWithEvaluationInfoList } from '@/application/country/getCountriesWithEvaluationInfoList'
 import { Api } from './domain/Api'
 import { createAuthRepository } from '@/infrastructure/repositories/auth/authRepository'
 import { signIn } from '@/application/auth/signIn'
@@ -18,7 +18,7 @@ export function createApi({ offline = false }: CreateApiProps): Api {
   const gradesRepository = createGradeRepository()
   return {
     Countries: {
-      getCountriesWithEvaluationInfo: getCountriesWithEvaluationInfo(countriesRepository),
+      getCountriesWithEvaluationInfoList: getCountriesWithEvaluationInfoList(countriesRepository),
     },
     Grades: {
       convertGrade: convertGrade(gradesRepository),
