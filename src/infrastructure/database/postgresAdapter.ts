@@ -10,6 +10,13 @@ export class PostgresAdapter implements DatabaseAdapter {
     this.pool = new Pool({ connectionString })
   }
 
+  async updateCountry(country): Promise<void> {
+    const QUERY = QUERIES.UPDATE_COUNTRY
+    const VALUES = [country.countryid, country.countrycode, country.countryname]
+    await this.pool.query(QUERY, VALUES)
+  
+  }
+
   async getCountryList(): Promise<APICountry[]> {
     const QUERY = QUERIES.GET_COUNTRY_LIST
     return this.pool.query(QUERY).then((result) => result.rows as APICountry[])
