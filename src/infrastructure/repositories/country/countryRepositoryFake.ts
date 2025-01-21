@@ -4,5 +4,11 @@ import { CountryRepository } from '@/domain/country/countryRepository'
 export function createCountryRepositoryFake(): CountryRepository {
   return {
     getCountryWithEvaluationInfoList: async () => COUNTRIES,
+    getCountryList: async () => {
+      COUNTRY_LIST
+    },
+    updateCountry: async (country) => {
+      return
+    },
   }
 }
