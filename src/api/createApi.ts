@@ -8,6 +8,7 @@ import { createGradeRepository } from '@/infrastructure/repositories/grades/grad
 import { convertGrade } from '@/application/grades/calculateConversion.ts'
 import { getCountryWithEvaluationInfoList } from '@/application/country/getCountryWithEvaluationInfoList/getCountryWithEvaluationInfoList'
 import { getCountryList } from '@/application/country/getCountryList/getCountryList'
+import { updateCountry } from '@/application/country/updateCountry/updateCountry'
 
 type CreateApiProps = {
   offline?: boolean
@@ -22,6 +23,7 @@ export function createApi({ offline = false }: CreateApiProps): Api {
     Country: {
       getCountryWithEvaluationInfoList: getCountryWithEvaluationInfoList(countryRepository),
       getCountryList: getCountryList(countryRepository),
+      updateCountry: updateCountry(countryRepository),
     },
     Grades: {
       convertGrade: convertGrade(gradesRepository),

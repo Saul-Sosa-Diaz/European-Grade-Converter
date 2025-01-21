@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Country } from '@/domain/country/country';
 
-export const CountryForm = ({ initialValue, onSubmit }: { initialValue: Country, onSubmit: () => void }) => {
+export const CountryForm = ({ initialValue, onSubmit }: { initialValue: Country, onSubmit: (country: Country) => void }) => {
   const [formValues, setFormValues] = useState(initialValue);
 
   useEffect(() => {
@@ -11,40 +11,37 @@ export const CountryForm = ({ initialValue, onSubmit }: { initialValue: Country,
   }, [initialValue]);
 
   const validationSchema = Yup.object({
-    countryName: Yup.string()
+    name: Yup.string()
       .max(255, 'The max length for the country name is 255 characters')
       .required('The country name is required'),
-    countryCode: Yup.string()
+    code: Yup.string()
       .max(4, 'The max length for the country code is 4 characters')
       .required('The country code is required'),
   });
-  // TODO: ADD TRANSLATIONS 
+
   return (
     <Formik
       enableReinitialize
       initialValues={formValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={(values) => onSubmit(values)}
     >
       {({ isSubmitting }) => (
         <Form>
-          {/* Hidden field to edit */}
-          {formValues.id && <Field type="hidden" name="countryID" />}
-
           <div>
-            <label htmlFor="countryName">Country Name</label>
-            <Field type="text" name="countryName" />
-            <ErrorMessage name="countryName" component="div" className="error" />
+            <label htmlFor="name">Country Name</label>
+            <Field type="text" name="name" />
+            <ErrorMessage name="name" component="div" className="error" />
           </div>
 
           <div>
-            <label htmlFor="countryCode">Country Code</label>
-            <Field type="text" name="countryCode" />
-            <ErrorMessage name="countryCode" component="div" className="error" />
+            <label htmlFor="code">Country Code</label>
+            <Field type="text" name="code" />
+            <ErrorMessage name="code" component="div" className="error" />
           </div>
 
           <button type="submit" disabled={isSubmitting}>
-            {formValues.id ? 'Actualizar' : 'Crear'}
+            {formValues.id ? 'Update' : 'Create'}
           </button>
         </Form>
       )}

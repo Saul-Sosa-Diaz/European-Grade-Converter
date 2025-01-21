@@ -25,10 +25,6 @@ export const Admin = () => {
   //   redirect('/403')
   // }
 
-  const handleSubmit = (values) => {
-    console.log('Datos enviados:', values);
-    // Aquí puedes realizar una petición a tu backend para guardar o actualizar el país
-  };
   const {countryList, isLoading} = useGetCountryList(); 
   console.log('countryList', countryList);
   // return (
