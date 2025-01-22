@@ -8,6 +8,10 @@ export const QUERIES = {
     SET countryCode = $2, countryName = $3
     WHERE countryId = $1 
   `,
+  CREATE_COUNTRY: `
+    INSERT INTO COUNTRY(countryCode, countryName)
+    VALUES($1, $2)
+  `,
   GET_COUNTRY_WITH_EVALUATION_INFO_LIST: `
     SELECT 
       COUNTRY.countryID, 

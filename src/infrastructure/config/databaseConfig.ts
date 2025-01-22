@@ -15,7 +15,8 @@ export type convertGradeParams = {
 export interface DatabaseAdapter {
   getCountryList(): Promise<APICountry[]>
   getCountryWithEvaluationInfoList(): Promise<APICountryWithEvaluationInfo[]>
-  updateCountry(country: APICountry ): Promise<void>
+  updateCountry(country: APICountry): Promise<void>
+  createCountry(country: APICountry): Promise<void>
   convertGrade(params: convertGradeParams): Promise<number>
 }
 
