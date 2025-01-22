@@ -12,6 +12,10 @@ export const QUERIES = {
     INSERT INTO COUNTRY(countryCode, countryName)
     VALUES($1, $2)
   `,
+  DELETE_COUNTRY: `
+    DELETE FROM COUNTRY
+    WHERE countryId = $1
+  `,
   GET_COUNTRY_WITH_EVALUATION_INFO_LIST: `
     SELECT 
       COUNTRY.countryID, 

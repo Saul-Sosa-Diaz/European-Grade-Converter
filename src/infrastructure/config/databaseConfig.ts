@@ -18,6 +18,7 @@ export interface DatabaseAdapter {
   updateCountry(country: APICountry): Promise<void>
   createCountry(country: APICountry): Promise<void>
   convertGrade(params: convertGradeParams): Promise<number>
+  deleteCountry(country: APICountry): Promise<void>
 }
 
 export function createDatabaseAdapter(): DatabaseAdapter {

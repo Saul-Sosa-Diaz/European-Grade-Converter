@@ -8,17 +8,20 @@ import { useUpdateCountry } from '@/hooks/useUpdateCountry';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
 import { useCreateCountry } from '@/hooks/useCreateCountry';
+import { useDeleteCountry } from '@/hooks/useDeleteCountry';
+import Image from 'next/image';
 
 
 export const CountryList = ({ countryList }: { countryList: Country[] }) => {
   const { updateCountry } = useUpdateCountry();
   const { createCountry } = useCreateCountry();
+  const { deleteCountry } = useDeleteCountry();
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [countryListState, setCountryListState] = useState<Country[]>(countryList);
   const [dialogVisibility, setDialogVisibility] = useState(false);
   const dialogRef = useRef<Dialog | null>(null);
   const toastRef = useRef(null);
-
+  // TODO: MODIFY TOAST TO GET A CORRECT MESSAGE WHEN ERROR
   const showSuccess = ({ message }: { message: string }) => {
     toastRef.current.show({ severity: 'success', summary: 'Success', detail: message, life: 3000 });
   };
@@ -41,9 +44,23 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
     showSuccess({ message: `Country ${newCountry.name} added successfully` });
     setDialogVisibility(false);
   };
+  const countryFlag = (country: Country) => {
+    const src = country.code ? `./flags/${country.code.toLowerCase()}.svg` : null;
+    const alt = country.name;
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        width={18}
+        height={18}
+      >
+      </Image>
+    )
+  }
 
-  const handleDelete = (countryId: number) => {
-    setCountryListState((prevList) => prevList.filter(country => Number(country.id) !== countryId));
+  const handleDelete = (countryToDelete: Country) => {
+    setCountryListState((prevList) => prevList.filter(country => country.id !== countryToDelete.id));
+    deleteCountry(countryToDelete);
     showSuccess({ message: `Country deleted successfully` });
   };
   // TODO: ADD HEADER TO THE DIALOG
@@ -60,24 +77,25 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
       />
       <DataTable value={countryListState} stripedRows>
         <Column field="code" header="Code"></Column>
+        <Column header="Flag" body={countryFlag}></Column>
         <Column field="name" header="Name"></Column>
-        <Column header="Edit" body={(rowData) => (
+        <Column header="Edit" body={(country) => (
           <Button
             icon="pi pi-pencil"
             rounded
             severity="secondary"
             onClick={() => {
-              setSelectedCountry(rowData);
+              setSelectedCountry(country);
               setDialogVisibility(true);
             }}
           />
         )}></Column>
-        <Column header="Delete" body={(rowData) => (
+        <Column header="Delete" body={(country) => (
           <Button
             icon="pi pi-trash"
             rounded
             severity="danger"
-            onClick={() => handleDelete(rowData.id)}
+            onClick={() => handleDelete(country)}
           />
         )}></Column>
       </DataTable>

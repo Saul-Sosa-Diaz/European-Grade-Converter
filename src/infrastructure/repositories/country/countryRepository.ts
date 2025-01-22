@@ -6,7 +6,7 @@ import { CountryRepository } from '@/domain/country/countryRepository'
 export function createCountryRepository(): CountryRepository {
   return {
     getCountryWithEvaluationInfoList: async () => {
-      const { countries } = await fetch('/api/country-with-evaluation-info-list', {
+      const { countries } = await fetch('/api/country/country-with-evaluation-info-list', {
         method: 'get',
       })
         .then((response) => response.json())
@@ -17,7 +17,7 @@ export function createCountryRepository(): CountryRepository {
       return mappedCountriesWithEvaluationInfo
     },
     getCountryList: async () => {
-      const { countries } = await fetch('/api/country-list', { method: 'get' })
+      const { countries } = await fetch('/api/country/country-list', { method: 'get' })
         .then((response) => response.json())
         .catch((error) => {
           throw new Error(error)
@@ -29,7 +29,7 @@ export function createCountryRepository(): CountryRepository {
     // TODO: SECURIZE THESE
     updateCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
-      await fetch('/api/update-country', {
+      await fetch('/api/country/update-country', {
         method: 'post',
         body: JSON.stringify(mappedCountry),
       })
@@ -40,7 +40,7 @@ export function createCountryRepository(): CountryRepository {
     },
     createCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
-      await fetch('/api/create-country', {
+      await fetch('/api/country/create-country', {
         method: 'post',
         body: JSON.stringify(mappedCountry),
       })
@@ -51,7 +51,7 @@ export function createCountryRepository(): CountryRepository {
     },
     deleteCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
-      await fetch('/api/delete-country', {
+      await fetch('/api/country/delete-country', {
         method: 'post',
         body: JSON.stringify(mappedCountry),
       })

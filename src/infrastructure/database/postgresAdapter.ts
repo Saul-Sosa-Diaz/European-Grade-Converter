@@ -22,6 +22,12 @@ export class PostgresAdapter implements DatabaseAdapter {
     await this.pool.query(QUERY, VALUES)
   }
 
+  async deleteCountry(country: APICountry): Promise<void> {
+    const QUERY = QUERIES.DELETE_COUNTRY
+    const VALUES = [country.countryid]
+    await this.pool.query(QUERY, VALUES)
+  }
+
   async getCountryList(): Promise<APICountry[]> {
     const QUERY = QUERIES.GET_COUNTRY_LIST
     return this.pool.query(QUERY).then((result) => result.rows as APICountry[])
