@@ -43,7 +43,7 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
     setCountryListState((prevList) => prevList.filter(country => Number(country.id) !== countryId));
     showSuccess({ message: `Country deleted successfully` });
   };
-
+  // TODO: ADD HEADER TO THE DIALOG
   return (
     <>
       <Toast ref={toastRef} />
