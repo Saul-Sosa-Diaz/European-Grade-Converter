@@ -7,10 +7,12 @@ import { useRef, useState } from 'react';
 import { useUpdateCountry } from '@/hooks/useUpdateCountry';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
+import { useCreateCountry } from '@/hooks/useCreateCountry';
 
 
 export const CountryList = ({ countryList }: { countryList: Country[] }) => {
   const { updateCountry } = useUpdateCountry();
+  const { createCountry } = useCreateCountry();
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [countryListState, setCountryListState] = useState<Country[]>(countryList);
   const [dialogVisibility, setDialogVisibility] = useState(false);
@@ -33,7 +35,8 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
     setDialogVisibility(false);
   };
 
-  const handleAdd = (newCountry: Country) => {
+  const handleCreate = (newCountry: Country) => {
+    createCountry(newCountry);
     setCountryListState((prevList) => [...prevList, newCountry]);
     showSuccess({ message: `Country ${newCountry.name} added successfully` });
     setDialogVisibility(false);
@@ -90,7 +93,7 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
           />
         ) : <CountryForm
           initialValue={{ id: '', name: '', code: '' }}
-          onSubmit={handleAdd}
+          onSubmit={handleCreate}
         />}
       </Dialog>
     </>
