@@ -7,6 +7,7 @@ import { createGradeRepositoryFake } from '@/infrastructure/repositories/grades/
 import { convertGrade } from '@/application/grades/calculateConversion.ts'
 import { getCountryList } from '@/application/country/getCountryList/getCountryList'
 import { updateCountry } from '@/application/country/updateCountry/updateCountry'
+import { createCountry } from '@/application/country/createCountry/createCountry'
 
 export function createApiFake(): Api {
   const COUNTRY_REPOSITORY = createCountryRepositoryFake()
@@ -17,6 +18,7 @@ export function createApiFake(): Api {
       getCountryWithEvaluationInfoList: getCountryWithEvaluationInfoList(COUNTRY_REPOSITORY),
       getCountryList: getCountryList(COUNTRY_REPOSITORY),
       updateCountry: updateCountry(COUNTRY_REPOSITORY),
+      createCountry: createCountry(COUNTRY_REPOSITORY)
     },
     Grades: {
       convertGrade: convertGrade(GRADES_REPOSITORY),
