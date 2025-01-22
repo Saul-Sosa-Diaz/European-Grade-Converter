@@ -1,6 +1,6 @@
 import { buildCountryListMap } from '@/application/country/getCountryList/mapGetCountryList'
 import { buildCountryEvaluationMap } from '@/application/country/getCountryWithEvaluationInfoList/mapGetCountryWithEvaluationInfoList'
-import { buildAPICountry } from '@/application/country/updateCountry/mapUpdateCountry'
+import { buildAPICountry } from '@/application/country/mapAPICountry'
 import { CountryRepository } from '@/domain/country/countryRepository'
 
 export function createCountryRepository(): CountryRepository {
