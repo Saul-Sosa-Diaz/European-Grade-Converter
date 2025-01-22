@@ -10,7 +10,7 @@ export const CountryToTreeSelect = ({ countries }: { countries: CountryWithEvalu
 
     // State to hold the key of the selected country
     const [keyCountryTo, setKeyCountryTo] = useState<string | null>(
-        countryTo.key
+        countryTo ? countryTo.key : null 
     );
 
     // Update the actual country object whenever the keyCountryTo state changes
