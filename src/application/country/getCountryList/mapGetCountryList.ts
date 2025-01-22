@@ -12,7 +12,9 @@ export const buildCountryListMap = async (
         code: country.countrycode,
       }
     })
-    return countryList
+
+    const sortedCountries = countryList.sort((a, b) => a.name.localeCompare(b.name))
+    return sortedCountries
   } catch (error) {
     console.log(error)
     throw new Error(error)
