@@ -48,6 +48,17 @@ export function createCountryRepository(): CountryRepository {
         .catch((error) => {
           throw new Error(error)
         })
-    }
+    },
+    deleteCountry: async (country) => {
+      const mappedCountry = await buildAPICountry(country)
+      await fetch('/api/delete-country', {
+        method: 'post',
+        body: JSON.stringify(mappedCountry),
+      })
+        .then((response) => response.json())
+        .catch((error) => {
+          throw new Error(error)
+        })
+    },
   }
 }

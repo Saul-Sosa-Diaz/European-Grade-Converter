@@ -16,5 +16,9 @@ export function createCountryRepositoryFake(): CountryRepository {
       console.log(country)
       return
     },
+    deleteCountry: async (country) => {
+      console.log(country)
+      return
+    },
   }
 }
