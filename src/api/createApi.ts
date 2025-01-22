@@ -10,6 +10,7 @@ import { getCountryWithEvaluationInfoList } from '@/application/country/getCount
 import { getCountryList } from '@/application/country/getCountryList/getCountryList'
 import { updateCountry } from '@/application/country/updateCountry/updateCountry'
 import { createCountry } from '@/application/country/createCountry/createCountry'
+import { deleteCountry } from '@/application/country/deleteCountry/deleteCountry'
 
 type CreateApiProps = {
   offline?: boolean
@@ -25,7 +26,8 @@ export function createApi({ offline = false }: CreateApiProps): Api {
       getCountryWithEvaluationInfoList: getCountryWithEvaluationInfoList(countryRepository),
       getCountryList: getCountryList(countryRepository),
       updateCountry: updateCountry(countryRepository),
-      createCountry: createCountry(countryRepository)
+      createCountry: createCountry(countryRepository),
+      deleteCountry: deleteCountry(countryRepository)
     },
     Grades: {
       convertGrade: convertGrade(gradesRepository),
