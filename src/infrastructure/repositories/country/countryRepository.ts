@@ -23,12 +23,24 @@ export function createCountryRepository(): CountryRepository {
           throw new Error(error)
         })
 
-        const mappedCountryList = await buildCountryListMap(countries)
-        return mappedCountryList
+      const mappedCountryList = await buildCountryListMap(countries)
+      return mappedCountryList
     },
-    updateCountry: async (country) => { // TODO: SECURIZE THIS
+    // TODO: SECURIZE THESE
+    updateCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
       await fetch('/api/update-country', {
+        method: 'post',
+        body: JSON.stringify(mappedCountry),
+      })
+        .then((response) => response.json())
+        .catch((error) => {
+          throw new Error(error)
+        })
+    },
+    createCountry: async (country) => {
+      const mappedCountry = await buildAPICountry(country)
+      await fetch('/api/create-country', {
         method: 'post',
         body: JSON.stringify(mappedCountry),
       })

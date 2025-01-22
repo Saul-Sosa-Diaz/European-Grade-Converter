@@ -8,6 +8,12 @@ export function createCountryRepositoryFake(): CountryRepository {
       COUNTRY_LIST
     },
     updateCountry: async (country) => {
+      // Use the country parameter
+      console.log(country)
+      return
+    },
+    createCountry: async (country) => {
+      console.log(country)
       return
     },
   }
