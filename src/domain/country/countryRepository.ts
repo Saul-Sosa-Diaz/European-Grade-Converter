@@ -23,9 +23,16 @@ export namespace CreateCountry {
   export type Response = void
   export type Request = (params: CreateCountry.Params) => Promise<CreateCountry.Response>
 }
+
+export namespace DeleteCountry {
+  export type Params = Country
+  export type Response = void
+  export type Request = (params: DeleteCountry.Params) => Promise<DeleteCountry.Response>
+}
 export interface CountryRepository {
   getCountryWithEvaluationInfoList: GetCountryWithEvaluationInfoList.Request
   getCountryList: GetCountryList.Request
   updateCountry: UpdateCountry.Request
   createCountry: CreateCountry.Request
+  deleteCountry: DeleteCountry.Request
 }
