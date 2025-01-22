@@ -24,7 +24,7 @@ export const CountryForm = ({ initialValue, onSubmit }: { initialValue: Country,
       enableReinitialize
       initialValues={formValues}
       validationSchema={validationSchema}
-      onSubmit={(values) => onSubmit(values)}
+      onSubmit={(country) => onSubmit({ ...country, code: country.code.toUpperCase() })}
     >
       {({ isSubmitting }) => (
         <Form>
