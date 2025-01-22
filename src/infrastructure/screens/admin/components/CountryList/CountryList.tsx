@@ -19,6 +19,7 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [countryListState, setCountryListState] = useState<Country[]>(countryList);
   const [dialogVisibility, setDialogVisibility] = useState(false);
+  const [maxId, setMaxId] = useState(Math.max(...countryListState.map((country) => parseInt(country.id))));
   const dialogRef = useRef<Dialog | null>(null);
   const toastRef = useRef(null);
   // TODO: MODIFY TOAST TO GET A CORRECT MESSAGE WHEN ERROR
@@ -38,8 +39,15 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
     setDialogVisibility(false);
   };
 
+  const setId = () => {
+    const actualID = maxId + 1
+    setMaxId(actualID);
+    return actualID.toString();
+  }
   const handleCreate = (newCountry: Country) => {
     createCountry(newCountry);
+    const frontEndId = setId();
+    newCountry.id = frontEndId;
     setCountryListState((prevList) => [...prevList, newCountry]);
     showSuccess({ message: `Country ${newCountry.name} added successfully` });
     setDialogVisibility(false);
@@ -110,7 +118,7 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
             onSubmit={handleUpdate}
           />
         ) : <CountryForm
-          initialValue={{ id: '', name: '', code: '' }}
+            initialValue={{ id: "", name: '', code: '' }}
           onSubmit={handleCreate}
         />}
       </Dialog>
