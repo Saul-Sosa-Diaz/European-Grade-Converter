@@ -4,14 +4,19 @@ import { useMutation } from '@tanstack/react-query'
 
 export const useDeleteCountry = () => {
   const { Country } = useApi()
+
   const mutation = useMutation({
     mutationFn: async (country: Country) => {
-      Country.deleteCountry(country)
+      const response = await Country.deleteCountry(country)
+      return response
     },
+    onError: (error) => {
+      console.error(error)
+    }
   })
 
   return {
-    deleteCountry: mutation.mutate,
+    deleteCountry: mutation.mutateAsync,
     ...mutation,
   }
 }

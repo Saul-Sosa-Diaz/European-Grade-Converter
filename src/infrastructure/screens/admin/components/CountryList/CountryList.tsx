@@ -23,89 +23,72 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
   const dialogRef = useRef<Dialog | null>(null);
   const toastRef = useRef(null);
   // TODO: MODIFY TOAST TO GET A CORRECT MESSAGE WHEN ERROR
-  const showSuccess = ({ message }: { message: string }) => {
-    toastRef.current.show({ severity: 'success', summary: 'Success', detail: message, life: 3000 });
+  const displayNotification = ({ message, status }: { message: string, status }) => {
+    toastRef.current.show({ severity: status, detail: message, life: 3000 });
   };
-
-  const handleUpdate = (updatedCountry: Country) => {
-    updateCountry(updatedCountry);
-    setCountryListState((prevList) =>
-      prevList.map((country) =>
-        country.id === updatedCountry.id ? updatedCountry : country
-      )
-    );
-    showSuccess({ message: `Country ${updatedCountry.name} updated successfully` });
-    setSelectedCountry(null);
-    setDialogVisibility(false);
-  };
-
   const setId = () => {
     const actualID = maxId + 1
     setMaxId(actualID);
     return actualID.toString();
   }
-  const handleCreate = (newCountry: Country) => {
-    createCountry(newCountry);
-    const frontEndId = setId();
-    newCountry.id = frontEndId;
-    setCountryListState((prevList) => [...prevList, newCountry]);
-    showSuccess({ message: `Country ${newCountry.name} added successfully` });
+
+  const handleUpdate = async (updatedCountry: Country) => {
+    try {
+      updateCountry(updatedCountry);
+      setCountryListState((prevList) =>
+        prevList.map((country) => (country.id === updatedCountry.id ? updatedCountry : country))
+      );
+      displayNotification({ message: `Country ${updatedCountry.name} updated successfully`, status: "success" });
+    } catch (error) {
+      console.log(error);
+      displayNotification({ message: `Error updating country ${updatedCountry.name}`, status: "error" });
+    }
+    setSelectedCountry(null);
     setDialogVisibility(false);
   };
-  const countryFlag = (country: Country) => {
-    const src = country.code ? `./flags/${country.code.toLowerCase()}.svg` : null;
-    const alt = country.name;
-    return (
-      <Image
-        src={src}
-        alt={alt}
-        width={18}
-        height={18}
-      >
-      </Image>
-    )
-  }
 
-  const handleDelete = (countryToDelete: Country) => {
-    setCountryListState((prevList) => prevList.filter(country => country.id !== countryToDelete.id));
-    deleteCountry(countryToDelete);
-    showSuccess({ message: `Country deleted successfully` });
+  const handleCreate = async (newCountry: Country) => {
+    try {
+      await createCountry(newCountry);
+      const frontEndId = setId();
+      newCountry.id = frontEndId;
+      setCountryListState((prevList) => [...prevList, newCountry]);
+      displayNotification({ message: `Country ${newCountry.name} added successfully`, status: "success" });
+    } catch (error) {
+      displayNotification({ message: `Error adding country ${newCountry.name}: ${error.message}`, status: "error" });
+    }
+    setDialogVisibility(false);
   };
-  // TODO: ADD HEADER TO THE DIALOG
+
+  const handleDelete = async (countryToDelete: Country) => {
+    try {
+      await deleteCountry(countryToDelete);
+      setCountryListState((prevList) => prevList.filter((country) => country.id !== countryToDelete.id));
+      displayNotification({ message: `Country deleted successfully`, status: "success" });
+    } catch (error) {
+      displayNotification({ message: `Error deleting country: ${error.message}`, status: "error" });
+    }
+  };
+
   return (
     <>
       <Toast ref={toastRef} />
-      <Button
-        icon="pi pi-plus"
-        rounded
-        severity="secondary"
-        onClick={() => {
-          setDialogVisibility(true);
-        }}
-      />
+      <Button icon="pi pi-plus" rounded severity="secondary" onClick={() => setDialogVisibility(true)} />
       <DataTable value={countryListState} stripedRows>
         <Column field="code" header="Code"></Column>
-        <Column header="Flag" body={countryFlag}></Column>
+        <Column header="Flag" body={(country: Country) => (
+          <Image src={country.code ? `./flags/${country.code.toLowerCase()}.svg` : ""} alt={country.name} width={18} height={18} />
+        )} />
         <Column field="name" header="Name"></Column>
         <Column header="Edit" body={(country) => (
-          <Button
-            icon="pi pi-pencil"
-            rounded
-            severity="secondary"
-            onClick={() => {
-              setSelectedCountry(country);
-              setDialogVisibility(true);
-            }}
-          />
-        )}></Column>
+          <Button icon="pi pi-pencil" rounded severity="secondary" onClick={() => {
+            setSelectedCountry(country);
+            setDialogVisibility(true);
+          }} />
+        )} />
         <Column header="Delete" body={(country) => (
-          <Button
-            icon="pi pi-trash"
-            rounded
-            severity="danger"
-            onClick={() => handleDelete(country)}
-          />
-        )}></Column>
+          <Button icon="pi pi-trash" rounded severity="danger" onClick={() => handleDelete(country)} />
+        )} />
       </DataTable>
 
       <Dialog ref={dialogRef} visible={dialogVisibility || !!selectedCountry} onHide={() => {
@@ -113,14 +96,10 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
         setSelectedCountry(null);
       }}>
         {selectedCountry ? (
-          <CountryForm
-            initialValue={selectedCountry}
-            onSubmit={handleUpdate}
-          />
-        ) : <CountryForm
-            initialValue={{ id: "", name: '', code: '' }}
-          onSubmit={handleCreate}
-        />}
+          <CountryForm initialValue={selectedCountry} onSubmit={handleUpdate} />
+        ) : (
+          <CountryForm initialValue={{ id: "", name: "", code: "" }} onSubmit={handleCreate} />
+        )}
       </Dialog>
     </>
   );

@@ -51,14 +51,14 @@ export function createCountryRepository(): CountryRepository {
     },
     deleteCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
-      await fetch('/api/country/delete-country', {
+      const response = await fetch('/api/country/delete-country', {
         method: 'post',
         body: JSON.stringify(mappedCountry),
       })
         .then((response) => response.json())
-        .catch((error) => {
-          throw new Error(error)
-        })
+      if (!response.success) {
+        throw new Error(response.error)
+      }
     },
   }
 }
