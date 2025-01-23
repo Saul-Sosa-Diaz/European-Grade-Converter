@@ -34,14 +34,13 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
 
   const handleUpdate = async (updatedCountry: Country) => {
     try {
-      updateCountry(updatedCountry);
+      await updateCountry(updatedCountry);
       setCountryListState((prevList) =>
         prevList.map((country) => (country.id === updatedCountry.id ? updatedCountry : country))
       );
       displayNotification({ message: `Country ${updatedCountry.name} updated successfully`, status: "success" });
     } catch (error) {
-      console.log(error);
-      displayNotification({ message: `Error updating country ${updatedCountry.name}`, status: "error" });
+      displayNotification({ message: `Error updating country ${updatedCountry.name}: ${error.message}`, status: "error" });
     }
     setSelectedCountry(null);
     setDialogVisibility(false);

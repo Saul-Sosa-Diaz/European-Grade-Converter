@@ -29,33 +29,30 @@ export function createCountryRepository(): CountryRepository {
     // TODO: SECURIZE THESE
     updateCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
-      await fetch('/api/country/update-country', {
+      const response = await fetch('/api/country/update-country', {
         method: 'post',
         body: JSON.stringify(mappedCountry),
-      })
-        .then((response) => response.json())
-        .catch((error) => {
-          throw new Error(error)
-        })
+      }).then((response) => response.json())
+      if (!response.success) {
+        throw new Error(response.error)
+      }
     },
     createCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
-      await fetch('/api/country/create-country', {
+      const response = await fetch('/api/country/create-country', {
         method: 'post',
         body: JSON.stringify(mappedCountry),
-      })
-        .then((response) => response.json())
-        .catch((error) => {
-          throw new Error(error)
-        })
+      }).then((response) => response.json())
+      if (!response.success) {
+        throw new Error(response.error)
+      }
     },
     deleteCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
       const response = await fetch('/api/country/delete-country', {
         method: 'post',
         body: JSON.stringify(mappedCountry),
-      })
-        .then((response) => response.json())
+      }).then((response) => response.json())
       if (!response.success) {
         throw new Error(response.error)
       }

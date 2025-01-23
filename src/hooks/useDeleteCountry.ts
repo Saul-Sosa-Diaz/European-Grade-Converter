@@ -12,7 +12,7 @@ export const useDeleteCountry = () => {
     },
     onError: (error) => {
       console.error(error)
-    }
+    },
   })
 
   return {

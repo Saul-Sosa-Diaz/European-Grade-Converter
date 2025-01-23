@@ -4,14 +4,19 @@ import { useMutation } from '@tanstack/react-query'
 
 export const useCreateCountry = () => {
   const { Country } = useApi()
+
   const mutation = useMutation({
     mutationFn: async (country: Country) => {
-      Country.createCountry(country)
+      const response = await Country.createCountry(country)
+      return response
+    },
+    onError: (error) => {
+      console.error(error)
     },
   })
 
   return {
-    createCountry: mutation.mutate,
+    createCountry: mutation.mutateAsync,
     ...mutation,
   }
 }
