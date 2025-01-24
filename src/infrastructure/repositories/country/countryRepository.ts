@@ -1,12 +1,13 @@
 import { buildCountryListMap } from '@/application/country/getCountryList/mapGetCountryList'
 import { buildCountryEvaluationMap } from '@/application/country/getCountryWithEvaluationInfoList/mapGetCountryWithEvaluationInfoList'
 import { buildAPICountry } from '@/application/country/mapAPICountry'
+import { API_URL } from '@/constants/apiURL'
 import { CountryRepository } from '@/domain/country/countryRepository'
 
 export function createCountryRepository(): CountryRepository {
   return {
     getCountryWithEvaluationInfoList: async () => {
-      const { countries } = await fetch('/api/country/country-with-evaluation-info-list', {
+      const { countries } = await fetch(API_URL.country.getCountryWithEvaluationInfoList, {
         method: 'get',
       })
         .then((response) => response.json())
@@ -17,7 +18,7 @@ export function createCountryRepository(): CountryRepository {
       return mappedCountriesWithEvaluationInfo
     },
     getCountryList: async () => {
-      const { countries } = await fetch('/api/country/country-list', { method: 'get' })
+      const { countries } = await fetch(API_URL.country.getCountryList, { method: 'get' })
         .then((response) => response.json())
         .catch((error) => {
           throw new Error(error)
@@ -29,7 +30,7 @@ export function createCountryRepository(): CountryRepository {
     // TODO: SECURIZE THESE
     updateCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
-      const response = await fetch('/api/country/update-country', {
+      const response = await fetch(API_URL.country.updateCountry, {
         method: 'post',
         body: JSON.stringify(mappedCountry),
       }).then((response) => response.json())
@@ -39,7 +40,7 @@ export function createCountryRepository(): CountryRepository {
     },
     createCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
-      const response = await fetch('/api/country/create-country', {
+      const response = await fetch(API_URL.country.createCountry, {
         method: 'post',
         body: JSON.stringify(mappedCountry),
       }).then((response) => response.json())
@@ -49,7 +50,7 @@ export function createCountryRepository(): CountryRepository {
     },
     deleteCountry: async (country) => {
       const mappedCountry = await buildAPICountry(country)
-      const response = await fetch('/api/country/delete-country', {
+      const response = await fetch(API_URL.country.deleteCountry, {
         method: 'post',
         body: JSON.stringify(mappedCountry),
       }).then((response) => response.json())
