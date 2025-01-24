@@ -1,5 +1,5 @@
 import { Country } from '@/domain/country/country'
-import { APIGetCountryWithEvaluationInfoList } from '@/domain/country/dto/ApiGetCountries'
+import { APIGetCountryWithEvaluationInfoList } from '@/domain/country/dto/ApiCountry'
 
 export const buildCountryListMap = async (
   dto: APIGetCountryWithEvaluationInfoList,

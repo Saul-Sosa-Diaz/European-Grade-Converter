@@ -1,4 +1,4 @@
-import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/ApiGetCountries'
+import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/ApiCountry'
 import { PostgresAdapter } from '../database/postgresAdapter'
 import { EvaluationType } from '@/domain/country/country'
 

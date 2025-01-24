@@ -2,7 +2,7 @@ import { CountryWithEvaluationInfo, EvaluationType } from '@/domain/country/coun
 import {
   APICountryWithEvaluationInfo,
   APIGetCountryWithEvaluationInfoList,
-} from '@/domain/country/dto/ApiGetCountries'
+} from '@/domain/country/dto/ApiCountry'
 
 export const buildCountryEvaluationMap = async (
   dto: APIGetCountryWithEvaluationInfoList,

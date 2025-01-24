@@ -1,4 +1,4 @@
-import { APICountry } from "@/domain/country/dto/ApiGetCountries";
+import { APICountry } from "@/domain/country/dto/ApiCountry";
 import { createDatabaseAdapter } from "@/infrastructure/config/databaseConfig";
 
 

@@ -1,7 +1,7 @@
 import { Pool } from 'pg'
 import { QUERIES } from './queries'
 import { ConverterDirection, convertGradeParams, DatabaseAdapter } from '../config/databaseConfig'
-import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/ApiGetCountries'
+import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/ApiCountry'
 import { EvaluationType } from '@/domain/country/country'
 
 export class PostgresAdapter implements DatabaseAdapter {
