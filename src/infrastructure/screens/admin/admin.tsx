@@ -2,7 +2,7 @@
 // import { redirect } from "next/navigation";
 // import { ProgressSpinner } from 'primereact/progressspinner';
 // import { useEffect, useState } from "react";
-import { useGetCountryList } from "@/hooks/useGetCountryList";
+import { useGetCountryList } from "@/hooks/country/useGetCountryList";
 import { CountryList } from "./components/CountryList/CountryList";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { HeaderSideBar, MainContainer, MainContent, SideBar } from "./admin.styles";

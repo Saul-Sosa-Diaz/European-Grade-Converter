@@ -8,7 +8,7 @@ import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.t
 import { InputGrade } from "./components/InputGradeComponent/InputGradeComponent";
 import { CountryFromTreeSelect } from "./components/CountryFromTreeSelectorComponent/CountryFromTreeSelectComponent";
 import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/CountryAdditionalInfoComponent";
-import { useGetCountryWithEvaluationInfoList } from "@/hooks/useGetCountryWithEvaluationInfoList";
+import { useGetCountryWithEvaluationInfoList } from "@/hooks/country/useGetCountryWithEvaluationInfoList";
 import { GradeConverterContextProvider } from "@/context/GradeConverterContext";
 import { ProgressSpinner } from 'primereact/progressspinner';
 // TODO: FIX SWITZELAND

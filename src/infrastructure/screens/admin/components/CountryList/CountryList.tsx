@@ -4,11 +4,11 @@ import { Country } from '@/domain/country/country';
 import { Button } from 'primereact/button';
 import { CountryForm } from '../../forms/country/CountryForm';
 import { useRef, useState } from 'react';
-import { useUpdateCountry } from '@/hooks/useUpdateCountry';
+import { useUpdateCountry } from '@/hooks/country/useUpdateCountry';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
-import { useCreateCountry } from '@/hooks/useCreateCountry';
-import { useDeleteCountry } from '@/hooks/useDeleteCountry';
+import { useCreateCountry } from '@/hooks/country/useCreateCountry';
+import { useDeleteCountry } from '@/hooks/country/useDeleteCountry';
 import Image from 'next/image';
 
 
