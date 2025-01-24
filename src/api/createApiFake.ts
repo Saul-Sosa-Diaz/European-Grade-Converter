@@ -9,24 +9,36 @@ import { getCountryList } from '@/application/country/getCountryList/getCountryL
 import { updateCountry } from '@/application/country/updateCountry/updateCountry'
 import { createCountry } from '@/application/country/createCountry/createCountry'
 import { deleteCountry } from '@/application/country/deleteCountry/deleteCountry'
+import { getUniversityList } from '@/application/university/getUniversityList/getUniversityList'
+import { updateUniversity } from '@/application/university/updateUniversity/updateCountry'
+import { createUniversity } from '@/application/university/createUniversity/createUniversity'
+import { deleteUniversity } from '@/application/university/deleteUniversity/deleteUniversity'
+import { createUniversityRepositoryFake } from '@/infrastructure/repositories/university/universityRepositoryFake'
 
 export function createApiFake(): Api {
-  const COUNTRY_REPOSITORY = createCountryRepositoryFake()
-  const AUTH_REPOSITORY = createAuthRepositoryFake()
-  const GRADES_REPOSITORY = createGradeRepositoryFake()
+  const FAKE_COUNTRY_REPOSITORY = createCountryRepositoryFake()
+  const FAKE_UNIVERSITY_REPOSITORY = createUniversityRepositoryFake()
+  const FAKE_AUTH_REPOSITORY = createAuthRepositoryFake()
+  const FAKE_GRADES_REPOSITORY = createGradeRepositoryFake()
   return {
     Country: {
-      getCountryWithEvaluationInfoList: getCountryWithEvaluationInfoList(COUNTRY_REPOSITORY),
-      getCountryList: getCountryList(COUNTRY_REPOSITORY),
-      updateCountry: updateCountry(COUNTRY_REPOSITORY),
-      createCountry: createCountry(COUNTRY_REPOSITORY),
-      deleteCountry: deleteCountry(COUNTRY_REPOSITORY)
+      getCountryWithEvaluationInfoList: getCountryWithEvaluationInfoList(FAKE_COUNTRY_REPOSITORY),
+      getCountryList: getCountryList(FAKE_COUNTRY_REPOSITORY),
+      updateCountry: updateCountry(FAKE_COUNTRY_REPOSITORY),
+      createCountry: createCountry(FAKE_COUNTRY_REPOSITORY),
+      deleteCountry: deleteCountry(FAKE_COUNTRY_REPOSITORY),
+    },
+    University: {
+      getUniversityList: getUniversityList(FAKE_UNIVERSITY_REPOSITORY),
+      updateUniversity: updateUniversity(FAKE_UNIVERSITY_REPOSITORY),
+      createUniversity: createUniversity(FAKE_UNIVERSITY_REPOSITORY),
+      deleteUniversity: deleteUniversity(FAKE_UNIVERSITY_REPOSITORY),
     },
     Grades: {
-      convertGrade: convertGrade(GRADES_REPOSITORY),
+      convertGrade: convertGrade(FAKE_GRADES_REPOSITORY),
     },
     Auth: {
-      signIn: signIn(AUTH_REPOSITORY),
+      signIn: signIn(FAKE_AUTH_REPOSITORY),
     },
   }
 }
