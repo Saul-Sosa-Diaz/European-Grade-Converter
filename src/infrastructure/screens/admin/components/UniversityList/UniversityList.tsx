@@ -7,6 +7,9 @@ import { Dialog } from 'primereact/dialog';
 import { University } from '@/domain/university/university';
 import { UniversityForm } from '../../forms/university/UniversityForm';
 import { Country } from '@/domain/country/country';
+import { useUpdateUniversity } from '@/hooks/university/useUpdateUniversity';
+import { useCreateUniversity } from '@/hooks/university/useCreateUniversity';
+import { useDeleteUniversity } from '@/hooks/university/useDeleteUniversity';
 
 
 export const UniversityList = ({ universityList, countryList }: { universityList: University[], countryList: Country[] }) => { // TODO: MODIFY TO GET THE CORRECT TYPE
@@ -14,6 +17,9 @@ export const UniversityList = ({ universityList, countryList }: { universityList
   const [universityListState, setUniversityListState] = useState<University[]>(universityList);
   const [dialogVisibility, setDialogVisibility] = useState(false);
   const [maxId, setMaxId] = useState(Math.max(...universityListState.map((university) => parseInt(university.id))));
+  const { updateUniversity } = useUpdateUniversity();
+  const { createUniversity } = useCreateUniversity();
+  const { deleteUniversity } = useDeleteUniversity();
   const dialogRef = useRef<Dialog | null>(null);
   const toastRef = useRef(null);
 
@@ -28,7 +34,7 @@ export const UniversityList = ({ universityList, countryList }: { universityList
 
   const handleUpdate = async (updatedUniversity: University) => {
     try {
-      console.log(updatedUniversity);
+      await updateUniversity(updatedUniversity);
       setUniversityListState((prevList) =>
         prevList.map((university) => (university.id === updatedUniversity.id ? updatedUniversity : university))
       );
@@ -42,7 +48,7 @@ export const UniversityList = ({ universityList, countryList }: { universityList
 
   const handleCreate = async (newUniversity: University) => {
     try {
-
+      await createUniversity(newUniversity);
       const frontEndId = setId();
       newUniversity.id = frontEndId;
       setUniversityListState((prevList) => [...prevList, newUniversity]);
@@ -55,7 +61,7 @@ export const UniversityList = ({ universityList, countryList }: { universityList
 
   const handleDelete = async (universityToDelete: University) => {
     try {
-
+      await deleteUniversity(universityToDelete);
       setUniversityListState((prevList) => prevList.filter((university) => university.id !== universityToDelete.id));
       displayNotification({ message: `University deleted successfully`, status: "success" });
     } catch (error) {
@@ -88,7 +94,7 @@ export const UniversityList = ({ universityList, countryList }: { universityList
         {selectedUniversity ? (
           <UniversityForm initialValue={selectedUniversity} onSubmit={handleUpdate} countryList={countryList} />
         ) : (
-          <UniversityForm initialValue={{ id: "", name: "", country: "", countryID: "" }} onSubmit={handleUpdate} countryList={countryList} />
+          <UniversityForm initialValue={{ id: "", name: "", country: "", countryID: "" }} onSubmit={handleCreate} countryList={countryList} />
         )}
       </Dialog>
     </>

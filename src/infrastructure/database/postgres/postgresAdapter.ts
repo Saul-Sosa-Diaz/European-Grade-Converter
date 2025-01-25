@@ -1,9 +1,15 @@
 import { Pool } from 'pg'
-import { QUERIES } from './queries'
-import { ConverterDirection, convertGradeParams, DatabaseAdapter } from '../config/databaseConfig'
+import {
+  ConverterDirection,
+  convertGradeParams,
+  DatabaseAdapter,
+} from '../../config/databaseConfig'
 import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/ApiCountry'
 import { EvaluationType } from '@/domain/country/country'
 import { APIUniversity } from '@/domain/university/dto/ApiUniversity'
+import { countryQueries } from './queries/countryQueries'
+import { universityQueries } from './queries/universityQueries'
+import { evaluationSystemQueries } from './queries/evaluationSystemQueries'
 
 export class PostgresAdapter implements DatabaseAdapter {
   private pool: Pool
@@ -12,36 +18,54 @@ export class PostgresAdapter implements DatabaseAdapter {
   }
 
   async updateCountry(country): Promise<void> {
-    const QUERY = QUERIES.UPDATE_COUNTRY
+    const QUERY = countryQueries.UPDATE_COUNTRY
     const VALUES = [country.countryid, country.countrycode, country.countryname]
     await this.pool.query(QUERY, VALUES)
   }
 
   async createCountry(country: APICountry): Promise<void> {
-    const QUERY = QUERIES.CREATE_COUNTRY
+    const QUERY = countryQueries.CREATE_COUNTRY
     const VALUES = [country.countrycode, country.countryname]
     await this.pool.query(QUERY, VALUES)
   }
 
   async deleteCountry(country: APICountry): Promise<void> {
-    const QUERY = QUERIES.DELETE_COUNTRY
+    const QUERY = countryQueries.DELETE_COUNTRY
     const VALUES = [country.countryid]
     await this.pool.query(QUERY, VALUES)
   }
 
   async getCountryList(): Promise<APICountry[]> {
-    const QUERY = QUERIES.GET_COUNTRY_LIST
+    const QUERY = countryQueries.GET_COUNTRY_LIST
     return this.pool.query(QUERY).then((result) => result.rows as APICountry[])
   }
 
   async getCountryWithEvaluationInfoList(): Promise<APICountryWithEvaluationInfo[]> {
-    const QUERY = QUERIES.GET_COUNTRY_WITH_EVALUATION_INFO_LIST
+    const QUERY = countryQueries.GET_COUNTRY_WITH_EVALUATION_INFO_LIST
     return this.pool.query(QUERY).then((result) => result.rows as APICountryWithEvaluationInfo[])
   }
 
   async getUniversityList(): Promise<APIUniversity[]> {
-    const QUERY = QUERIES.GET_UNIVERSITY_LIST
+    const QUERY = universityQueries.GET_UNIVERSITY_LIST
     return this.pool.query(QUERY).then((result) => result.rows as APIUniversity[])
+  }
+
+  async updateUniversity(university: APIUniversity): Promise<void> {
+    const QUERY = universityQueries.UPDATE_UNIVERSITY
+    const VALUES = [university.universityid, university.universityname, university.countryid]
+    await this.pool.query(QUERY, VALUES)
+  }
+
+  async deleteUniversity(university: APIUniversity): Promise<void> {
+    const QUERY = universityQueries.DELETE_UNIVERSITY
+    const VALUES = [university.universityid]
+    await this.pool.query(QUERY, VALUES)
+  }
+
+  async createUniversity(university: APIUniversity): Promise<void> {
+    const QUERY = universityQueries.CREATE_UNIVERSITY
+    const VALUES = [university.universityname, university.countryid]
+    await this.pool.query(QUERY, VALUES)
   }
 
   async convertGrade({
@@ -67,8 +91,8 @@ export class PostgresAdapter implements DatabaseAdapter {
 
     const QUERY =
       direction === ConverterDirection.toSpain
-        ? QUERIES.COUNTINUOUS_TO_SPAIN
-        : QUERIES.COUNTINUOUS_FROM_SPAIN
+        ? evaluationSystemQueries.COUNTINUOUS_TO_SPAIN
+        : evaluationSystemQueries.COUNTINUOUS_FROM_SPAIN
 
     const VALUES = [evaluationSystemID, grade]
     const { rows } = await this.pool.query(QUERY, VALUES)
@@ -107,8 +131,8 @@ export class PostgresAdapter implements DatabaseAdapter {
     console.log('Discrete grade convert', evaluationSystemID, grade, direction)
     const QUERY =
       direction === ConverterDirection.toSpain
-        ? QUERIES.DISCRETE_TO_SPAIN
-        : QUERIES.DISCRETE_FROM_SPAIN
+        ? evaluationSystemQueries.DISCRETE_TO_SPAIN
+        : evaluationSystemQueries.DISCRETE_FROM_SPAIN
     const VALUES = [evaluationSystemID, grade]
     const { rows } = await this.pool.query(QUERY, VALUES)
     if (rows.length === 0) {

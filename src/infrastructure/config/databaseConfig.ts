@@ -1,5 +1,5 @@
 import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/ApiCountry'
-import { PostgresAdapter } from '../database/postgresAdapter'
+import { PostgresAdapter } from '../database/postgres/postgresAdapter'
 import { EvaluationType } from '@/domain/country/country'
 import { APIUniversity } from '@/domain/university/dto/ApiUniversity'
 
@@ -21,6 +21,9 @@ export interface DatabaseAdapter {
   convertGrade(params: convertGradeParams): Promise<number>
   deleteCountry(country: APICountry): Promise<void>
   getUniversityList(): Promise<APIUniversity[]>
+  updateUniversity(university: APIUniversity): Promise<void>
+  createUniversity(university: APIUniversity): Promise<void>
+  deleteUniversity(university: APIUniversity): Promise<void>
 }
 
 export function createDatabaseAdapter(): DatabaseAdapter {
