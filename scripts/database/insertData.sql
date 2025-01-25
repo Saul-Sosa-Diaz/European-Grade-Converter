@@ -547,7 +547,7 @@ VALUES (
   10,
   'Bulgaria',
   'discrete',
-  '{"2","3","4","5"}', 
+  '{"2","3","4","5", "6"}', 
   0
 );
 INSERT INTO DISCRETE_GRADE_CONVERSION (
