@@ -32,7 +32,7 @@ export const GradeConverterContextProvider = ({ children, countries }: GradeConv
   const [gradeToConvert, setGradeToConvert] = useState<string>("");
   const [countryFrom, setCountryFrom] = useState<CountryWithEvaluationInfo>(undefined);
   const [countryTo, setCountryTo] = useState<CountryWithEvaluationInfo>(
-    countries.find((country) => country.code === "ES")
+    countries.find((country) => country.code === "ES") || countries[0]
   );
   return (
     <GradeConverterContext.Provider value={{ gradeToConvert, setGradeToConvert, countryFrom, setCountryFrom, countryTo, setCountryTo }}>

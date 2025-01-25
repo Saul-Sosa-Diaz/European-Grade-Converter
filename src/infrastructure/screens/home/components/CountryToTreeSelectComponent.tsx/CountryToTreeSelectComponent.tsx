@@ -10,7 +10,7 @@ export const CountryToTreeSelect = ({ countries }: { countries: CountryWithEvalu
 
     // State to hold the key of the selected country
     const [keyCountryTo, setKeyCountryTo] = useState<string | null>(
-        countryTo ? countryTo.key : null 
+        countryTo ? countryTo.key : null
     );
 
     // Update the actual country object whenever the keyCountryTo state changes
@@ -38,7 +38,7 @@ export const CountryToTreeSelect = ({ countries }: { countries: CountryWithEvalu
             optionLabel="label" // Display the country label as the display name
             placeholder="Select a Country" // Placeholder text for the TreeSelect dropdown
             panelFooterTemplate={() =>
-                keyCountryTo ? ( // Footer template displaying the selected country
+                keyCountryTo && countryTo ? ( // Footer template displaying the selected country
                     <span>
                         <b>{countryTo.label}</b> selected.
                     </span>
