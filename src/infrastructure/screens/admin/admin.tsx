@@ -6,7 +6,9 @@ import { useGetCountryList } from "@/hooks/country/useGetCountryList";
 import { CountryList } from "./components/CountryList/CountryList";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { HeaderSideBar, MainContainer, MainContent, SideBar } from "./admin.styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { UniversityList } from "./components/UniversityList/UniversityList";
+import { useGetUniversityList } from "@/hooks/university/useGetUniversityList";
 // TODO: UNCOMMENT THE FOLLOWING LINES
 
 enum AdminTabsNames {
@@ -35,7 +37,15 @@ export const Admin = () => {
   //   redirect('/403')
   // }
 
-  const { countryList, isLoading } = useGetCountryList();
+  const { countryList, isLoading: countryListIsLoading, refetch: refetchCountryList } = useGetCountryList();
+  const { universityList, isLoading: universityListIsLoading, refetch: refetchUniversityList } = useGetUniversityList();
+
+  useEffect(() => {
+    if (activeTab === AdminTabsNames.COUNTRIES || activeTab === AdminTabsNames.UNIVERSITIES) {
+      refetchCountryList();
+      refetchUniversityList();
+    }
+  }, [activeTab]);
   // return (
   //   <>
   //     {session && (
@@ -46,7 +56,7 @@ export const Admin = () => {
   //     )}
   //   </>
   // );
-  if (isLoading) {
+  if (countryListIsLoading || universityListIsLoading) {
     return <ProgressSpinner />
   }
   return (
@@ -62,7 +72,7 @@ export const Admin = () => {
         </SideBar>
         <MainContent>
           {activeTab === AdminTabsNames.COUNTRIES && <CountryList countryList={countryList} />}
-          {activeTab === AdminTabsNames.UNIVERSITIES && <h1>Universities</h1>}
+          {activeTab === AdminTabsNames.UNIVERSITIES && <UniversityList universityList={universityList} countryList={countryList} />}
           {activeTab === AdminTabsNames.EVALUATION_SYSTEM && <h1>Evaluation System</h1>}
         </MainContent>
 

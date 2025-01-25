@@ -3,8 +3,8 @@ CREATE SCHEMA public;
 
 CREATE TABLE COUNTRY (
     countryID SERIAL UNIQUE,
-    countryName VARCHAR(255) NOT NULL,
-    countryCode VARCHAR(4) NOT NULL,
+    countryName VARCHAR(255) UNIQUE NOT NULL,
+    countryCode VARCHAR(4) UNIQUE NOT NULL,
     PRIMARY KEY (countryID)
 );
 

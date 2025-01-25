@@ -3,6 +3,7 @@ import { QUERIES } from './queries'
 import { ConverterDirection, convertGradeParams, DatabaseAdapter } from '../config/databaseConfig'
 import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/ApiCountry'
 import { EvaluationType } from '@/domain/country/country'
+import { APIUniversity } from '@/domain/university/dto/ApiUniversity'
 
 export class PostgresAdapter implements DatabaseAdapter {
   private pool: Pool
@@ -36,6 +37,11 @@ export class PostgresAdapter implements DatabaseAdapter {
   async getCountryWithEvaluationInfoList(): Promise<APICountryWithEvaluationInfo[]> {
     const QUERY = QUERIES.GET_COUNTRY_WITH_EVALUATION_INFO_LIST
     return this.pool.query(QUERY).then((result) => result.rows as APICountryWithEvaluationInfo[])
+  }
+
+  async getUniversityList(): Promise<APIUniversity[]> {
+    const QUERY = QUERIES.GET_UNIVERSITY_LIST
+    return this.pool.query(QUERY).then((result) => result.rows as APIUniversity[])
   }
 
   async convertGrade({

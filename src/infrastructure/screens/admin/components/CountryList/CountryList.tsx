@@ -22,7 +22,7 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
   const [maxId, setMaxId] = useState(Math.max(...countryListState.map((country) => parseInt(country.id))));
   const dialogRef = useRef<Dialog | null>(null);
   const toastRef = useRef(null);
-  // TODO: MODIFY TOAST TO GET A CORRECT MESSAGE WHEN ERROR
+  
   const displayNotification = ({ message, status }: { message: string, status }) => {
     toastRef.current.show({ severity: status, detail: message, life: 3000 });
   };

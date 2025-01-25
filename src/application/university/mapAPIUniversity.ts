@@ -6,7 +6,7 @@ export const buildAPIUniversity = async (university: University): Promise<APIUni
     const convertedUniversity: APIUniversity = {
       universityname: university.name,
       countryname: university.country,
-      countryid: university.contryID,
+      countryid: university.countryID,
       universityid: university.id,
     }
     return convertedUniversity

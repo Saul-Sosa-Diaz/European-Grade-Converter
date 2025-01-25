@@ -21,24 +21,24 @@ RETURNING (countryName, countryID);
 
 INSERT INTO UNIVERSITY (countryID, universityName)
 	VALUES 
-	(1, null),  -- 1 Spain
-	(2, null), -- 2 France
-  (3, 'Salerno University'), -- 3 Italy 
+	(1, 'Universidad de La Laguna'),  -- 1 Spain
+   (2, 'Université Paris-Saclay'), -- 2 France
+   (3, 'Salerno University'), -- 3 Italy 
   (3, 'Bolonia University'), -- 3 Italy
-  (4, null), -- 4 Ireland
-  (5, null) ,-- 5 United Kingdom
-  (6, null) ,-- 6 Belgium
-  (7, null) ,-- 7 Denmark
-  (8, null) ,-- 8 Austria
-  (9, null) ,-- 9 Bulgaria
-  (10, null), -- 10 Czech Republic
-  (11, null), -- 11 Germany
-  (12, null), -- 12 Greece
-  (13, null), -- 13 Norway
-  (14, null), -- 14 Poland
-  (15, null), -- 15 Portugal
-  (16, null), -- 16 Switzerland
-  (17, null) -- 17 Slovenia
+   (4, 'Trinity College Dublin'), -- 4 Ireland
+   (5, 'University of Oxford'), -- 5 United Kingdom
+   (6, 'KU Leuven'), -- 6 Belgium
+   (7, 'University of Copenhagen'), -- 7 Denmark
+   (8, 'University of Vienna'), -- 8 Austria
+   (9, 'Sofia University'), -- 9 Bulgaria
+   (10, 'Charles University'), -- 10 Czech Republic
+   (11, 'Ludwig Maximilian University of Munich'), -- 11 Germany
+   (12, 'National and Kapodistrian University of Athens'), -- 12 Greece
+   (13, 'University of Oslo'), -- 13 Norway
+   (14, 'University of Warsaw'), -- 14 Poland
+   (15, 'University of Lisbon'), -- 15 Portugal
+   (16, 'University of Zurich'), -- 16 Switzerland
+   (17, 'University of Ljubljana') -- 17 Slovenia
 RETURNING (countryID, universityID);
 
 -- Spain Evaluation System

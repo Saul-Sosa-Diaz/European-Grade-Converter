@@ -1,10 +1,9 @@
-import { UniversityRepository } from "@/domain/university/universityRepository"
-
+import { UniversityRepository } from '@/domain/university/universityRepository'
 
 export function createUniversityRepositoryFake(): UniversityRepository {
   return {
     getUniversityList: async () => {
-      return [ { name: 'University of Toronto', country: 'Canada', contryID: '1', id: "2" } ]
+      return [{ name: 'University of Toronto', country: 'Canada', countryID: '1', id: '2' }]
     },
     updateUniversity: async (country) => {
       // Use the country parameter

@@ -32,6 +32,9 @@ export const QUERIES = {
     JOIN COUNTRY ON UNIVERSITY.countryID = COUNTRY.countryID 
     JOIN EVALUATION_SYSTEM ON UNIVERSITY.universityID = EVALUATION_SYSTEM.universityID
   `,
+  GET_UNIVERSITY_LIST: `
+    SELECT universityID, universityName, UNIVERSITY.countryID, COUNTRY.countryName
+    FROM UNIVERSITY JOIN COUNTRY ON UNIVERSITY.countryID = COUNTRY.countryID `,
   COUNTINUOUS_TO_SPAIN: `
      SELECT gc.MinIntervalGrade, gc.MaxIntervalGrade,
             gc.baseEquivalentSpanishGrade, gc.topEquivalentSpanishGrade

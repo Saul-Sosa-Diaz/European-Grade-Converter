@@ -1,22 +1,22 @@
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { CountryForm } from '../../forms/country/CountryForm';
 import { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
-import Image from 'next/image';
+import { University } from '@/domain/university/university';
+import { UniversityForm } from '../../forms/university/UniversityForm';
+import { Country } from '@/domain/country/country';
 
 
-export const UniversityList = ({ universityList }: { universityList: University[] }) => { // TODO: MODIFY TO GET THE CORRECT TYPE
-
+export const UniversityList = ({ universityList, countryList }: { universityList: University[], countryList: Country[] }) => { // TODO: MODIFY TO GET THE CORRECT TYPE
   const [selectedUniversity, setSelectedCountry] = useState<University | null>(null);
   const [universityListState, setUniversityListState] = useState<University[]>(universityList);
   const [dialogVisibility, setDialogVisibility] = useState(false);
-  const [maxId, setMaxId] = useState(Math.max(...universityListState.map((country) => parseInt(country.id))));
+  const [maxId, setMaxId] = useState(Math.max(...universityListState.map((university) => parseInt(university.id))));
   const dialogRef = useRef<Dialog | null>(null);
   const toastRef = useRef(null);
-  // TODO: MODIFY TOAST TO GET A CORRECT MESSAGE WHEN ERROR
+
   const displayNotification = ({ message, status }: { message: string, status }) => {
     toastRef.current.show({ severity: status, detail: message, life: 3000 });
   };
@@ -28,13 +28,13 @@ export const UniversityList = ({ universityList }: { universityList: University[
 
   const handleUpdate = async (updatedUniversity: University) => {
     try {
-
+      console.log(updatedUniversity);
       setUniversityListState((prevList) =>
-        prevList.map((country) => (country.id === updatedUniversity.id ? updatedUniversity : country))
+        prevList.map((university) => (university.id === updatedUniversity.id ? updatedUniversity : university))
       );
       displayNotification({ message: `University ${updatedUniversity.name} updated successfully`, status: "success" });
     } catch (error) {
-      displayNotification({ message: `Error updating country ${updatedUniversity.name}: ${error.message}`, status: "error" });
+      displayNotification({ message: `Error updating university ${updatedUniversity.name}: ${error.message}`, status: "error" });
     }
     setSelectedCountry(null);
     setDialogVisibility(false);
@@ -48,7 +48,7 @@ export const UniversityList = ({ universityList }: { universityList: University[
       setUniversityListState((prevList) => [...prevList, newUniversity]);
       displayNotification({ message: `University ${newUniversity.name} added successfully`, status: "success" });
     } catch (error) {
-      displayNotification({ message: `Error adding country ${newUniversity.name}: ${error.message}`, status: "error" });
+      displayNotification({ message: `Error adding university ${newUniversity.name}: ${error.message}`, status: "error" });
     }
     setDialogVisibility(false);
   };
@@ -56,10 +56,10 @@ export const UniversityList = ({ universityList }: { universityList: University[
   const handleDelete = async (universityToDelete: University) => {
     try {
 
-      setUniversityListState((prevList) => prevList.filter((country) => country.id !== universityToDelete.id));
+      setUniversityListState((prevList) => prevList.filter((university) => university.id !== universityToDelete.id));
       displayNotification({ message: `University deleted successfully`, status: "success" });
     } catch (error) {
-      displayNotification({ message: `Error deleting country: ${error.message}`, status: "error" });
+      displayNotification({ message: `Error deleting university: ${error.message}`, status: "error" });
     }
   };
 
@@ -68,16 +68,16 @@ export const UniversityList = ({ universityList }: { universityList: University[
       <Toast ref={toastRef} />
       <Button icon="pi pi-plus" rounded severity="secondary" onClick={() => setDialogVisibility(true)} />
       <DataTable value={universityListState} stripedRows>
-        <Column field="code" header="Code"></Column>
+        <Column field="country" header="Country" ></Column>
         <Column field="name" header="Name"></Column>
-        <Column header="Edit" body={(country) => (
+        <Column header="Edit" body={(university) => (
           <Button icon="pi pi-pencil" rounded severity="secondary" onClick={() => {
-            setSelectedCountry(country);
+            setSelectedCountry(university);
             setDialogVisibility(true);
           }} />
         )} />
-        <Column header="Delete" body={(country) => (
-          <Button icon="pi pi-trash" rounded severity="danger" onClick={() => handleDelete(country)} />
+        <Column header="Delete" body={(university) => (
+          <Button icon="pi pi-trash" rounded severity="danger" onClick={() => handleDelete(university)} />
         )} />
       </DataTable>
 
@@ -86,9 +86,9 @@ export const UniversityList = ({ universityList }: { universityList: University[
         setSelectedCountry(null);
       }}>
         {selectedUniversity ? (
-          <CountryForm initialValue={selectedUniversity} onSubmit={handleUpdate} />
+          <UniversityForm initialValue={selectedUniversity} onSubmit={handleUpdate} countryList={countryList} />
         ) : (
-          <CountryForm initialValue={{ id: "", name: "", code: "" }} onSubmit={handleCreate} />
+          <UniversityForm initialValue={{ id: "", name: "", country: "", countryID: "" }} onSubmit={handleUpdate} countryList={countryList} />
         )}
       </Dialog>
     </>

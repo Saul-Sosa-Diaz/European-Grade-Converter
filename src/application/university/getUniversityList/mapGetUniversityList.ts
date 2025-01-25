@@ -10,7 +10,7 @@ export const buildUniversityListMap = async (
       return {
         name: university.universityname,
         country: university.countryname,
-        contryID: university.countryid,
+        countryID: university.countryid,
         id: university.universityid,
       }
     })
