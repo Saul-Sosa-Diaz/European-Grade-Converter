@@ -44,7 +44,7 @@ export namespace DeleteEvaluationSystem {
   ) => Promise<DeleteEvaluationSystem.Response>
 }
 
-export interface EvalutationSystemRepository {
+export interface EvaluationSystemRepository {
   convertGrade: ConvertGrade.Request
   getEvaluationSystemList: GetEvaluationSystemList.Request
   updateEvaluationSystem: UpdateEvaluationSystem.Request

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { UniversityList } from "./components/UniversityList/UniversityList";
 import { useGetUniversityList } from "@/hooks/university/useGetUniversityList";
 import { EvaluationSystemList } from "./components/EvaluationSystemList/EvaluationSystemList";
+import { useGetEvaluationSystemList } from "@/hooks/evaluationSystem/useGetEvaluationSystemList";
 // TODO: UNCOMMENT THE FOLLOWING LINES
 
 enum AdminTabsNames {
@@ -40,11 +41,13 @@ export const Admin = () => {
 
   const { countryList, isLoading: countryListIsLoading, refetch: refetchCountryList } = useGetCountryList();
   const { universityList, isLoading: universityListIsLoading, refetch: refetchUniversityList } = useGetUniversityList();
+  const { evaluationSystemList, isLoading: evaluationSystemListIsLoading, refetch: refetchEvaluationSystemList } = useGetEvaluationSystemList();
 
   useEffect(() => {
-    if (activeTab === AdminTabsNames.COUNTRIES || activeTab === AdminTabsNames.UNIVERSITIES) {
+    if (activeTab === AdminTabsNames.COUNTRIES || activeTab === AdminTabsNames.UNIVERSITIES || activeTab === AdminTabsNames.EVALUATION_SYSTEM) {
       refetchCountryList();
       refetchUniversityList();
+      refetchEvaluationSystemList();
     }
   }, [activeTab]);
   // return (
@@ -57,7 +60,7 @@ export const Admin = () => {
   //     )}
   //   </>
   // );
-  if (countryListIsLoading || universityListIsLoading) {
+  if (countryListIsLoading || universityListIsLoading || evaluationSystemListIsLoading) {
     return <ProgressSpinner />
   }
   return (
@@ -74,7 +77,7 @@ export const Admin = () => {
         <MainContent>
           {activeTab === AdminTabsNames.COUNTRIES && <CountryList countryList={countryList} />}
           {activeTab === AdminTabsNames.UNIVERSITIES && <UniversityList universityList={universityList} countryList={countryList} />}
-          {activeTab === AdminTabsNames.EVALUATION_SYSTEM && <EvaluationSystemList evaluationSystemList={[]} />}
+          {activeTab === AdminTabsNames.EVALUATION_SYSTEM && <EvaluationSystemList evaluationSystemList={evaluationSystemList} />}
         </MainContent>
 
       </MainContainer>

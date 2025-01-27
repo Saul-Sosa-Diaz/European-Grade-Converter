@@ -1,10 +1,10 @@
 import {
-  EvalutationSystemRepository,
+  EvaluationSystemRepository,
   GetEvaluationSystemList,
 } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
 export function getEvaluationSystemList(
-  evaluationSystemRepository: EvalutationSystemRepository,
+  evaluationSystemRepository: EvaluationSystemRepository,
 ): GetEvaluationSystemList.Request {
   return async () => await evaluationSystemRepository.getEvaluationSystemList()
 }

@@ -1,6 +1,6 @@
-import { EvalutationSystemRepository } from '@/domain/evaluationSystem/evaluationSystemRepository'
+import { EvaluationSystemRepository } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
-export function createEvaluationSystemRepositoryFake(): EvalutationSystemRepository {
+export function createEvaluationSystemRepositoryFake(): EvaluationSystemRepository {
   return {
     convertGrade: async (params) => {
       if (params.grade < 5) return 'F'

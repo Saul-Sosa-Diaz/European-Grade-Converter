@@ -14,12 +14,13 @@ import { updateUniversity } from '@/application/university/updateCountry'
 import { createUniversity } from '@/application/university/createUniversity'
 import { deleteUniversity } from '@/application/university/deleteUniversity'
 import { createUniversityRepositoryFake } from '@/infrastructure/repositories/university/universityRepositoryFake'
+import { getEvaluationSystemList } from '@/application/evaluationSystem/getEvaluationSystemList/getEvaluationSystemList'
 
 export function createApiFake(): Api {
   const FAKE_COUNTRY_REPOSITORY = createCountryRepositoryFake()
   const FAKE_UNIVERSITY_REPOSITORY = createUniversityRepositoryFake()
   const FAKE_AUTH_REPOSITORY = createAuthRepositoryFake()
-  const FAKE_GRADES_REPOSITORY = createEvaluationSystemRepositoryFake()
+  const FAKE_EVALUATION_SYSTEM_REPOSITORY = createEvaluationSystemRepositoryFake()
   return {
     Country: {
       getCountryWithEvaluationInfoList: getCountryWithEvaluationInfoList(FAKE_COUNTRY_REPOSITORY),
@@ -35,7 +36,11 @@ export function createApiFake(): Api {
       deleteUniversity: deleteUniversity(FAKE_UNIVERSITY_REPOSITORY),
     },
     EvaluationSystem: {
-      convertGrade: convertGrade(FAKE_GRADES_REPOSITORY),
+      convertGrade: convertGrade(FAKE_EVALUATION_SYSTEM_REPOSITORY),
+      getEvaluationSystemList: getEvaluationSystemList(FAKE_EVALUATION_SYSTEM_REPOSITORY),
+      updateEvaluationSystem: updateEvaluationSystem(FAKE_EVALUATION_SYSTEM_REPOSITORY),
+      createEvaluationSystem: createEvaluationSystem(FAKE_EVALUATION_SYSTEM_REPOSITORY),
+      deleteEvaluationSystem: deleteEvaluationSystem(FAKE_EVALUATION_SYSTEM_REPOSITORY),
     },
     Auth: {
       signIn: signIn(FAKE_AUTH_REPOSITORY),

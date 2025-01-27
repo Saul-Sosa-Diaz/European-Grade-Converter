@@ -16,6 +16,7 @@ import { updateUniversity } from '@/application/university/updateCountry'
 import { createUniversity } from '@/application/university/createUniversity'
 import { deleteUniversity } from '@/application/university/deleteUniversity'
 import { createUniversityRepository } from '@/infrastructure/repositories/university/universityRepository'
+import { getEvaluationSystemList } from '@/application/evaluationSystem/getEvaluationSystemList/getEvaluationSystemList'
 
 type CreateApiProps = {
   offline?: boolean
@@ -25,7 +26,7 @@ export function createApi({ offline = false }: CreateApiProps): Api {
 
   const countryRepository = createCountryRepository()
   const authRepository = createAuthRepository()
-  const gradesRepository = createEvaluationSystemRepository()
+  const evaluationSystemRepository = createEvaluationSystemRepository()
   const universityRepository = createUniversityRepository()
   return {
     Country: {
@@ -42,7 +43,11 @@ export function createApi({ offline = false }: CreateApiProps): Api {
       deleteUniversity: deleteUniversity(universityRepository),
     },
     EvaluationSystem: {
-      convertGrade: convertGrade(gradesRepository),
+      convertGrade: convertGrade(evaluationSystemRepository),
+      getEvaluationSystemList: getEvaluationSystemList(evaluationSystemRepository),
+      updateEvaluationSystem: updateEvaluationSystem(evaluationSystemRepository),
+      createEvaluationSystem: createEvaluationSystem(evaluationSystemRepository),
+      deleteEvaluationSystem: deleteEvaluationSystem(evaluationSystemRepository),
     },
     Auth: {
       signIn: signIn(authRepository),

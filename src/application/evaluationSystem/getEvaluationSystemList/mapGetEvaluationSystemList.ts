@@ -1,7 +1,7 @@
 import { APIEvaluationSystem } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
 import { EvaluationSystem } from '@/domain/evaluationSystem/evaluationSystem'
 
-export const builEvaluationSystemListMap = async (
+export const buildEvaluationSystemListMap = async (
   dto: APIEvaluationSystem[],
 ): Promise<EvaluationSystem[]> => {
   try {
