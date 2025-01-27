@@ -13,7 +13,7 @@ import { useDeleteUniversity } from '@/hooks/university/useDeleteUniversity';
 
 
 export const UniversityList = ({ universityList, countryList }: { universityList: University[], countryList: Country[] }) => { // TODO: MODIFY TO GET THE CORRECT TYPE
-  const [selectedUniversity, setSelectedCountry] = useState<University | null>(null);
+  const [selectedUniversity, setSelectedUniversity] = useState<University | null>(null);
   const [universityListState, setUniversityListState] = useState<University[]>(universityList);
   const [dialogVisibility, setDialogVisibility] = useState(false);
   const [maxId, setMaxId] = useState(Math.max(...universityListState.map((university) => parseInt(university.id))));
@@ -42,7 +42,7 @@ export const UniversityList = ({ universityList, countryList }: { universityList
     } catch (error) {
       displayNotification({ message: `Error updating university ${updatedUniversity.name}: ${error.message}`, status: "error" });
     }
-    setSelectedCountry(null);
+    setSelectedUniversity(null);
     setDialogVisibility(false);
   };
 
@@ -78,7 +78,7 @@ export const UniversityList = ({ universityList, countryList }: { universityList
         <Column field="name" header="Name"></Column>
         <Column header="Edit" body={(university) => (
           <Button icon="pi pi-pencil" rounded severity="secondary" onClick={() => {
-            setSelectedCountry(university);
+            setSelectedUniversity(university);
             setDialogVisibility(true);
           }} />
         )} />
@@ -89,7 +89,7 @@ export const UniversityList = ({ universityList, countryList }: { universityList
 
       <Dialog ref={dialogRef} visible={dialogVisibility || !!selectedUniversity} onHide={() => {
         setDialogVisibility(false);
-        setSelectedCountry(null);
+        setSelectedUniversity(null);
       }}>
         {selectedUniversity ? (
           <UniversityForm initialValue={selectedUniversity} onSubmit={handleUpdate} countryList={countryList} />
