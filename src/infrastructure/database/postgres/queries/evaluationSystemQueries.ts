@@ -3,6 +3,9 @@ export const evaluationSystemQueries = {
     SELECT evaluationsystemid, EVALUATION_SYSTEM.universityid, UNIVERSITY.universityname, evaluationtype, validgrades, evaluationsystemname, fixed 
     FROM EVALUATION_SYSTEM JOIN UNIVERSITY ON EVALUATION_SYSTEM.universityid = UNIVERSITY.universityid
     `,
+  UPDATE_EVALUATION_SYSTEM: ``, // TODO: Implement
+  DELETE_EVALUATION_SYSTEM: ``, // TODO: Implement
+  CREATE_EVALUATION_SYSTEM: ``, // TODO: Implement
   COUNTINUOUS_TO_SPAIN: `
      SELECT gc.MinIntervalGrade, gc.MaxIntervalGrade,
             gc.baseEquivalentSpanishGrade, gc.topEquivalentSpanishGrade

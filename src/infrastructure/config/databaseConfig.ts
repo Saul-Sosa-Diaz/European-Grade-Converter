@@ -2,6 +2,7 @@ import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/A
 import { PostgresAdapter } from '../database/postgres/postgresAdapter'
 import { APIUniversity } from '@/domain/university/dto/ApiUniversity'
 import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
+import { APIEvaluationSystem } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
 
 export enum ConverterDirection {
   toSpain = 'toSpain',
@@ -24,6 +25,10 @@ export interface DatabaseAdapter {
   updateUniversity(university: APIUniversity): Promise<void>
   createUniversity(university: APIUniversity): Promise<void>
   deleteUniversity(university: APIUniversity): Promise<void>
+  getEvaluationSystemList(): Promise<APIEvaluationSystem[]>
+  updateEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
+  createEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
+  deleteEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
 }
 
 export function createDatabaseAdapter(): DatabaseAdapter {

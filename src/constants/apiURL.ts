@@ -13,10 +13,10 @@ export const API_URL = {
     deleteUniversity: '/api/university/delete-university',
   },
   evaluationSystem: {
-    convertGrade: '/api/evaluationSystem/convert-grade',
-    getEvaluationSystemList: '/api/evaluationSystem/evaluation-system-list',
-    updateEvaluationSystem: '/api/evaluationSystem/update-evaluation-system',
-    createEvaluationSystem: '/api/evaluationSystem/create-evaluation-system',
-    deleteEvaluationSystem: '/api/evaluationSystem/delete-evaluation-system',
+    convertGrade: '/api/evaluation-system/convert-grade',
+    getEvaluationSystemList: '/api/evaluation-system/evaluation-system-list',
+    updateEvaluationSystem: '/api/evaluation-system/update-evaluation-system',
+    createEvaluationSystem: '/api/evaluation-system/create-evaluation-system',
+    deleteEvaluationSystem: '/api/evaluation-system/delete-evaluation-system',
   },
 }

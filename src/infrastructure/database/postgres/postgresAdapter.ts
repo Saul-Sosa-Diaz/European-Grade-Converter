@@ -10,6 +10,7 @@ import { countryQueries } from './queries/countryQueries'
 import { universityQueries } from './queries/universityQueries'
 import { evaluationSystemQueries } from './queries/evaluationSystemQueries'
 import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
+import { APIEvaluationSystem } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
 
 export class PostgresAdapter implements DatabaseAdapter {
   private pool: Pool
@@ -65,6 +66,41 @@ export class PostgresAdapter implements DatabaseAdapter {
   async createUniversity(university: APIUniversity): Promise<void> {
     const QUERY = universityQueries.CREATE_UNIVERSITY
     const VALUES = [university.universityname, university.countryid]
+    await this.pool.query(QUERY, VALUES)
+  }
+
+  async getEvaluationSystemList() {
+    const QUERY = evaluationSystemQueries.GET_EVALUATION_SYSTEM_LIST
+    return this.pool.query(QUERY).then((result) => result.rows as APIEvaluationSystem[])
+  }
+
+  async updateEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void> {
+    const QUERY = evaluationSystemQueries.UPDATE_EVALUATION_SYSTEM
+    const VALUES = [
+      evaluationSystem.evaluationsystemid,
+      evaluationSystem.evaluationsystemname,
+      evaluationSystem.validgrades,
+      evaluationSystem.evaluationtype,
+      evaluationSystem.fixed,
+    ]
+    await this.pool.query(QUERY, VALUES)
+  }
+
+  async createEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void> {
+    const QUERY = evaluationSystemQueries.CREATE_EVALUATION_SYSTEM
+    const VALUES = [
+      evaluationSystem.universityid,
+      evaluationSystem.evaluationtype,
+      evaluationSystem.validgrades,
+      evaluationSystem.evaluationsystemname,
+      evaluationSystem.fixed,
+    ]
+    await this.pool.query(QUERY, VALUES)
+  }
+
+  async deleteEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void> {
+    const QUERY = evaluationSystemQueries.DELETE_EVALUATION_SYSTEM
+    const VALUES = [evaluationSystem.evaluationsystemid]
     await this.pool.query(QUERY, VALUES)
   }
 
