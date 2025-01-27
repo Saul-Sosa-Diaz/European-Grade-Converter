@@ -9,6 +9,7 @@ import { HeaderSideBar, MainContainer, MainContent, SideBar } from "./admin.styl
 import { useEffect, useState } from "react";
 import { UniversityList } from "./components/UniversityList/UniversityList";
 import { useGetUniversityList } from "@/hooks/university/useGetUniversityList";
+import { EvaluationSystemList } from "./components/EvaluationSystemList/EvaluationSystemList";
 // TODO: UNCOMMENT THE FOLLOWING LINES
 
 enum AdminTabsNames {
@@ -73,7 +74,7 @@ export const Admin = () => {
         <MainContent>
           {activeTab === AdminTabsNames.COUNTRIES && <CountryList countryList={countryList} />}
           {activeTab === AdminTabsNames.UNIVERSITIES && <UniversityList universityList={universityList} countryList={countryList} />}
-          {activeTab === AdminTabsNames.EVALUATION_SYSTEM && <h1>Evaluation System</h1>}
+          {activeTab === AdminTabsNames.EVALUATION_SYSTEM && <EvaluationSystemList evaluationSystemList={[]} />}
         </MainContent>
 
       </MainContainer>

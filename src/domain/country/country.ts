@@ -1,7 +1,4 @@
-export enum EvaluationType {
-  CONTINUOUS = 'continuous',
-  DISCRETE = 'discrete',
-}
+import { EvaluationType } from "../evaluationSystem/evaluationSystem"
 
 export type Country = {
   name: string

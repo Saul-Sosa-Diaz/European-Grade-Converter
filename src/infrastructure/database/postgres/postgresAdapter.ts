@@ -5,11 +5,11 @@ import {
   DatabaseAdapter,
 } from '../../config/databaseConfig'
 import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/ApiCountry'
-import { EvaluationType } from '@/domain/country/country'
 import { APIUniversity } from '@/domain/university/dto/ApiUniversity'
 import { countryQueries } from './queries/countryQueries'
 import { universityQueries } from './queries/universityQueries'
 import { evaluationSystemQueries } from './queries/evaluationSystemQueries'
+import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
 
 export class PostgresAdapter implements DatabaseAdapter {
   private pool: Pool

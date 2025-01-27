@@ -1,5 +1,5 @@
 import { useGradeConverterContext } from "@/context/GradeConverterContext";
-import { EvaluationType } from "@/domain/country/country";
+import { EvaluationType } from "@/domain/evaluationSystem/evaluationSystem";
 import { customParseFloat } from "@/lib/utils";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
