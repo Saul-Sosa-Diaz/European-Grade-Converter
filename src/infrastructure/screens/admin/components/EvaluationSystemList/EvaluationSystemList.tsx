@@ -4,13 +4,14 @@ import { Button } from 'primereact/button';
 import { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
+import { EvaluationSystem } from '@/domain/evaluationSystem/evaluationSystem';
 
 
 export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSystemList: EvaluationSystem[] }) => { // TODO: MODIFY TO GET THE CORRECT TYPE
   const [selectedEvaluationSystem, setSelectedCountry] = useState<EvaluationSystem | null>(null);
   const [evaluationSystemListState, setEvaluationSystemListState] = useState<EvaluationSystem[]>(evaluationSystemList);
   const [dialogVisibility, setDialogVisibility] = useState(false);
-  const [maxId, setMaxId] = useState(Math.max(...evaluationSystemListState.map((evaluationSystem) => parseInt(evaluationSystem.id))));
+  const [maxId, setMaxId] = useState(Math.max(...evaluationSystemListState.map((evaluationSystem) => parseInt(evaluationSystem.evaluationSystemID))));
   // const { updateEvaluationSystem } = useUpdateEvaluationSystem();
   // const { createEvaluationSystem } = useCreateEvaluationSystem();
   // const { deleteEvaluationSystem } = useDeleteEvaluationSystem();
@@ -28,13 +29,12 @@ export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSyste
 
   const handleUpdate = async (updatedEvaluationSystem: EvaluationSystem) => {
     try {
-      await updateEvaluationSystem(updatedEvaluationSystem);
       setEvaluationSystemListState((prevList) =>
-        prevList.map((evaluationSystem) => (evaluationSystem.id === updatedEvaluationSystem.id ? updatedEvaluationSystem : evaluationSystem))
+        prevList.map((evaluationSystem) => (evaluationSystem.evaluationSystemID === updatedEvaluationSystem.evaluationSystemID ? updatedEvaluationSystem : evaluationSystem))
       );
-      displayNotification({ message: `EvaluationSystem ${updatedEvaluationSystem.name} updated successfully`, status: "success" });
+      displayNotification({ message: `EvaluationSystem ${updatedEvaluationSystem.evaluationSystemName} updated successfully`, status: "success" });
     } catch (error) {
-      displayNotification({ message: `Error updating evaluationSystem ${updatedEvaluationSystem.name}: ${error.message}`, status: "error" });
+      displayNotification({ message: `Error updating evaluationSystem ${updatedEvaluationSystem.evaluationSystemName}: ${error.message}`, status: "error" });
     }
     setSelectedCountry(null);
     setDialogVisibility(false);
@@ -42,21 +42,19 @@ export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSyste
 
   const handleCreate = async (newEvaluationSystem: EvaluationSystem) => {
     try {
-      await createEvaluationSystem(newEvaluationSystem);
       const frontEndId = setId();
-      newEvaluationSystem.id = frontEndId;
+      newEvaluationSystem.evaluationSystemID = frontEndId;
       setEvaluationSystemListState((prevList) => [...prevList, newEvaluationSystem]);
-      displayNotification({ message: `EvaluationSystem ${newEvaluationSystem.name} added successfully`, status: "success" });
+      displayNotification({ message: `EvaluationSystem ${newEvaluationSystem.evaluationSystemName} added successfully`, status: "success" });
     } catch (error) {
-      displayNotification({ message: `Error adding evaluationSystem ${newEvaluationSystem.name}: ${error.message}`, status: "error" });
+      displayNotification({ message: `Error adding evaluationSystem ${newEvaluationSystem.evaluationSystemName}: ${error.message}`, status: "error" });
     }
     setDialogVisibility(false);
   };
 
   const handleDelete = async (evaluationSystemToDelete: EvaluationSystem) => {
     try {
-      await deleteEvaluationSystem(evaluationSystemToDelete);
-      setEvaluationSystemListState((prevList) => prevList.filter((evaluationSystem) => evaluationSystem.id !== evaluationSystemToDelete.id));
+      setEvaluationSystemListState((prevList) => prevList.filter((evaluationSystem) => evaluationSystem.evaluationSystemID !== evaluationSystemToDelete.evaluationSystemID));
       displayNotification({ message: `EvaluationSystem deleted successfully`, status: "success" });
     } catch (error) {
       displayNotification({ message: `Error deleting evaluationSystem: ${error.message}`, status: "error" });
@@ -69,7 +67,7 @@ export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSyste
       <Button icon="pi pi-plus" rounded severity="secondary" onClick={() => setDialogVisibility(true)} />
       <DataTable value={evaluationSystemListState} stripedRows>
         <Column field="country" header="Country" ></Column>
-        <Column field="name" header="Name"></Column>
+        <Column field=".evaluationSystemName" header="Name"></Column>
         <Column header="Edit" body={(evaluationSystem) => (
           <Button icon="pi pi-pencil" rounded severity="secondary" onClick={() => {
             setSelectedCountry(evaluationSystem);
@@ -88,7 +86,7 @@ export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSyste
         {selectedEvaluationSystem ? (
           <h1>a</h1>
         ) : (
-            <h1>a</h1>
+          <h1>a</h1>
         )}
       </Dialog>
     </>
