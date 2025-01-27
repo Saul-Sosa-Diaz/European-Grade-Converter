@@ -4,7 +4,7 @@ import {
 } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
 export function getEvaluationSystemList(
-  countryRepository: EvalutationSystemRepository,
+  evaluationSystemRepository: EvalutationSystemRepository,
 ): GetEvaluationSystemList.Request {
-  return async () => await countryRepository.getEvaluationSystemList()
+  return async () => await evaluationSystemRepository.getEvaluationSystemList()
 }
