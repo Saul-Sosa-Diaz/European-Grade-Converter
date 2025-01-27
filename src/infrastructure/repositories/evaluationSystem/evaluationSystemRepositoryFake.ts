@@ -1,13 +1,37 @@
+import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
 import { EvaluationSystemRepository } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
 export function createEvaluationSystemRepositoryFake(): EvaluationSystemRepository {
   return {
     convertGrade: async (params) => {
-      if (params.grade < 5) return 'F'
-      if (params.grade < 6) return 'E'
-      if (params.grade < 7) return 'D'
-      if (params.grade < 8) return 'C'
+      const grade = Number(params.grade)
+      if (grade < 5) return 'F'
+      if (grade < 6) return 'E'
+      if (grade < 7) return 'D'
+      if (grade < 8) return 'C'
       return 'A'
+    },
+    getEvaluationSystemList: async () => {
+      return [
+        {
+          evaluationType: EvaluationType.DISCRETE,
+          validGrades: ['A', 'B', 'C', 'D', 'E', 'F'],
+          fixed: 0,
+          evaluationSystemID: '1',
+          universityID: '1',
+          evaluationSystemName: 'A-F',
+          universityName: 'University 1',
+        },
+      ]
+    },
+    updateEvaluationSystem: async (params) => {
+      console.log('updateEvaluationSystem', params)
+    },
+    createEvaluationSystem: async (params) => {
+      console.log('createEvaluationSystem', params)
+    },
+    deleteEvaluationSystem: async (params) => {
+      console.log('deleteEvaluationSystem', params)
     },
   }
 }

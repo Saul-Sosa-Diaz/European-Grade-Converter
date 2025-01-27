@@ -5,16 +5,21 @@ import { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
 import { EvaluationSystem } from '@/domain/evaluationSystem/evaluationSystem';
+import { useUpdateEvaluationSystem } from '@/hooks/evaluationSystem/useUpdateEvaluationSystem';
+import { useCreateEvaluationSystem } from '@/hooks/evaluationSystem/useCreateEvaluationSystem';
+import { useDeleteEvaluationSystem } from '@/hooks/evaluationSystem/useDeleteEvaluationSystem';
+import { EvaluationSystemForm } from '../../forms/evaluationSystem/EvaluationSystemForm';
+import { University } from '@/domain/university/university';
 
 
-export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSystemList: EvaluationSystem[] }) => { // TODO: MODIFY TO GET THE CORRECT TYPE
+export const EvaluationSystemList = ({ evaluationSystemList, universityList }: { evaluationSystemList: EvaluationSystem[], universityList: University[] }) => {
   const [selectedEvaluationSystem, setSelectedCountry] = useState<EvaluationSystem | null>(null);
   const [evaluationSystemListState, setEvaluationSystemListState] = useState<EvaluationSystem[]>(evaluationSystemList);
   const [dialogVisibility, setDialogVisibility] = useState(false);
   const [maxId, setMaxId] = useState(Math.max(...evaluationSystemListState.map((evaluationSystem) => parseInt(evaluationSystem.evaluationSystemID))));
-  // const { updateEvaluationSystem } = useUpdateEvaluationSystem();
-  // const { createEvaluationSystem } = useCreateEvaluationSystem();
-  // const { deleteEvaluationSystem } = useDeleteEvaluationSystem();
+  const { updateEvaluationSystem } = useUpdateEvaluationSystem();
+  const { createEvaluationSystem } = useCreateEvaluationSystem();
+  const { deleteEvaluationSystem } = useDeleteEvaluationSystem();
   const dialogRef = useRef<Dialog | null>(null);
   const toastRef = useRef(null);
 
@@ -29,6 +34,7 @@ export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSyste
 
   const handleUpdate = async (updatedEvaluationSystem: EvaluationSystem) => {
     try {
+      await updateEvaluationSystem(updatedEvaluationSystem);
       setEvaluationSystemListState((prevList) =>
         prevList.map((evaluationSystem) => (evaluationSystem.evaluationSystemID === updatedEvaluationSystem.evaluationSystemID ? updatedEvaluationSystem : evaluationSystem))
       );
@@ -42,6 +48,7 @@ export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSyste
 
   const handleCreate = async (newEvaluationSystem: EvaluationSystem) => {
     try {
+      await createEvaluationSystem(newEvaluationSystem);
       const frontEndId = setId();
       newEvaluationSystem.evaluationSystemID = frontEndId;
       setEvaluationSystemListState((prevList) => [...prevList, newEvaluationSystem]);
@@ -54,6 +61,7 @@ export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSyste
 
   const handleDelete = async (evaluationSystemToDelete: EvaluationSystem) => {
     try {
+      await deleteEvaluationSystem(evaluationSystemToDelete);
       setEvaluationSystemListState((prevList) => prevList.filter((evaluationSystem) => evaluationSystem.evaluationSystemID !== evaluationSystemToDelete.evaluationSystemID));
       displayNotification({ message: `EvaluationSystem deleted successfully`, status: "success" });
     } catch (error) {
@@ -66,8 +74,9 @@ export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSyste
       <Toast ref={toastRef} />
       <Button icon="pi pi-plus" rounded severity="secondary" onClick={() => setDialogVisibility(true)} />
       <DataTable value={evaluationSystemListState} stripedRows>
-        <Column field="country" header="Country" ></Column>
-        <Column field=".evaluationSystemName" header="Name"></Column>
+        <Column field="universityName" header="University Name" ></Column>
+        <Column field="evaluationSystemName" header="Evaluation System Name" ></Column>
+        <Column field="evaluationType" header="Type"></Column>
         <Column header="Edit" body={(evaluationSystem) => (
           <Button icon="pi pi-pencil" rounded severity="secondary" onClick={() => {
             setSelectedCountry(evaluationSystem);
@@ -84,7 +93,11 @@ export const EvaluationSystemList = ({ evaluationSystemList }: { evaluationSyste
         setSelectedCountry(null);
       }}>
         {selectedEvaluationSystem ? (
-          <h1>a</h1>
+          <EvaluationSystemForm
+            initialValue={selectedEvaluationSystem}
+            onSubmit={handleUpdate}
+            universityList={universityList}
+          />
         ) : (
           <h1>a</h1>
         )}

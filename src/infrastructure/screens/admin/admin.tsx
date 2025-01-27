@@ -77,7 +77,7 @@ export const Admin = () => {
         <MainContent>
           {activeTab === AdminTabsNames.COUNTRIES && <CountryList countryList={countryList} />}
           {activeTab === AdminTabsNames.UNIVERSITIES && <UniversityList universityList={universityList} countryList={countryList} />}
-          {activeTab === AdminTabsNames.EVALUATION_SYSTEM && <EvaluationSystemList evaluationSystemList={evaluationSystemList} />}
+          {activeTab === AdminTabsNames.EVALUATION_SYSTEM && <EvaluationSystemList evaluationSystemList={evaluationSystemList} universityList={universityList} />}
         </MainContent>
 
       </MainContainer>
