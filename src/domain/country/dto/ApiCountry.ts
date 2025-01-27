@@ -1,4 +1,4 @@
-export type APIGetCountrList = APICountry[]
+export type APIGetCountryList = APICountry[]
 export interface APICountry {
   countryid: string
   countrycode: string
