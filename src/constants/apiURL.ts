@@ -14,5 +14,9 @@ export const API_URL = {
   },
   evaluationSystem: {
     convertGrade: '/api/evaluationSystem/convert-grade',
+    getEvaluationSystemList: '/api/evaluationSystem/evaluation-system-list',
+    updateEvaluationSystem: '/api/evaluationSystem/update-evaluation-system',
+    createEvaluationSystem: '/api/evaluationSystem/create-evaluation-system',
+    deleteEvaluationSystem: '/api/evaluationSystem/delete-evaluation-system',
   },
 }

@@ -17,5 +17,37 @@ export function createEvaluationSystemRepository(): EvalutationSystemRepository 
         })
       return convertedGrade
     },
+    getEvaluationSystemList: async () => {
+      const evaluationSystemList = await fetch(API_URL.evaluationSystem.getEvaluationSystemList)
+        .then((response) => response.json())
+        .catch((error) => {
+          throw new Error(error)
+        })
+      return evaluationSystemList
+    },
+    updateEvaluationSystem: async (params) => {
+      await fetch(API_URL.evaluationSystem.updateEvaluationSystem, {
+        method: 'post',
+        body: JSON.stringify({ ...params }),
+      }).catch((error) => {
+        throw new Error(error)
+      })
+    },
+    createEvaluationSystem: async (params) => {
+      await fetch(API_URL.evaluationSystem.createEvaluationSystem, {
+        method: 'post',
+        body: JSON.stringify({ ...params }),
+      }).catch((error) => {
+        throw new Error(error)
+      })
+    },
+    deleteEvaluationSystem: async (params) => {
+      await fetch(API_URL.evaluationSystem.deleteEvaluationSystem, {
+        method: 'post',
+        body: JSON.stringify({ ...params }),
+      }).catch((error) => {
+        throw new Error(error)
+      })
+    },
   }
 }
