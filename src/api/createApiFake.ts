@@ -15,6 +15,9 @@ import { createUniversity } from '@/application/university/createUniversity'
 import { deleteUniversity } from '@/application/university/deleteUniversity'
 import { createUniversityRepositoryFake } from '@/infrastructure/repositories/university/universityRepositoryFake'
 import { getEvaluationSystemList } from '@/application/evaluationSystem/getEvaluationSystemList/getEvaluationSystemList'
+import { updateEvaluationSystem } from '@/application/evaluationSystem/updateEvaluationSystem'
+import { createEvaluationSystem } from '@/application/evaluationSystem/createEvaluationSystem'
+import { deleteEvaluationSystem } from '@/application/evaluationSystem/deleteEvaluationSystem'
 
 export function createApiFake(): Api {
   const FAKE_COUNTRY_REPOSITORY = createCountryRepositoryFake()
