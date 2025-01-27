@@ -1,4 +1,4 @@
-import { EvaluationType } from "../country/country"
+import { EvaluationType } from '../country/country'
 
 export namespace ConvertGrade {
   export type Params = {
@@ -13,6 +13,6 @@ export namespace ConvertGrade {
   export type Request = (params: ConvertGrade.Params) => Promise<ConvertGrade.Response>
 }
 
-export interface GradesRepository {
+export interface EvalutationSystemRepository {
   convertGrade: ConvertGrade.Request
 }

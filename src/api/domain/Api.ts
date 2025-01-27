@@ -1,11 +1,11 @@
 import { AuthRepository } from '@/domain/auth/authRepository'
 import { CountryRepository } from '@/domain/country/countryRepository'
-import { GradesRepository } from '@/domain/grades/gradesRepository'
+import { EvalutationSystemRepository } from '@/domain/evaluationSystem/evaluationSystemRepository'
 import { UniversityRepository } from '@/domain/university/universityRepository'
 
 export interface Api {
   Country: CountryRepository
   University: UniversityRepository
-  Grades: GradesRepository
+  EvaluationSystem: EvalutationSystemRepository
   Auth: AuthRepository
 }

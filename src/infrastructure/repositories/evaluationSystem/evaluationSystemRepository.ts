@@ -1,10 +1,13 @@
 import { API_URL } from '@/constants/apiURL'
-import { ConvertGrade, GradesRepository } from '@/domain/grades/gradesRepository'
+import {
+  ConvertGrade,
+  EvalutationSystemRepository,
+} from '@/domain/evaluationSystem/evaluationSystemRepository'
 
-export function createGradeRepository(): GradesRepository {
+export function createEvaluationSystemRepository(): EvalutationSystemRepository {
   return {
     convertGrade: async (params: ConvertGrade.Params) => {
-      const { convertedGrade } = await fetch(API_URL.grade.convertGrade, {
+      const { convertedGrade } = await fetch(API_URL.evaluationSystem.convertGrade, {
         method: 'post',
         body: JSON.stringify({ ...params }),
       })

@@ -4,8 +4,8 @@ import { createCountryRepository } from '../infrastructure/repositories/country/
 import { Api } from './domain/Api'
 import { createAuthRepository } from '@/infrastructure/repositories/auth/authRepository'
 import { signIn } from '@/application/auth/signIn'
-import { createGradeRepository } from '@/infrastructure/repositories/grades/gradesRepository'
-import { convertGrade } from '@/application/grades/calculateConversion.ts'
+import { createEvaluationSystemRepository } from '@/infrastructure/repositories/evaluationSystem/evaluationSystemRepository'
+import { convertGrade } from '@/application/evaluationSystem/calculateConversion.ts'
 import { getCountryWithEvaluationInfoList } from '@/application/country/getCountryWithEvaluationInfoList/getCountryWithEvaluationInfoList'
 import { getCountryList } from '@/application/country/getCountryList/getCountryList'
 import { updateCountry } from '@/application/country/updateCountry/updateCountry'
@@ -25,7 +25,7 @@ export function createApi({ offline = false }: CreateApiProps): Api {
 
   const countryRepository = createCountryRepository()
   const authRepository = createAuthRepository()
-  const gradesRepository = createGradeRepository()
+  const gradesRepository = createEvaluationSystemRepository()
   const universityRepository = createUniversityRepository()
   return {
     Country: {
@@ -41,7 +41,7 @@ export function createApi({ offline = false }: CreateApiProps): Api {
       createUniversity: createUniversity(universityRepository),
       deleteUniversity: deleteUniversity(universityRepository),
     },
-    Grades: {
+    EvaluationSystem: {
       convertGrade: convertGrade(gradesRepository),
     },
     Auth: {

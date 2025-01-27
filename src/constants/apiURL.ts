@@ -12,7 +12,7 @@ export const API_URL = {
     createUniversity: '/api/university/create-university',
     deleteUniversity: '/api/university/delete-university',
   },
-  grade: {
+  evaluationSystem: {
     convertGrade: '/api/grade/convert-grade',
   },
 }

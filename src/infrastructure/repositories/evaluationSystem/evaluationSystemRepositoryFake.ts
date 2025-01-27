@@ -1,8 +1,6 @@
-import { GradesRepository } from '@/domain/grades/gradesRepository'
+import { EvalutationSystemRepository } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
-
-
-export function createGradeRepositoryFake(): GradesRepository {
+export function createEvaluationSystemRepositoryFake(): EvalutationSystemRepository {
   return {
     convertGrade: async (params) => {
       if (params.grade < 5) return 'F'
@@ -10,6 +8,6 @@ export function createGradeRepositoryFake(): GradesRepository {
       if (params.grade < 7) return 'D'
       if (params.grade < 8) return 'C'
       return 'A'
-    }
+    },
   }
 }
