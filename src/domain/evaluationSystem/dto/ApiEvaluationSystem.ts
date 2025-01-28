@@ -10,3 +10,13 @@ export interface APIEvaluationSystem {
   evaluationsystemname: string
   fixed: number
 }
+
+export type APIContinuousGradeConversion = {
+  gradeconversionid: string
+  evaluationsystemid: string
+  minintervalgrade: number
+  maxintervalgrade: number
+  baseequivalentspanishgrade: number
+  topequivalentspanishgrade: number
+  gradename: string
+}

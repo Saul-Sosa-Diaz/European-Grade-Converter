@@ -7,7 +7,6 @@ export const useGetEvaluationSystemList = () => {
     queryKey: ['evaluationSystemList'],
     queryFn: async () => await EvaluationSystem.getEvaluationSystemList(),
   })
-  console.log(data)
 
   return { evaluationSystemList: data, ...rest }
 }

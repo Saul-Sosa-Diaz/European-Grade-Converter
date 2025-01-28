@@ -18,6 +18,7 @@ import { getEvaluationSystemList } from '@/application/evaluationSystem/getEvalu
 import { updateEvaluationSystem } from '@/application/evaluationSystem/updateEvaluationSystem'
 import { createEvaluationSystem } from '@/application/evaluationSystem/createEvaluationSystem'
 import { deleteEvaluationSystem } from '@/application/evaluationSystem/deleteEvaluationSystem'
+import { getContinouosGradeConversionListByEvaluationID } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/getContinouosGradeConversion'
 
 export function createApiFake(): Api {
   const FAKE_COUNTRY_REPOSITORY = createCountryRepositoryFake()
@@ -41,6 +42,8 @@ export function createApiFake(): Api {
     EvaluationSystem: {
       convertGrade: convertGrade(FAKE_EVALUATION_SYSTEM_REPOSITORY),
       getEvaluationSystemList: getEvaluationSystemList(FAKE_EVALUATION_SYSTEM_REPOSITORY),
+      getContinouosGradeConversionListByEvaluationID:
+        getContinouosGradeConversionListByEvaluationID(FAKE_EVALUATION_SYSTEM_REPOSITORY),
       updateEvaluationSystem: updateEvaluationSystem(FAKE_EVALUATION_SYSTEM_REPOSITORY),
       createEvaluationSystem: createEvaluationSystem(FAKE_EVALUATION_SYSTEM_REPOSITORY),
       deleteEvaluationSystem: deleteEvaluationSystem(FAKE_EVALUATION_SYSTEM_REPOSITORY),

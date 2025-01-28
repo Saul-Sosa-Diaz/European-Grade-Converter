@@ -8,7 +8,7 @@ import { EvaluationSystem } from '@/domain/evaluationSystem/evaluationSystem';
 import { useUpdateEvaluationSystem } from '@/hooks/evaluationSystem/useUpdateEvaluationSystem';
 import { useCreateEvaluationSystem } from '@/hooks/evaluationSystem/useCreateEvaluationSystem';
 import { useDeleteEvaluationSystem } from '@/hooks/evaluationSystem/useDeleteEvaluationSystem';
-import { EvaluationSystemForm } from '../../forms/evaluationSystem/EvaluationSystemForm';
+import { EvaluationSystemForm } from '../forms/evaluationSystem/EvaluationSystemForm';
 import { University } from '@/domain/university/university';
 
 
@@ -94,7 +94,7 @@ export const EvaluationSystemList = ({ evaluationSystemList, universityList }: {
       }}>
         {selectedEvaluationSystem ? (
           <EvaluationSystemForm
-            initialValue={selectedEvaluationSystem}
+            initialValues={selectedEvaluationSystem}
             onSubmit={handleUpdate}
             universityList={universityList}
           />

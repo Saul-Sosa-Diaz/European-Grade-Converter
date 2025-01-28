@@ -69,9 +69,20 @@ INSERT INTO CONTINUOUS_GRADE_CONVERSION (
 VALUES (
   1, 
   5.0,               
-  7,               
+  6.0,               
   5.0,                            
-  7,            
+  6.0,            
+  'Aprobado'
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, gradeName
+)
+VALUES (
+  1, 
+  6.0,               
+  7.0,               
+  6.0,                            
+  7.0,            
   'Aprobado'
 );
 INSERT INTO CONTINUOUS_GRADE_CONVERSION (
@@ -80,9 +91,20 @@ INSERT INTO CONTINUOUS_GRADE_CONVERSION (
 VALUES (
   1, 
   7.0,               
-  9,               
+  8.0,               
   7.0,                              
-  9,            
+  8.0,            
+  'Notable'
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, gradeName
+)
+VALUES (
+  1, 
+  8.0,               
+  9.0,               
+  8.0,                              
+  9.0,            
   'Notable'
 );
 INSERT INTO CONTINUOUS_GRADE_CONVERSION (
@@ -252,9 +274,29 @@ INSERT INTO CONTINUOUS_GRADE_CONVERSION (
  VALUES (
   4,               
   18,               
-  28,               
+  20,               
   5,                               
-  7          
+  6          
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+  4, 
+  20,               
+  25,               
+  6,                             
+  7
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+)
+VALUES (
+  4, 
+  25,               
+  28,               
+  7,                             
+  8
 );
 INSERT INTO CONTINUOUS_GRADE_CONVERSION (
    evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
@@ -263,7 +305,7 @@ VALUES (
   4, 
   28,               
   30,               
-  7,                             
+  8,                             
   9
 );
 INSERT INTO DISCRETE_GRADE_CONVERSION (

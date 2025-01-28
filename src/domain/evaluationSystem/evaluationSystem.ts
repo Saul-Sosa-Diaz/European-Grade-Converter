@@ -12,3 +12,13 @@ export type EvaluationSystem = {
   universityID: string
   universityName: string
 }
+
+export type ContinuousGradeConversion = {
+  gradeConversionID: string
+  evaluationSystemID: string
+  MinIntervalGrade: number
+  MaxIntervalGrade: number
+  baseEquivalentSpanishGrade: number
+  topEquivalentSpanishGrade: number
+  gradeName: string
+}

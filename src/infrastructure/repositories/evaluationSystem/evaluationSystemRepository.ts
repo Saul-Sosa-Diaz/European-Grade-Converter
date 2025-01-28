@@ -1,9 +1,14 @@
+import { buildContinuousGradeConversionListByEvaluationIDMap } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/mapGetContinouosGradeConversionts'
 import { buildEvaluationSystemListMap } from '@/application/evaluationSystem/getEvaluationSystemList/mapGetEvaluationSystemList'
 import { API_URL } from '@/constants/apiURL'
-import { APIEvaluationSystem } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
+import {
+  APIContinuousGradeConversion,
+  APIEvaluationSystem,
+} from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
 import {
   ConvertGrade,
   EvaluationSystemRepository,
+  GetContinouosGradeConversionListByEvaluationID,
 } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
 export function createEvaluationSystemRepository(): EvaluationSystemRepository {
@@ -20,7 +25,6 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
       return convertedGrade
     },
     getEvaluationSystemList: async () => {
-      console.log('getEvaluationSystemList')
       const evaluationSystemList: { evaluationSystemList: APIEvaluationSystem[] } = await fetch(
         API_URL.evaluationSystem.getEvaluationSystemList,
       )
@@ -33,6 +37,24 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
         evaluationSystemList.evaluationSystemList,
       )
       return mappedEvaluationSystemList
+    },
+    getContinouosGradeConversionListByEvaluationID: async (
+      params: GetContinouosGradeConversionListByEvaluationID.Params,
+    ) => {
+      const continuousGradeConversionList: {
+        continuousGradeConversionList: APIContinuousGradeConversion[]
+      } = await fetch(API_URL.evaluationSystem.getContinouosGradeConversion, {
+        method: 'post',
+        body: JSON.stringify({ ...params }),
+      })
+        .then((response) => response.json())
+        .catch((error) => {
+          throw new Error(error)
+        })
+      const continuousGradeConversion = buildContinuousGradeConversionListByEvaluationIDMap(
+        continuousGradeConversionList.continuousGradeConversionList,
+      )
+      return continuousGradeConversion
     },
     updateEvaluationSystem: async (params) => {
       await fetch(API_URL.evaluationSystem.updateEvaluationSystem, {

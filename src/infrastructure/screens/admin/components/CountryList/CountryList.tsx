@@ -2,7 +2,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Country } from '@/domain/country/country';
 import { Button } from 'primereact/button';
-import { CountryForm } from '../../forms/country/CountryForm';
+import { CountryForm } from '../forms/country/CountryForm';
 import { useRef, useState } from 'react';
 import { useUpdateCountry } from '@/hooks/country/useUpdateCountry';
 import { Toast } from 'primereact/toast';
@@ -22,7 +22,7 @@ export const CountryList = ({ countryList }: { countryList: Country[] }) => {
   const [maxId, setMaxId] = useState(Math.max(...countryListState.map((country) => parseInt(country.id))));
   const dialogRef = useRef<Dialog | null>(null);
   const toastRef = useRef(null);
-  
+
   const displayNotification = ({ message, status }: { message: string, status }) => {
     toastRef.current.show({ severity: status, detail: message, life: 3000 });
   };

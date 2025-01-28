@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
 import { University } from '@/domain/university/university';
-import { UniversityForm } from '../../forms/university/UniversityForm';
+import { UniversityForm } from '../forms/university/UniversityForm';
 import { Country } from '@/domain/country/country';
 import { useUpdateUniversity } from '@/hooks/university/useUpdateUniversity';
 import { useCreateUniversity } from '@/hooks/university/useCreateUniversity';

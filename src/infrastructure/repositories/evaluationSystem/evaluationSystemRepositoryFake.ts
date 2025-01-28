@@ -24,6 +24,20 @@ export function createEvaluationSystemRepositoryFake(): EvaluationSystemReposito
         },
       ]
     },
+    getContinouosGradeConversionListByEvaluationID: async (params) => {
+      console.log('getContinouosGradeConversion', params)
+      return [
+        {
+          gradeName: 'A',
+          MinIntervalGrade: 8,
+          MaxIntervalGrade: 10,
+          baseEquivalentSpanishGrade: 9,
+          topEquivalentSpanishGrade: 10,
+          evaluationSystemID: '1',
+          gradeConversionID: '1',
+        },
+      ]
+    },
     updateEvaluationSystem: async (params) => {
       console.log('updateEvaluationSystem', params)
     },
