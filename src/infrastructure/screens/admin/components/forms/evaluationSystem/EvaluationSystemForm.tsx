@@ -1,8 +1,9 @@
-
-import { EvaluationSystem, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
+import { ContinuousGradeConversion, EvaluationSystem, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
 import { University } from '@/domain/university/university';
-import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
-import { useState } from 'react';
+import { useGetContinuousGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetContinuousGradeConversion';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { use, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 
 interface EvaluationSystemFormProps {
@@ -19,6 +20,7 @@ const validationSchema = Yup.object().shape({
   validGrades: Yup.array()
     .of(Yup.string().required())
     .min(1, 'Debe tener al menos una calificación válida'),
+
   fixed: Yup.number().min(0).required('Requerido'),
   universityID: Yup.string().required('Requerido'),
 
@@ -34,9 +36,7 @@ const validationSchema = Yup.object().shape({
     Yup.object().shape({
       MinIntervalGrade: Yup.number().required('Mínimo requerido'),
       MaxIntervalGrade: Yup.number().required('Máximo requerido'),
-      baseEquivalentSpanishGrade: Yup.number().required('Equivalencia base requerida'),
-      topEquivalentSpanishGrade: Yup.number().required('Equivalencia tope requerida'),
-      gradeName: Yup.string().notRequired()
+      gradeName: Yup.string().required('Letra requerida')
     })
   )
 });
@@ -46,40 +46,41 @@ export const EvaluationSystemForm = ({
   onSubmit,
   universityList
 }: EvaluationSystemFormProps) => {
-  const [formValues] = useState({
+  const { getContinouosGradeConversionListByEvaluationID, isFetched } =
+    useGetContinuousGradeConversionListByEvaluationID({
+      evaluationSystemID: initialValues.evaluationSystemID
+    });
+  const europeanGrade = ['F', 'E', 'D', 'C', 'B', 'A'];
+  const [gradeConversionFromBack, setGradeConversionFromBack] = useState(europeanGrade.map((grade) => ({
+    MinIntervalGrade: 0,
+    MaxIntervalGrade: 0,
+    gradeName: ''
+  })));
+
+  const formValues = {
     ...initialValues,
-
-    // Para discretas
-    discreteEquivalences: initialValues.discreteEquivalences || [
-      {
-        gradeValue: '',
-        baseEquivalentSpanishGrade: '',
-        topEquivalentSpanishGrade: ''
-      }
-    ],
-
-    // Para continuas
-    continuousEquivalences: initialValues.continuousEquivalences || [
-      {
-        MinIntervalGrade: '',
-        MaxIntervalGrade: '',
-        baseEquivalentSpanishGrade: '',
-        topEquivalentSpanishGrade: '',
-        gradeName: ''
-      }
-    ],
-
-    // Calculamos minGrade y maxGrade de validGrades si aplica.
+    continuousEquivalences: gradeConversionFromBack,
     maxGrade: initialValues.validGrades[initialValues.validGrades.length - 1],
     minGrade: initialValues.validGrades[0]
-  });
+  };
 
   const [fixed, setFixed] = useState(initialValues.fixed);
+
+  useEffect(() => {
+    if (isFetched) {
+      setGradeConversionFromBack(getContinouosGradeConversionListByEvaluationID.map((gradeConversion) => ({
+        MinIntervalGrade: gradeConversion.MinIntervalGrade,
+        MaxIntervalGrade: gradeConversion.MaxIntervalGrade,
+        gradeName: gradeConversion.gradeName
+      })));
+    }
+  }, [isFetched, getContinouosGradeConversionListByEvaluationID]);
 
   return (
     <Formik
       initialValues={formValues}
       validationSchema={validationSchema}
+      enableReinitialize={true}
       onSubmit={onSubmit}
     >
       {({ values }) => (
@@ -101,34 +102,19 @@ export const EvaluationSystemForm = ({
             </Field>
           </div>
 
+          {/* University */}
+
+
           <div>
             <label>Valid Grades</label>
             {values.evaluationType === EvaluationType.DISCRETE ? (
-              <FieldArray name="validGrades">
-                {({ push, remove }) => (
-                  <div>
-                    {values.validGrades.map((grade: string, index: number) => (
-                      <div key={index}>
-                        <Field name={`validGrades.${index}`} />
-                        <button
-                          type="button"
-                          onClick={() => remove(index)}
-                        >
-                          Eliminar
-                        </button>
-                      </div>
-                    ))}
-                    <button type="button" onClick={() => push('')}>
-                      Add grade
-                    </button>
-                  </div>
-                )}
-              </FieldArray>
+              <div>
+                {/* FieldArray u otro mecanismo para validGrades si lo necesitas */}
+                {/* ... */}
+              </div>
             ) : (
-              // Si es continuo, normalmente vas a usar min y max en vez de un array
-              // de strings, pero mantengo este ejemplo por si quieres tomar
-              // la lógica de validGrades. 
               <>
+
                 <div>
                   <label>Min grade</label>
                   <Field type="number" name="minGrade" />
@@ -137,7 +123,6 @@ export const EvaluationSystemForm = ({
                   <label>Max Grade</label>
                   <Field type="number" name="maxGrade" />
                 </div>
-
                 <div>
                   <label>Number of decimals</label>
                   <Field
@@ -153,164 +138,64 @@ export const EvaluationSystemForm = ({
             )}
             <ErrorMessage name="validGrades" component="div" className="text-error" />
           </div>
-
-          {values.evaluationType === EvaluationType.DISCRETE && (
-            <div>
-              <h3>Equivalencias Discretas</h3>
-              <FieldArray name="discreteEquivalences">
-                {({ push, remove }) => (
-                  <div>
-                    {values.discreteEquivalences.map(
-                      (item: any, index: number) => (
-                        <div key={index} style={{ marginBottom: '1rem' }}>
-                          <label>Grade Value</label>
-                          <Field
-                            name={`discreteEquivalences.${index}.gradeValue`}
-                            placeholder="Ej: A, B, C, etc."
-                          />
-                          <ErrorMessage
-                            name={`discreteEquivalences.${index}.gradeValue`}
-                            component="div"
-                            className="text-error"
-                          />
-
-                          <label>Base Equivalent</label>
-                          <Field
-                            name={`discreteEquivalences.${index}.baseEquivalentSpanishGrade`}
-                            type="number"
-                          />
-                          <ErrorMessage
-                            name={`discreteEquivalences.${index}.baseEquivalentSpanishGrade`}
-                            component="div"
-                            className="text-error"
-                          />
-
-                          <label>Top Equivalent</label>
-                          <Field
-                            name={`discreteEquivalences.${index}.topEquivalentSpanishGrade`}
-                            type="number"
-                          />
-                          <ErrorMessage
-                            name={`discreteEquivalences.${index}.topEquivalentSpanishGrade`}
-                            component="div"
-                            className="text-error"
-                          />
-
-                          <button type="button" onClick={() => remove(index)}>
-                            Eliminar
-                          </button>
-                        </div>
-                      )
-                    )}
-                    <button
-                      type="button"
-                      onClick={() =>
-                        push({
-                          gradeValue: '',
-                          baseEquivalentSpanishGrade: '',
-                          topEquivalentSpanishGrade: ''
-                        })
-                      }
-                    >
-                      Agregar nueva equivalencia
-                    </button>
-                  </div>
-                )}
-              </FieldArray>
-            </div>
-          )}
-
           {values.evaluationType === EvaluationType.CONTINUOUS && (
-            <div>
-              <h3>Equivalencias Continuas</h3>
-              <FieldArray name="continuousEquivalences">
-                {({ push, remove }) => (
-                  <div>
-                    {values.continuousEquivalences.map((interval, index) => (
-                      <div key={index} style={{ marginBottom: '1rem' }}>
-                        <label>Mínimo</label>
-                        <Field
-                          name={`continuousEquivalences.${index}.MinIntervalGrade`}
-                          type="number"
-                        />
-                        <ErrorMessage
-                          name={`continuousEquivalences.${index}.MinIntervalGrade`}
-                          component="div"
-                          className="text-error"
-                        />
+            !isFetched ? <ProgressSpinner/> : (
+              <div>
+                <h3>European equivalences </h3>
+                {values.continuousEquivalences.map((interval: any, index: number) => (
+                  <div key={index} style={{ marginBottom: '1rem' }}>
+                    <div>
+                      <label>Equivalence </label> <strong>{europeanGrade[index]}</strong>
+                    </div>
 
-                        <label>Máximo</label>
-                        <Field
-                          name={`continuousEquivalences.${index}.MaxIntervalGrade`}
-                          type="number"
-                        />
-                        <ErrorMessage
-                          name={`continuousEquivalences.${index}.MaxIntervalGrade`}
-                          component="div"
-                          className="text-error"
-                        />
+                    <div>
+                      <label>Bottom Interval</label>
+                      <Field
+                        name={`continuousEquivalences.${index}.MinIntervalGrade`}
+                        type="number"
+                      />
+                      <ErrorMessage
+                        name={`continuousEquivalences.${index}.MinIntervalGrade`}
+                        component="div"
+                        className="text-error"
+                      />
+                    </div>
 
-                        <label>Equivalencia base (ES)</label>
-                        <Field
-                          name={`continuousEquivalences.${index}.baseEquivalentSpanishGrade`}
-                          type="number"
-                        />
-                        <ErrorMessage
-                          name={`continuousEquivalences.${index}.baseEquivalentSpanishGrade`}
-                          component="div"
-                          className="text-error"
-                        />
+                    <div>
+                      <label>Top interval</label>
+                      <Field
+                        name={`continuousEquivalences.${index}.MaxIntervalGrade`}
+                        type="number"
+                      />
+                      <ErrorMessage
+                        name={`continuousEquivalences.${index}.MaxIntervalGrade`}
+                        component="div"
+                        className="text-error"
+                      />
+                    </div>
+                    <div>
+                      <label>Interval Name</label>
+                      <Field
+                        name={`continuousEquivalences.${index}.gradeName`}
+                        type="text"
+                        placeholder="Fail, Pass, etc."
+                      />
+                      <ErrorMessage
+                        name={`continuousEquivalences.${index}.gradeName`}
+                        component="div"
+                        className="text-error"
+                      />
+                    </div>
 
-                        <label>Equivalencia tope (ES)</label>
-                        <Field
-                          name={`continuousEquivalences.${index}.topEquivalentSpanishGrade`}
-                          type="number"
-                        />
-                        <ErrorMessage
-                          name={`continuousEquivalences.${index}.topEquivalentSpanishGrade`}
-                          component="div"
-                          className="text-error"
-                        />
-
-                        <label>Nombre</label>
-                        <Field
-                          name={`continuousEquivalences.${index}.gradeName`}
-                          placeholder="Ej: F, E, D..."
-                        />
-                        <ErrorMessage
-                          name={`continuousEquivalences.${index}.gradeName`}
-                          component="div"
-                          className="text-error"
-                        />
-
-                        <button type="button" onClick={() => remove(index)}>
-                          Eliminar
-                        </button>
-                      </div>
-                    ))}
-                    <button
-                      type="button"
-                      onClick={() =>
-                        push({
-                          MinIntervalGrade: '',
-                          MaxIntervalGrade: '',
-                          baseEquivalentSpanishGrade: '',
-                          topEquivalentSpanishGrade: '',
-                          gradeName: ''
-                        })
-                      }
-                    >
-                      Agregar intervalo
-                    </button>
                   </div>
-                )}
-              </FieldArray>
-            </div>
-          )}
+                ))}
+              </div>)
 
-
+          )
+          }
           <button type="submit">Save</button>
         </Form>
+
       )}
     </Formik>
   );
