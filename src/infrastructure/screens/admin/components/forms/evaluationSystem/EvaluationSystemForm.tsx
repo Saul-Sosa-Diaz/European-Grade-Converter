@@ -1,10 +1,11 @@
-import { ContinuousGradeConversion, EvaluationSystem, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
+import { EvaluationSystem, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
 import { University } from '@/domain/university/university';
 import { useGetContinuousGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetContinuousGradeConversion';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import { generateGrades } from '../../../../../../../scripts/validGrades.mjs';
 
 interface EvaluationSystemFormProps {
   initialValues: EvaluationSystem;
@@ -12,34 +13,42 @@ interface EvaluationSystemFormProps {
   universityList: University[];
 }
 
-const validationSchema = Yup.object().shape({
-  evaluationSystemName: Yup.string().required('Requerido'),
-  evaluationType: Yup.string()
-    .oneOf(Object.values(EvaluationType))
-    .required('Requerido'),
-  validGrades: Yup.array()
-    .of(Yup.string().required())
-    .min(1, 'Debe tener al menos una calificación válida'),
+const getValidationSchema = (minGrade, maxGrade) => {
+  return Yup.object().shape({
+    evaluationSystemName: Yup.string().required('Required'),
+    evaluationType: Yup.string()
+      .oneOf(Object.values(EvaluationType))
+      .required('Required'),
+    validGrades: Yup.array()
+      .of(Yup.string().required())
+      .min(1, 'Debe tener al menos una calificación válida'),
 
-  fixed: Yup.number().min(0).required('Requerido'),
-  universityID: Yup.string().required('Requerido'),
+    fixed: Yup.number().min(0).required('Required'),
+    universityID: Yup.string().required('Required'),
 
-  discreteEquivalences: Yup.array().of(
-    Yup.object().shape({
-      gradeValue: Yup.string().required('Valor de la nota requerido'),
-      baseEquivalentSpanishGrade: Yup.number().required('Equivalencia base requerida'),
-      topEquivalentSpanishGrade: Yup.number().required('Equivalencia tope requerida')
-    })
-  ),
+    discreteEquivalences: Yup.array().of(
+      Yup.object().shape({
+        gradeValue: Yup.string().required('Valor de la nota requerido'),
+        baseEquivalentSpanishGrade: Yup.number().required('Equivalencia base requerida'),
+        topEquivalentSpanishGrade: Yup.number().required('Equivalencia tope requerida')
+      })
+    ),
 
-  continuousEquivalences: Yup.array().of(
-    Yup.object().shape({
-      MinIntervalGrade: Yup.number().required('Mínimo requerido'),
-      MaxIntervalGrade: Yup.number().required('Máximo requerido'),
-      gradeName: Yup.string().required('Letra requerida')
-    })
-  )
-});
+    continuousEquivalences: Yup.array().of(
+      Yup.object().shape({
+        MinIntervalGrade: Yup.number()
+          .required('Required')
+          .min(minGrade, `Debe ser >= ${minGrade}`)
+          .max(maxGrade, `Debe ser <= ${maxGrade}`),
+        MaxIntervalGrade: Yup.number()
+          .required('Required')
+          .min(minGrade, `Debe ser >= ${minGrade}`)
+          .max(maxGrade, `Debe ser <= ${maxGrade}`),
+        gradeName: Yup.string().required('Required')
+      })
+    )
+  });
+}
 
 export const EvaluationSystemForm = ({
   initialValues,
@@ -50,6 +59,7 @@ export const EvaluationSystemForm = ({
     useGetContinuousGradeConversionListByEvaluationID({
       evaluationSystemID: initialValues.evaluationSystemID
     });
+  const [fixed, setFixed] = useState(initialValues.fixed);
   const europeanGrade = ['F', 'E', 'D', 'C', 'B', 'A'];
   const [gradeConversionFromBack, setGradeConversionFromBack] = useState(europeanGrade.map((grade) => ({
     MinIntervalGrade: 0,
@@ -59,12 +69,13 @@ export const EvaluationSystemForm = ({
 
   const formValues = {
     ...initialValues,
+    fixed,
     continuousEquivalences: gradeConversionFromBack,
-    maxGrade: initialValues.validGrades[initialValues.validGrades.length - 1],
-    minGrade: initialValues.validGrades[0]
+    maxGrade: parseFloat(initialValues.validGrades[initialValues.validGrades.length - 1]),
+    minGrade: parseFloat(initialValues.validGrades[0])
   };
 
-  const [fixed, setFixed] = useState(initialValues.fixed);
+
 
   useEffect(() => {
     if (isFetched) {
@@ -79,9 +90,22 @@ export const EvaluationSystemForm = ({
   return (
     <Formik
       initialValues={formValues}
-      validationSchema={validationSchema}
+      validationSchema={getValidationSchema(formValues.minGrade, formValues.maxGrade)}
       enableReinitialize={true}
-      onSubmit={onSubmit}
+      validateOnChange={true}
+      onSubmit={(updatedEvaluationSystem) => {
+        const updatedValues: EvaluationSystem = {
+          validGrades: generateGrades(updatedEvaluationSystem.minGrade, updatedEvaluationSystem.maxGrade, 1 / Math.pow(10, updatedEvaluationSystem.fixed)),
+          evaluationSystemID: updatedEvaluationSystem.evaluationSystemID,
+          evaluationSystemName: updatedEvaluationSystem.evaluationSystemName,
+          evaluationType: updatedEvaluationSystem.evaluationType,
+          fixed: updatedEvaluationSystem.fixed,
+          universityID: updatedEvaluationSystem.universityID,
+          universityName: universityList.find((university) => university.id === updatedEvaluationSystem.universityID).name,
+        }
+        
+        onSubmit(updatedValues);
+      }}
     >
       {({ values }) => (
         <Form>
@@ -109,8 +133,6 @@ export const EvaluationSystemForm = ({
             <label>Valid Grades</label>
             {values.evaluationType === EvaluationType.DISCRETE ? (
               <div>
-                {/* FieldArray u otro mecanismo para validGrades si lo necesitas */}
-                {/* ... */}
               </div>
             ) : (
               <>
@@ -139,7 +161,7 @@ export const EvaluationSystemForm = ({
             <ErrorMessage name="validGrades" component="div" className="text-error" />
           </div>
           {values.evaluationType === EvaluationType.CONTINUOUS && (
-            !isFetched ? <ProgressSpinner/> : (
+            !isFetched ? <ProgressSpinner /> : (
               <div>
                 <h3>European equivalences </h3>
                 {values.continuousEquivalences.map((interval: any, index: number) => (
@@ -153,6 +175,7 @@ export const EvaluationSystemForm = ({
                       <Field
                         name={`continuousEquivalences.${index}.MinIntervalGrade`}
                         type="number"
+                        step={1 / Math.pow(10, fixed)}
                       />
                       <ErrorMessage
                         name={`continuousEquivalences.${index}.MinIntervalGrade`}
@@ -166,6 +189,7 @@ export const EvaluationSystemForm = ({
                       <Field
                         name={`continuousEquivalences.${index}.MaxIntervalGrade`}
                         type="number"
+                        step={1 / Math.pow(10, fixed)}
                       />
                       <ErrorMessage
                         name={`continuousEquivalences.${index}.MaxIntervalGrade`}

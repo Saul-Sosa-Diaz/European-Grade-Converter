@@ -3,7 +3,6 @@
 export function generateGrades(start, end, step) {
   const result = []
   for (let i = start; i <= end; i += step) {
-    // Round the number to two decimals
     i = parseFloat(i.toFixed(2))
     result.push(String(i))
   }
