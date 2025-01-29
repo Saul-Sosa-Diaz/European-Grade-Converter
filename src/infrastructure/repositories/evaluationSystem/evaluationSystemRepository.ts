@@ -8,7 +8,7 @@ import {
 import {
   ConvertGrade,
   EvaluationSystemRepository,
-  GetContinouosGradeConversionListByEvaluationID,
+  GetContinuousGradeConversionListByEvaluationID,
 } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
 export function createEvaluationSystemRepository(): EvaluationSystemRepository {
@@ -39,11 +39,11 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
       return mappedEvaluationSystemList
     },
     getContinouosGradeConversionListByEvaluationID: async (
-      params: GetContinouosGradeConversionListByEvaluationID.Params,
+      params: GetContinuousGradeConversionListByEvaluationID.Params,
     ) => {
       const continuousGradeConversionList: {
-        continuousGradeConversionList: APIContinuousGradeConversion[]
-      } = await fetch(API_URL.evaluationSystem.getContinouosGradeConversion, {
+        continuousGradeConversionListByEvaluationID: APIContinuousGradeConversion[]
+      } = await fetch(API_URL.evaluationSystem.getContinouosGradeConversionListByEvaluationID, {
         method: 'post',
         body: JSON.stringify({ ...params }),
       })
@@ -51,8 +51,8 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
         .catch((error) => {
           throw new Error(error)
         })
-      const continuousGradeConversion = buildContinuousGradeConversionListByEvaluationIDMap(
-        continuousGradeConversionList.continuousGradeConversionList,
+      const continuousGradeConversion = await buildContinuousGradeConversionListByEvaluationIDMap(
+        continuousGradeConversionList.continuousGradeConversionListByEvaluationID,
       )
       return continuousGradeConversion
     },

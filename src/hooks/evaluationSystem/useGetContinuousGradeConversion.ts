@@ -1,9 +1,9 @@
 import { useApi } from '@/context/ApiContext'
-import { GetContinouosGradeConversionListByEvaluationID } from '@/domain/evaluationSystem/evaluationSystemRepository'
+import { GetContinuousGradeConversionListByEvaluationID } from '@/domain/evaluationSystem/evaluationSystemRepository'
 import { useQuery } from '@tanstack/react-query'
 
 export const useGetContinuousGradeConversionListByEvaluationID = (
-  params: GetContinouosGradeConversionListByEvaluationID.Params,
+  params: GetContinuousGradeConversionListByEvaluationID.Params,
 ) => {
   const { EvaluationSystem } = useApi()
   const { data, ...rest } = useQuery({
@@ -11,6 +11,5 @@ export const useGetContinuousGradeConversionListByEvaluationID = (
     queryFn: async () =>
       await EvaluationSystem.getContinouosGradeConversionListByEvaluationID(params),
   })
-
-  return { evaluationSystemList: data, ...rest }
+  return { getContinouosGradeConversionListByEvaluationID: data, ...rest }
 }

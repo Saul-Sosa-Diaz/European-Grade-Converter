@@ -10,7 +10,7 @@ import { countryQueries } from './queries/countryQueries'
 import { universityQueries } from './queries/universityQueries'
 import { evaluationSystemQueries } from './queries/evaluationSystemQueries'
 import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
-import { APIEvaluationSystem } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
+import { APIContinuousGradeConversion, APIEvaluationSystem } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
 
 export class PostgresAdapter implements DatabaseAdapter {
   private pool: Pool
@@ -72,6 +72,12 @@ export class PostgresAdapter implements DatabaseAdapter {
   async getEvaluationSystemList() {
     const QUERY = evaluationSystemQueries.GET_EVALUATION_SYSTEM_LIST
     return this.pool.query(QUERY).then((result) => result.rows as APIEvaluationSystem[])
+  }
+
+  async getContinouosGradeConversionListByEvaluationID(evaluationSystemID: string) {
+    const QUERY = evaluationSystemQueries.GET_CONTINUOUS_GRADE_CONVERSION_LIST_BY_EVALUATION_ID
+    const VALUES = [evaluationSystemID]
+    return this.pool.query(QUERY, VALUES).then((result) => result.rows as APIContinuousGradeConversion[])
   }
 
   async updateEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void> {

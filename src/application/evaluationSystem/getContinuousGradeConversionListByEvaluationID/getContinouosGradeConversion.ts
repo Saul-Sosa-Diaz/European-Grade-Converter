@@ -1,11 +1,12 @@
 import {
   EvaluationSystemRepository,
-  GetContinouosGradeConversionListByEvaluationID,
+  GetContinuousGradeConversionListByEvaluationID,
 } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
 export function getContinouosGradeConversionListByEvaluationID(
   evaluationSystemRepository: EvaluationSystemRepository,
-): GetContinouosGradeConversionListByEvaluationID.Request {
-  return async (params) =>
-    await evaluationSystemRepository.getContinouosGradeConversionListByEvaluationID(params)
+): GetContinuousGradeConversionListByEvaluationID.Request {
+  return async (params) => {
+    return await evaluationSystemRepository.getContinouosGradeConversionListByEvaluationID(params)
+  }
 }

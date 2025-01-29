@@ -21,12 +21,12 @@ export namespace GetEvaluationSystemList {
   ) => Promise<GetEvaluationSystemList.Response>
 }
 
-export namespace GetContinouosGradeConversionListByEvaluationID {
+export namespace GetContinuousGradeConversionListByEvaluationID {
   export type Params = { evaluationSystemID: string }
   export type Response = ContinuousGradeConversion[]
   export type Request = (
-    params: GetContinouosGradeConversionListByEvaluationID.Params,
-  ) => Promise<GetContinouosGradeConversionListByEvaluationID.Response>
+    params: GetContinuousGradeConversionListByEvaluationID.Params,
+  ) => Promise<GetContinuousGradeConversionListByEvaluationID.Response>
 }
 
 export namespace UpdateEvaluationSystem {
@@ -55,7 +55,7 @@ export namespace DeleteEvaluationSystem {
 export interface EvaluationSystemRepository {
   convertGrade: ConvertGrade.Request
   getEvaluationSystemList: GetEvaluationSystemList.Request
-  getContinouosGradeConversionListByEvaluationID: GetContinouosGradeConversionListByEvaluationID.Request
+  getContinouosGradeConversionListByEvaluationID: GetContinuousGradeConversionListByEvaluationID.Request
   updateEvaluationSystem: UpdateEvaluationSystem.Request
   createEvaluationSystem: CreateEvaluationSystem.Request
   deleteEvaluationSystem: DeleteEvaluationSystem.Request
