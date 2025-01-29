@@ -20,7 +20,7 @@ import { getEvaluationSystemList } from '@/application/evaluationSystem/getEvalu
 import { updateEvaluationSystem } from '@/application/evaluationSystem/updateEvaluationSystem'
 import { createEvaluationSystem } from '@/application/evaluationSystem/createEvaluationSystem'
 import { deleteEvaluationSystem } from '@/application/evaluationSystem/deleteEvaluationSystem'
-import { getContinouosGradeConversionListByEvaluationID } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/getContinouosGradeConversion'
+import { getContinouosGradeConversionListByEvaluationID } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/getContinuousGradeConversion'
 
 type CreateApiProps = {
   offline?: boolean

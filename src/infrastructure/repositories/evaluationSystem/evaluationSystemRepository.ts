@@ -1,4 +1,4 @@
-import { buildContinuousGradeConversionListByEvaluationIDMap } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/mapGetContinouosGradeConversionts'
+import { buildContinuousGradeConversionListByEvaluationIDMap } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/mapGetContinuousGradeConversionts'
 import { buildEvaluationSystemListMap } from '@/application/evaluationSystem/getEvaluationSystemList/mapGetEvaluationSystemList'
 import { API_URL } from '@/constants/apiURL'
 import {
