@@ -117,7 +117,7 @@ export const EvaluationSystemForm = ({
           universityName: updatedEvaluationSystem.universityName,
           gradeConversions: updatedEvaluationSystem.continuousEquivalences.map((interval) => ({
             gradeConversionID: interval.gradeConversionID,
-            evaluationSystemID: updatedEvaluationSystem.evaluationSystemID,
+            evaluationSystemID: interval.evaluationSystemID,
             ...interval
           }))
         };

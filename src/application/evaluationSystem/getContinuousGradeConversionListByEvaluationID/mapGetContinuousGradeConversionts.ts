@@ -12,8 +12,6 @@ export const buildContinuousGradeConversionListByEvaluationIDMap = async (
           evaluationSystemID: continuousGradeConversion.evaluationsystemid,
           MinIntervalGrade: continuousGradeConversion.minintervalgrade,
           MaxIntervalGrade: continuousGradeConversion.maxintervalgrade,
-          baseEquivalentSpanishGrade: continuousGradeConversion.baseequivalentspanishgrade,
-          topEquivalentSpanishGrade: continuousGradeConversion.topequivalentspanishgrade,
           gradeName: continuousGradeConversion.gradename,
         }
       },

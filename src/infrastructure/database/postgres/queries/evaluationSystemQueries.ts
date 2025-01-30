@@ -8,7 +8,12 @@ export const evaluationSystemQueries = {
     FROM CONTINUOUS_GRADE_CONVERSION
     WHERE evaluationSystemID = $1
     `,
-  UPDATE_EVALUATION_SYSTEM: ``, // TODO: Implement
+  UPDATE_EVALUATION_SYSTEM: `
+    UPDATE EVALUATION_SYSTEM SET evaluationsystemname = $1, universityID = $2, validgrades = $3, evaluationtype = $4, fixed = $5
+    WHERE evaluationsystemid = $6`,
+  UPDATE_CONTINUOUS_GRADE_CONVERSION: `
+  UPDATE CONTINUOUS_GRADE_CONVERSION SET MinIntervalGrade = $1, MaxIntervalGrade = $2, gradeName = $3, baseEquivalentSpanishGrade = $4, topEquivalentSpanishGrade = $5
+  WHERE gradeconversionid = $6`,
   DELETE_EVALUATION_SYSTEM: ``, // TODO: Implement
   CREATE_EVALUATION_SYSTEM: ``, // TODO: Implement
   COUNTINUOUS_TO_SPAIN: `

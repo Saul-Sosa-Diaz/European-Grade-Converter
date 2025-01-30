@@ -7,7 +7,6 @@ export async function POST(request: Request) {
     const body: GetContinuousGradeConversionListByEvaluationID.Params = await request.json();
     const databaseAdapter = createDatabaseAdapter();
     const result = await databaseAdapter.getContinouosGradeConversionListByEvaluationID(body.evaluationSystemID);
-    console.log(result);
     return Response.json({ continuousGradeConversionListByEvaluationID: result });
   } catch (error) {
     console.error(error);

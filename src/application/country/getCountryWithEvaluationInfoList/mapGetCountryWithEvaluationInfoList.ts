@@ -1,8 +1,9 @@
-import { CountryWithEvaluationInfo, EvaluationType } from '@/domain/country/country'
+import { CountryWithEvaluationInfo } from '@/domain/country/country'
 import {
   APICountryWithEvaluationInfo,
   APIGetCountryWithEvaluationInfoList,
 } from '@/domain/country/dto/ApiCountry'
+import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
 
 export const buildCountryEvaluationMap = async (
   dto: APIGetCountryWithEvaluationInfoList,
@@ -95,6 +96,20 @@ export const buildCountryEvaluationMap = async (
               }
             }
 
+            return {
+              label: country.universityname,
+              code: country.countrycode,
+              evaluationType: country.evaluationtype as unknown as EvaluationType,
+              key: `${country.countrycode}-${country.universityid}`,
+              fixed: country.fixed,
+              evaluationSystemID: country.evaluationsystemid,
+              validGrades: country.validgrades,
+            }
+          })
+      } else {
+        children = dto
+          .filter((country) => parseInt(country.countryid) === parseInt(countryId))
+          .map((country) => {
             return {
               label: country.universityname,
               code: country.countrycode,

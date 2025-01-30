@@ -1,12 +1,13 @@
 
-import { APIEvaluationSystem } from "@/domain/evaluationSystem/dto/ApiEvaluationSystem";
+import { APIEvaluationSystemWithGradeConversions } from "@/domain/evaluationSystem/dto/ApiEvaluationSystem";
 import { createDatabaseAdapter } from "@/infrastructure/config/databaseConfig";
 
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const evaluationSystemToUpdate: APIEvaluationSystem = body;
+    const evaluationSystemToUpdate: APIEvaluationSystemWithGradeConversions = body;
+    console.log(body);
     const databaseAdapter = createDatabaseAdapter();
     await databaseAdapter.updateEvaluationSystem(evaluationSystemToUpdate);
     return Response.json({ success: true }, { status: 200 });

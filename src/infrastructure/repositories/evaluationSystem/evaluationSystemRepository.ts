@@ -1,5 +1,6 @@
 import { buildContinuousGradeConversionListByEvaluationIDMap } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/mapGetContinuousGradeConversionts'
 import { buildEvaluationSystemListMap } from '@/application/evaluationSystem/getEvaluationSystemList/mapGetEvaluationSystemList'
+import { buildAPIEvaluationSystemWithGradeConversions } from '@/application/evaluationSystem/mapAPIEvaluationSystemy'
 import { API_URL } from '@/constants/apiURL'
 import {
   APIContinuousGradeConversion,
@@ -57,12 +58,13 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
       return continuousGradeConversion
     },
     updateEvaluationSystem: async (params) => {
-      await fetch(API_URL.evaluationSystem.updateEvaluationSystem, {
+      const response = await fetch(API_URL.evaluationSystem.updateEvaluationSystem, {
         method: 'post',
-        body: JSON.stringify({ ...params }),
-      }).catch((error) => {
-        throw new Error(error)
-      })
+        body: JSON.stringify(await buildAPIEvaluationSystemWithGradeConversions(params)),
+      }).then((response) => response.json())
+      if (!response.success) {
+        throw new Error(response.error)
+      }
     },
     createEvaluationSystem: async (params) => {
       await fetch(API_URL.evaluationSystem.createEvaluationSystem, {

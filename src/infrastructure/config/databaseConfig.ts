@@ -2,7 +2,11 @@ import { APICountry, APICountryWithEvaluationInfo } from '@/domain/country/dto/A
 import { PostgresAdapter } from '../database/postgres/postgresAdapter'
 import { APIUniversity } from '@/domain/university/dto/ApiUniversity'
 import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
-import { APIContinuousGradeConversion, APIEvaluationSystem } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
+import {
+  APIContinuousGradeConversion,
+  APIEvaluationSystem,
+  APIEvaluationSystemWithGradeConversions,
+} from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
 
 export enum ConverterDirection {
   toSpain = 'toSpain',
@@ -26,8 +30,10 @@ export interface DatabaseAdapter {
   createUniversity(university: APIUniversity): Promise<void>
   deleteUniversity(university: APIUniversity): Promise<void>
   getEvaluationSystemList(): Promise<APIEvaluationSystem[]>
-  getContinouosGradeConversionListByEvaluationID(evaluationSystemID: string): Promise<APIContinuousGradeConversion[]>
-  updateEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
+  getContinouosGradeConversionListByEvaluationID(
+    evaluationSystemID: string,
+  ): Promise<APIContinuousGradeConversion[]>
+  updateEvaluationSystem(evaluationSystem: APIEvaluationSystemWithGradeConversions): Promise<void>
   createEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
   deleteEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
 }
