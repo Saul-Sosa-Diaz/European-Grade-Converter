@@ -62,7 +62,7 @@ export const EvaluationSystemForm = ({
 }: EvaluationSystemFormProps) => {
   const { getContinouosGradeConversionListByEvaluationID, isFetched } =
     useGetContinuousGradeConversionListByEvaluationID({
-      evaluationSystemID: initialValues.evaluationSystemID
+      evaluationSystemID: initialValues.evaluationSystemID,
     });
 
   const europeanGrade = ['F', 'E', 'D', 'C', 'B', 'A'];
@@ -82,7 +82,7 @@ export const EvaluationSystemForm = ({
   };
 
   useEffect(() => {
-    if (isFetched) {
+    if (isFetched && getContinouosGradeConversionListByEvaluationID) {
       setGradeConversionFromBack(getContinouosGradeConversionListByEvaluationID.map((gradeConversion) => ({
         gradeConversionID: gradeConversion.gradeConversionID,
         evaluationSystemID: gradeConversion.evaluationSystemID,
@@ -127,7 +127,6 @@ export const EvaluationSystemForm = ({
     >
       {({ values }) => (
         <Form>
-
           <div>
 
             <label htmlFor="universityName">University Name</label>

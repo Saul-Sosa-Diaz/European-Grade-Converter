@@ -4,7 +4,7 @@ import { Button } from 'primereact/button';
 import { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
-import { EvaluationSystem, EvaluationSystemWithGradeConversions } from '@/domain/evaluationSystem/evaluationSystem';
+import { EvaluationSystem, EvaluationSystemWithGradeConversions, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
 import { useUpdateEvaluationSystem } from '@/hooks/evaluationSystem/useUpdateEvaluationSystem';
 import { useCreateEvaluationSystem } from '@/hooks/evaluationSystem/useCreateEvaluationSystem';
 import { useDeleteEvaluationSystem } from '@/hooks/evaluationSystem/useDeleteEvaluationSystem';
@@ -34,7 +34,7 @@ export const EvaluationSystemList = ({ evaluationSystemList, universityList }: {
 
   const handleUpdate = async (updatedEvaluationSystem: EvaluationSystemWithGradeConversions) => {
     try {
-     console.log(updatedEvaluationSystem)
+      await updateEvaluationSystem(updatedEvaluationSystem);
       setEvaluationSystemListState((prevList) =>
         prevList.map((evaluationSystem) => (evaluationSystem.evaluationSystemID === updatedEvaluationSystem.evaluationSystemID ? updatedEvaluationSystem : evaluationSystem))
       );
@@ -99,7 +99,11 @@ export const EvaluationSystemList = ({ evaluationSystemList, universityList }: {
             universityList={universityList}
           />
         ) : (
-          <h1>a</h1>
+          <EvaluationSystemForm
+            initialValues={{ evaluationSystemID: '', evaluationSystemName: '', evaluationType: EvaluationType.CONTINUOUS, validGrades: [], fixed: 0, universityID: '', universityName: '' }}
+            onSubmit={handleCreate}
+            universityList={universityList}
+          />
         )}
       </Dialog>
     </>
