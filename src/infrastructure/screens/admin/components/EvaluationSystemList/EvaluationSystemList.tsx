@@ -4,7 +4,7 @@ import { Button } from 'primereact/button';
 import { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
-import { EvaluationSystem } from '@/domain/evaluationSystem/evaluationSystem';
+import { EvaluationSystem, EvaluationSystemWithGradeConversions } from '@/domain/evaluationSystem/evaluationSystem';
 import { useUpdateEvaluationSystem } from '@/hooks/evaluationSystem/useUpdateEvaluationSystem';
 import { useCreateEvaluationSystem } from '@/hooks/evaluationSystem/useCreateEvaluationSystem';
 import { useDeleteEvaluationSystem } from '@/hooks/evaluationSystem/useDeleteEvaluationSystem';
@@ -32,9 +32,9 @@ export const EvaluationSystemList = ({ evaluationSystemList, universityList }: {
     return actualID.toString();
   }
 
-  const handleUpdate = async (updatedEvaluationSystem: EvaluationSystem) => {
+  const handleUpdate = async (updatedEvaluationSystem: EvaluationSystemWithGradeConversions) => {
     try {
-      await updateEvaluationSystem(updatedEvaluationSystem);
+     console.log(updatedEvaluationSystem)
       setEvaluationSystemListState((prevList) =>
         prevList.map((evaluationSystem) => (evaluationSystem.evaluationSystemID === updatedEvaluationSystem.evaluationSystemID ? updatedEvaluationSystem : evaluationSystem))
       );
@@ -46,7 +46,7 @@ export const EvaluationSystemList = ({ evaluationSystemList, universityList }: {
     setDialogVisibility(false);
   };
 
-  const handleCreate = async (newEvaluationSystem: EvaluationSystem) => {
+  const handleCreate = async (newEvaluationSystem: EvaluationSystemWithGradeConversions) => {
     try {
       await createEvaluationSystem(newEvaluationSystem);
       const frontEndId = setId();

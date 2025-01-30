@@ -18,7 +18,16 @@ export type ContinuousGradeConversion = {
   evaluationSystemID: string
   MinIntervalGrade: number
   MaxIntervalGrade: number
-  baseEquivalentSpanishGrade: number
-  topEquivalentSpanishGrade: number
   gradeName: string
+}
+
+export type EvaluationSystemWithGradeConversions = {
+  evaluationSystemID: string
+  evaluationSystemName: string
+  evaluationType: EvaluationType
+  validGrades: string[]
+  fixed: number
+  universityID: string
+  universityName: string
+  gradeConversions: ContinuousGradeConversion[]
 }

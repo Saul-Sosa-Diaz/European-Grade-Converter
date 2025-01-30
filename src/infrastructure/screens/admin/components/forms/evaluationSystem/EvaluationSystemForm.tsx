@@ -1,11 +1,12 @@
-import { EvaluationSystem, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
+import { ContinuousGradeConversion, EvaluationSystem, EvaluationSystemWithGradeConversions, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
 import { University } from '@/domain/university/university';
 import { useGetContinuousGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetContinuousGradeConversion';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { generateGrades } from '../../../../../../../scripts/validGrades.mjs';
+import { Dropdown } from 'primereact/dropdown';
 
 interface EvaluationSystemFormProps {
   initialValues: EvaluationSystem;
@@ -66,6 +67,8 @@ export const EvaluationSystemForm = ({
 
   const europeanGrade = ['F', 'E', 'D', 'C', 'B', 'A'];
   const [gradeConversionFromBack, setGradeConversionFromBack] = useState(europeanGrade.map((grade) => ({
+    gradeConversionID: '',
+    evaluationSystemID: initialValues.evaluationSystemID,
     MinIntervalGrade: 0,
     MaxIntervalGrade: 0,
     gradeName: ''
@@ -81,6 +84,8 @@ export const EvaluationSystemForm = ({
   useEffect(() => {
     if (isFetched) {
       setGradeConversionFromBack(getContinouosGradeConversionListByEvaluationID.map((gradeConversion) => ({
+        gradeConversionID: gradeConversion.gradeConversionID,
+        evaluationSystemID: gradeConversion.evaluationSystemID,
         MinIntervalGrade: gradeConversion.MinIntervalGrade,
         MaxIntervalGrade: gradeConversion.MaxIntervalGrade,
         gradeName: gradeConversion.gradeName
@@ -88,6 +93,9 @@ export const EvaluationSystemForm = ({
     }
   }, [isFetched, getContinouosGradeConversionListByEvaluationID]);
 
+  const getStep = useCallback((fixed) => {
+    return 1 / Math.pow(10, fixed);
+  }, []);
 
   return (
     <Formik
@@ -95,20 +103,23 @@ export const EvaluationSystemForm = ({
       validationSchema={validationSchema}
       enableReinitialize={true}
       onSubmit={(updatedEvaluationSystem) => {
-        const updatedValues: EvaluationSystem = {
+        const updatedValues: EvaluationSystemWithGradeConversions = {
           validGrades: generateGrades(
             updatedEvaluationSystem.minGrade,
             updatedEvaluationSystem.maxGrade,
-            1 / Math.pow(10, updatedEvaluationSystem.fixed)
+            getStep(updatedEvaluationSystem.fixed)
           ),
           evaluationSystemID: updatedEvaluationSystem.evaluationSystemID,
           evaluationSystemName: updatedEvaluationSystem.evaluationSystemName,
           evaluationType: updatedEvaluationSystem.evaluationType,
           fixed: updatedEvaluationSystem.fixed,
-          universityID: updatedEvaluationSystem.universityID,
-          universityName: universityList.find(
-            (university) => university.id === updatedEvaluationSystem.universityID
-          ).name,
+          universityID: universityList.find((university) => university.name === updatedEvaluationSystem.universityName).id,
+          universityName: updatedEvaluationSystem.universityName,
+          gradeConversions: updatedEvaluationSystem.continuousEquivalences.map((interval) => ({
+            gradeConversionID: interval.gradeConversionID,
+            evaluationSystemID: updatedEvaluationSystem.evaluationSystemID,
+            ...interval
+          }))
         };
 
         onSubmit(updatedValues);
@@ -116,6 +127,24 @@ export const EvaluationSystemForm = ({
     >
       {({ values }) => (
         <Form>
+
+          <div>
+
+            <label htmlFor="universityName">University Name</label>
+            <Field name="universityName">
+              {({ form }) => (
+                <Dropdown
+                  id="universityName"
+                  value={form.values.universityName}
+                  options={universityList.map((university) => ({ label: university.name, value: university.name }))}
+                  filter
+                  onChange={(e) => form.setFieldValue('universityName', e.value)}
+                />
+              )}
+            </Field>
+            <ErrorMessage name="country" component="div" className="error" />
+          </div>
+
           <div>
             <label>Name of the system</label>
             <Field name="evaluationSystemName" />
@@ -132,8 +161,6 @@ export const EvaluationSystemForm = ({
               ))}
             </Field>
           </div>
-
-          {/* University */}
 
           <div>
             <label>Valid Grades</label>
@@ -170,18 +197,19 @@ export const EvaluationSystemForm = ({
             !isFetched ? <ProgressSpinner /> : (
               <div>
                 <h3>European equivalences </h3>
-                {values.continuousEquivalences.map((interval: any, index: number) => (
+                {values.continuousEquivalences.map((interval: ContinuousGradeConversion, index: number) => (
                   <div key={index}>
+                    <strong> {europeanGrade[index]}</strong>
                     <Field
                       name={`continuousEquivalences.${index}.MinIntervalGrade`}
                       type="number"
-                      step={1 / Math.pow(10, values.fixed)}
+                      step={getStep(values.fixed)}
                     />
                     <ErrorMessage name={`continuousEquivalences.${index}.MinIntervalGrade`} component="div" className="text-error" />
                     <Field
                       name={`continuousEquivalences.${index}.MaxIntervalGrade`}
                       type="number"
-                      step={1 / Math.pow(10, values.fixed)}
+                      step={getStep(values.fixed)}
                     />
                     <ErrorMessage name={`continuousEquivalences.${index}.MaxIntervalGrade`} component="div" className="text-error" />
                   </div>
