@@ -2,7 +2,30 @@ import {
   APIEvaluationSystem,
   APIEvaluationSystemWithGradeConversions,
 } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
-import { EvaluationSystemWithGradeConversions } from '@/domain/evaluationSystem/evaluationSystem'
+import {
+  EvaluationSystem,
+  EvaluationSystemWithGradeConversions,
+} from '@/domain/evaluationSystem/evaluationSystem'
+
+export const buildAPIEvaluationSystem = async (
+  EvaluationSistem: EvaluationSystem,
+): Promise<APIEvaluationSystem> => {
+  try {
+    const apiEvaluationSystem: APIEvaluationSystem = {
+      evaluationsystemid: EvaluationSistem.evaluationSystemID,
+      universityid: EvaluationSistem.universityID,
+      universityname: EvaluationSistem.universityName,
+      evaluationtype: EvaluationSistem.evaluationType,
+      validgrades: EvaluationSistem.validGrades,
+      evaluationsystemname: EvaluationSistem.evaluationSystemName,
+      fixed: EvaluationSistem.fixed,
+    }
+    return apiEvaluationSystem
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
+  }
+}
 
 export const buildAPIEvaluationSystemWithGradeConversions = async (
   EvaluationSystemWithGradeConversions: EvaluationSystemWithGradeConversions,
@@ -30,3 +53,5 @@ export const buildAPIEvaluationSystemWithGradeConversions = async (
     throw new Error(error)
   }
 }
+
+

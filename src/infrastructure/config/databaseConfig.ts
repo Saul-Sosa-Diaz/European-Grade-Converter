@@ -34,7 +34,7 @@ export interface DatabaseAdapter {
     evaluationSystemID: string,
   ): Promise<APIContinuousGradeConversion[]>
   updateEvaluationSystem(evaluationSystem: APIEvaluationSystemWithGradeConversions): Promise<void>
-  createEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
+  createEvaluationSystem(evaluationSystem: APIEvaluationSystemWithGradeConversions): Promise<void>
   deleteEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
 }
 

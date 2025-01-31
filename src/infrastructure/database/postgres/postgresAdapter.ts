@@ -18,8 +18,17 @@ import {
 
 export class PostgresAdapter implements DatabaseAdapter {
   private pool: Pool
+  private spanishEquivalent: { base: number; top: number }[]
   constructor(connectionString: string) {
     this.pool = new Pool({ connectionString })
+    this.spanishEquivalent = [
+      { base: 0, top: 5 },
+      { base: 5, top: 6 },
+      { base: 6, top: 7 },
+      { base: 7, top: 8 },
+      { base: 8, top: 9 },
+      { base: 9, top: 10 },
+    ]
   }
 
   async updateCountry(country): Promise<void> {
@@ -102,23 +111,14 @@ export class PostgresAdapter implements DatabaseAdapter {
     // Update evaluation system table
     await this.pool.query(QUERY, VALUES)
     // Update associated grade conversions
-    const spanishEquivalent = [
-      { base: 0, top: 5 },
-      { base: 5, top: 6 },
-      { base: 6, top: 7 },
-      { base: 7, top: 8 },
-      { base: 8, top: 9 },
-      { base: 9, top: 10 },
-    ]
-
     await Promise.all(
       evaluationSystem.gradeconversions.map((gradeConversion, index) => {
         const GRADE_CONVERSION_VALUES = [
           gradeConversion.minintervalgrade,
           gradeConversion.maxintervalgrade,
           gradeConversion.gradename,
-          spanishEquivalent[index].base,
-          spanishEquivalent[index].top,
+          this.spanishEquivalent[index].base,
+          this.spanishEquivalent[index].top,
           gradeConversion.gradeconversionid,
         ]
 
@@ -130,16 +130,38 @@ export class PostgresAdapter implements DatabaseAdapter {
     )
   }
 
-  async createEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void> {
+  async createEvaluationSystem(
+    evaluationSystem: APIEvaluationSystemWithGradeConversions,
+  ): Promise<void> {
     const QUERY = evaluationSystemQueries.CREATE_EVALUATION_SYSTEM
+    console.log('evaluationSystem', evaluationSystem)
     const VALUES = [
-      evaluationSystem.universityid,
-      evaluationSystem.evaluationtype,
-      evaluationSystem.validgrades,
       evaluationSystem.evaluationsystemname,
+      evaluationSystem.universityid,
+      evaluationSystem.validgrades,
+      evaluationSystem.evaluationtype,
       evaluationSystem.fixed,
     ]
-    await this.pool.query(QUERY, VALUES)
+    // Create evaluation system
+    const newEvaluationSystemId = (await this.pool.query(QUERY, VALUES)).rows[0].evaluationsystemid
+    // Create associated grade conversions
+    await Promise.all(
+      evaluationSystem.gradeconversions.map((gradeConversion, index) => {
+        const GRADE_CONVERSION_VALUES = [
+          newEvaluationSystemId,
+          gradeConversion.minintervalgrade,
+          gradeConversion.maxintervalgrade,
+          gradeConversion.gradename,
+          this.spanishEquivalent[index].base,
+          this.spanishEquivalent[index].top,
+        ]
+
+        return this.pool.query(
+          evaluationSystemQueries.CREATE_CONTINUOUS_GRADE_CONVERSION,
+          GRADE_CONVERSION_VALUES,
+        )
+      }),
+    )
   }
 
   async deleteEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void> {

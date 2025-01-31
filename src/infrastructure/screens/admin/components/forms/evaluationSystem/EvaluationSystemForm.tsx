@@ -15,11 +15,12 @@ interface EvaluationSystemFormProps {
 }
 
 const validationSchema = Yup.object().shape({
+  universityName: Yup.string().required('Required'),
+  evaluationType: Yup.string().required('Required'),
   evaluationSystemName: Yup.string().required('Required'),
   minGrade: Yup.number().required('Required'),
   maxGrade: Yup.number()
-    .required('Required')
-    .min(Yup.ref('minGrade'), 'Max grade must be >= min grade'),
+    .required('Required'),
   fixed: Yup.number()
     .when('evaluationType', {
       is: (type) => type === EvaluationType.CONTINUOUS,
@@ -28,30 +29,26 @@ const validationSchema = Yup.object().shape({
     }),
 
   continuousEquivalences: Yup.array().when('evaluationType', {
-    is: EvaluationType.CONTINUOUS,
+    is: (value: EvaluationType) => value === EvaluationType.CONTINUOUS,
     then: (schema) =>
-      schema
-        .of(
-          Yup.object().shape({
-            MinIntervalGrade: Yup.number()
-              .required('Required')
-              .min(Yup.ref('$minGrade'), ({ min }) => `The value must be >= ${min}`)
-              .test('min<=max', 'The min part has to be <= than the max part of the interval.', function (value) {
-                return value <= this.parent.MaxIntervalGrade;
-              }),
-
-            MaxIntervalGrade: Yup.number()
-              .required('Required')
-              .test('max>=min', 'Max must be >= Min', function (value) {
-                return value >= this.parent.MinIntervalGrade;
-              })
-              .max(Yup.ref('$maxGrade'), ({ max }) => `The value must be <= ${max}`),
-
-            gradeName: Yup.string().required('Required'),
-          })
-        )
-    ,
-    otherwise: Yup.array(),
+      schema.of(
+        Yup.object().shape({
+          MinIntervalGrade: Yup.number()
+            .required('Required')
+            .min(Yup.ref('$minGrade'), ({ min }) => `The value must be >= ${min}`)
+            .test('min<=max', 'The min part has to be <= than the max part of the interval.', function (value) {
+              return value <= this.parent.MaxIntervalGrade;
+            }),
+          MaxIntervalGrade: Yup.number()
+            .required('Required')
+            .test('max>=min', 'Max must be >= Min', function (value) {
+              return value >= this.parent.MinIntervalGrade;
+            })
+            .max(Yup.ref('$maxGrade'), ({ max }) => `The value must be <= ${max}`),
+          gradeName: Yup.string()
+        })
+      ),
+    otherwise: (schema) => schema.notRequired(),
   }),
 });
 
@@ -128,7 +125,6 @@ export const EvaluationSystemForm = ({
       {({ values }) => (
         <Form>
           <div>
-
             <label htmlFor="universityName">University Name</label>
             <Field name="universityName">
               {({ form }) => (
@@ -141,7 +137,7 @@ export const EvaluationSystemForm = ({
                 />
               )}
             </Field>
-            <ErrorMessage name="country" component="div" className="error" />
+            <ErrorMessage name="universityName" component="div" className="error" />
           </div>
 
           <div>
@@ -159,6 +155,7 @@ export const EvaluationSystemForm = ({
                 </option>
               ))}
             </Field>
+            <ErrorMessage name="evaluationType" component="div" className="text-error" />
           </div>
 
           <div>
@@ -171,10 +168,12 @@ export const EvaluationSystemForm = ({
                 <div>
                   <label>Min grade</label>
                   <Field type="number" name="minGrade" />
+                  <ErrorMessage name="maxGrade" component="div" className="text-error" />
                 </div>
                 <div>
                   <label>Max Grade</label>
                   <Field type="number" name="maxGrade" />
+                  <ErrorMessage name="maxGrade" component="div" className="text-error" />
                 </div>
               </>
             )}
@@ -193,7 +192,7 @@ export const EvaluationSystemForm = ({
           </div>
 
           {values.evaluationType === EvaluationType.CONTINUOUS && (
-            !isFetched ? <ProgressSpinner /> : (
+            !isFetched && values.evaluationSystemID ? <ProgressSpinner /> : (
               <div>
                 <h3>European equivalences </h3>
                 {values.continuousEquivalences.map((interval: ContinuousGradeConversion, index: number) => (
@@ -216,7 +215,7 @@ export const EvaluationSystemForm = ({
               </div>
             )
           )}
-          <button type="submit">Save</button>
+          <button type="submit">{values.evaluationSystemID ? "Update" : "Create"}</button>
         </Form>
       )}
     </Formik>

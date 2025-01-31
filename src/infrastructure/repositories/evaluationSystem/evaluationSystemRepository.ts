@@ -1,6 +1,9 @@
 import { buildContinuousGradeConversionListByEvaluationIDMap } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/mapGetContinuousGradeConversionts'
 import { buildEvaluationSystemListMap } from '@/application/evaluationSystem/getEvaluationSystemList/mapGetEvaluationSystemList'
-import { buildAPIEvaluationSystemWithGradeConversions } from '@/application/evaluationSystem/mapAPIEvaluationSystemy'
+import {
+  buildAPIEvaluationSystem,
+  buildAPIEvaluationSystemWithGradeConversions,
+} from '@/application/evaluationSystem/mapAPIEvaluationSystemy'
 import { API_URL } from '@/constants/apiURL'
 import {
   APIContinuousGradeConversion,
@@ -67,20 +70,22 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
       }
     },
     createEvaluationSystem: async (params) => {
-      await fetch(API_URL.evaluationSystem.createEvaluationSystem, {
+      const response = await fetch(API_URL.evaluationSystem.createEvaluationSystem, {
         method: 'post',
-        body: JSON.stringify({ ...params }),
-      }).catch((error) => {
-        throw new Error(error)
-      })
+        body: JSON.stringify(await buildAPIEvaluationSystemWithGradeConversions(params)),
+      }).then((response) => response.json())
+      if (!response.success) {
+        throw new Error(response.error)
+      }
     },
     deleteEvaluationSystem: async (params) => {
-      await fetch(API_URL.evaluationSystem.deleteEvaluationSystem, {
+      const response = await fetch(API_URL.evaluationSystem.deleteEvaluationSystem, {
         method: 'post',
-        body: JSON.stringify({ ...params }),
-      }).catch((error) => {
-        throw new Error(error)
-      })
+        body: JSON.stringify(await buildAPIEvaluationSystem(params)),
+      }).then((response) => response.json())
+      if (!response.success) {
+        throw new Error(response.error)
+      }
     },
   }
 }

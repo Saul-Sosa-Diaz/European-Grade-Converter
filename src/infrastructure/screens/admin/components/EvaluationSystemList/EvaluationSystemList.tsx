@@ -48,6 +48,7 @@ export const EvaluationSystemList = ({ evaluationSystemList, universityList }: {
 
   const handleCreate = async (newEvaluationSystem: EvaluationSystemWithGradeConversions) => {
     try {
+      console.log(newEvaluationSystem);
       await createEvaluationSystem(newEvaluationSystem);
       const frontEndId = setId();
       newEvaluationSystem.evaluationSystemID = frontEndId;

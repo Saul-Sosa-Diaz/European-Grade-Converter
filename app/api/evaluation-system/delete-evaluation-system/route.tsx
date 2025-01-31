@@ -7,6 +7,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const universityToDelete: APIUniversity = body;
+    console.log(universityToDelete);
     const databaseAdapter = createDatabaseAdapter();
     await databaseAdapter.deleteUniversity(universityToDelete);
     return Response.json({ success: true }, { status: 200 });
