@@ -98,40 +98,36 @@ export class PostgresAdapter implements DatabaseAdapter {
       evaluationSystem.fixed,
       evaluationSystem.evaluationsystemid,
     ]
-        try {
-          console.log(...VALUES)
-          // Update evaluation system table
-          await this.pool.query(QUERY, VALUES)
-          // Update associated grade conversions
-          const spanishEquivalent = [
-            { base: 0, top: 5 },
-            { base: 5, top: 6 },
-            { base: 6, top: 7 },
-            { base: 7, top: 8 },
-            { base: 8, top: 9 },
-            { base: 9, top: 10 },
-          ]
 
-          await Promise.all(
-            evaluationSystem.gradeconversions.map((gradeConversion, index) => {
-              console.log(gradeConversion)
-              const GRADE_CONVERSION_VALUES = [
-                gradeConversion.minintervalgrade,
-                gradeConversion.maxintervalgrade,
-                gradeConversion.gradename,
-                spanishEquivalent[index].base,
-                spanishEquivalent[index].top,
-                gradeConversion.gradeconversionid,
-              ]
-              return this.pool.query(
-                evaluationSystemQueries.UPDATE_CONTINUOUS_GRADE_CONVERSION,
-                GRADE_CONVERSION_VALUES,
-              )
-            }),
-          )
-        } catch (error) {
-          console.log(error)
-        }
+    // Update evaluation system table
+    await this.pool.query(QUERY, VALUES)
+    // Update associated grade conversions
+    const spanishEquivalent = [
+      { base: 0, top: 5 },
+      { base: 5, top: 6 },
+      { base: 6, top: 7 },
+      { base: 7, top: 8 },
+      { base: 8, top: 9 },
+      { base: 9, top: 10 },
+    ]
+
+    await Promise.all(
+      evaluationSystem.gradeconversions.map((gradeConversion, index) => {
+        const GRADE_CONVERSION_VALUES = [
+          gradeConversion.minintervalgrade,
+          gradeConversion.maxintervalgrade,
+          gradeConversion.gradename,
+          spanishEquivalent[index].base,
+          spanishEquivalent[index].top,
+          gradeConversion.gradeconversionid,
+        ]
+
+        return this.pool.query(
+          evaluationSystemQueries.UPDATE_CONTINUOUS_GRADE_CONVERSION,
+          GRADE_CONVERSION_VALUES,
+        )
+      }),
+    )
   }
 
   async createEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void> {

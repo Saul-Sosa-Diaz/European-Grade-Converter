@@ -10,6 +10,7 @@ export const useGetContinuousGradeConversionListByEvaluationID = (
     queryKey: ['getContinuousGradeConversionListByEvaluationID', JSON.stringify(params)],
     queryFn: async () =>
       await EvaluationSystem.getContinouosGradeConversionListByEvaluationID(params),
+    enabled: !!params.evaluationSystemID,
   })
   return { getContinouosGradeConversionListByEvaluationID: data, ...rest }
 }

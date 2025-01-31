@@ -7,7 +7,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const evaluationSystemToUpdate: APIEvaluationSystemWithGradeConversions = body;
-    console.log(body);
     const databaseAdapter = createDatabaseAdapter();
     await databaseAdapter.updateEvaluationSystem(evaluationSystemToUpdate);
     return Response.json({ success: true }, { status: 200 });

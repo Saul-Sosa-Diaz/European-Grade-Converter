@@ -6,7 +6,7 @@ export const evaluationSystemQueries = {
   GET_CONTINUOUS_GRADE_CONVERSION_LIST_BY_EVALUATION_ID: `
     SELECT gradeconversionid, evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, gradeName
     FROM CONTINUOUS_GRADE_CONVERSION
-    WHERE evaluationSystemID = $1
+    WHERE evaluationSystemID = $1 ORDER BY BaseEquivalentSpanishGrade
     `,
   UPDATE_EVALUATION_SYSTEM: `
     UPDATE EVALUATION_SYSTEM SET evaluationsystemname = $1, universityID = $2, validgrades = $3, evaluationtype = $4, fixed = $5
