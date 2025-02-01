@@ -13,9 +13,20 @@ export type EvaluationSystem = {
   universityName: string
 }
 
+export enum EuropeanEquivalence {
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D',
+  E = 'E',
+  FX = 'Fx',
+  F = 'F',
+}
+
 export type GradeConversion = {
   gradeConversionID: string
   evaluationSystemID: string
+  europeanEquivalence: EuropeanEquivalence
   MinIntervalGrade?: number
   MaxIntervalGrade?: number
   gradeName?: string

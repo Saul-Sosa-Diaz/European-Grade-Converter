@@ -1,4 +1,4 @@
-import { EvaluationType } from '../evaluationSystem'
+import { EuropeanEquivalence, EvaluationType } from '../evaluationSystem'
 
 export type APIGetEvaluationSystemList = APIEvaluationSystem[]
 export interface APIEvaluationSystem {
@@ -25,6 +25,7 @@ export interface APIEvaluationSystemWithGradeConversions {
 export type APIGradeConversion = {
   gradeconversionid: string
   evaluationsystemid: string
+  europeanequivalence: EuropeanEquivalence
   minintervalgrade?: number
   maxintervalgrade?: number
   gradename?: string

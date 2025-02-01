@@ -4,12 +4,12 @@ export const evaluationSystemQueries = {
     FROM EVALUATION_SYSTEM JOIN UNIVERSITY ON EVALUATION_SYSTEM.universityid = UNIVERSITY.universityid
     `,
   GET_CONTINUOUS_GRADE_CONVERSION_LIST_BY_EVALUATION_ID: `
-    SELECT gradeconversionid, evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, gradeName
+    SELECT gradeconversionid, evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, gradeName, europeanEquivalence
     FROM CONTINUOUS_GRADE_CONVERSION
     WHERE evaluationSystemID = $1 ORDER BY BaseEquivalentSpanishGrade
     `,
   GET_DISCRETE_GRADE_CONVERSION_LIST_BY_EVALUATION_ID: ` 
-  SELECT discreteGradeID as gradeconversionid, evaluationSystemID,gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+  SELECT discreteGradeID as gradeconversionid, evaluationSystemID,gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, europeanEquivalence
     FROM DISCRETE_GRADE_CONVERSION
     WHERE evaluationSystemID = $1 ORDER BY BaseEquivalentSpanishGrade`,
   UPDATE_EVALUATION_SYSTEM: `

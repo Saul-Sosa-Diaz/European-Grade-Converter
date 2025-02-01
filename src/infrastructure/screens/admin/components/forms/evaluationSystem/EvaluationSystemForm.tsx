@@ -1,4 +1,4 @@
-import { GradeConversion, EvaluationSystem, EvaluationSystemWithGradeConversions, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
+import { GradeConversion, EvaluationSystem, EvaluationSystemWithGradeConversions, EvaluationType, EuropeanEquivalence } from '@/domain/evaluationSystem/evaluationSystem';
 import { University } from '@/domain/university/university';
 import { useGetContinuousGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetContinuousGradeConversion';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -62,7 +62,7 @@ export const EvaluationSystemForm = ({
       evaluationSystemID: initialValues.evaluationSystemID,
     });
 
-  const [europeanGrade, setEuropeanGrade] = useState(['F', 'E', 'D', 'C', 'B', 'A']);
+  const europeanGrade = [EuropeanEquivalence.F, EuropeanEquivalence.FX, EuropeanEquivalence.E, EuropeanEquivalence.D, EuropeanEquivalence.C, EuropeanEquivalence.B, EuropeanEquivalence.A]);
   const [gradeConversionFromBack, setGradeConversionFromBack] = useState(europeanGrade.map((grade) => ({
     gradeConversionID: '',
     evaluationSystemID: initialValues.evaluationSystemID,
@@ -89,9 +89,6 @@ export const EvaluationSystemForm = ({
         gradeName: gradeConversion.gradeName,
         gradeValue: gradeConversion.gradeValue
       })));
-      if (getContinouosGradeConversionListByEvaluationID.length > europeanGrade.length) {
-        setEuropeanGrade(["F", "Fx", "E", "D", "C", "B", "A"]);
-      }
     }
   }, [isFetched, getContinouosGradeConversionListByEvaluationID]);
 
@@ -119,6 +116,7 @@ export const EvaluationSystemForm = ({
           universityName: updatedEvaluationSystem.universityName,
           gradeConversions: updatedEvaluationSystem.gradeEquivalence.map((interval) => ({
             gradeConversionID: interval.gradeConversionID,
+            europeanGrade: interval.europeanGrade,
             evaluationSystemID: interval.evaluationSystemID,
             ...interval
           }))
