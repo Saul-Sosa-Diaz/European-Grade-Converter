@@ -69,7 +69,8 @@ export const EvaluationSystemForm = ({
     MinIntervalGrade: 0,
     MaxIntervalGrade: 0,
     gradeName: '',
-    gradeValue: ''
+    gradeValue: '',
+    europeanEquivalence: grade
   })));
 
   const formValues = {
