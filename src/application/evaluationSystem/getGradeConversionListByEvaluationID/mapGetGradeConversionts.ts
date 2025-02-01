@@ -5,18 +5,20 @@ export const buildGradeConversionListByEvaluationIDMap = async (
   dto: APIGradeConversion[],
 ): Promise<GradeConversion[]> => {
   try {
-    const continuousGradeConversionList: GradeConversion[] = dto.map(
-      (continuousGradeConversion: APIGradeConversion) => {
+    const gardeConversionList: GradeConversion[] = dto.map(
+      (gardeConversion: APIGradeConversion) => {
         return {
-          gradeConversionID: continuousGradeConversion.gradeconversionid,
-          evaluationSystemID: continuousGradeConversion.evaluationsystemid,
-          MinIntervalGrade: continuousGradeConversion.minintervalgrade,
-          MaxIntervalGrade: continuousGradeConversion.maxintervalgrade,
-          gradeName: continuousGradeConversion.gradename,
+          gradeConversionID: gardeConversion.gradeconversionid,
+          evaluationSystemID: gardeConversion.evaluationsystemid,
+          MinIntervalGrade: gardeConversion.minintervalgrade,
+          MaxIntervalGrade: gardeConversion.maxintervalgrade,
+          gradeName: gardeConversion.gradename,
+          gradeValue: gardeConversion.gradevalue
         }
       },
     )
-    return continuousGradeConversionList
+    console.log(gardeConversionList)
+    return gardeConversionList
   } catch (error) {
     console.log(error)
     throw new Error(error)

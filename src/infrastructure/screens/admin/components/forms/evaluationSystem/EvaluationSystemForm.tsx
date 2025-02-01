@@ -68,7 +68,8 @@ export const EvaluationSystemForm = ({
     evaluationSystemID: initialValues.evaluationSystemID,
     MinIntervalGrade: 0,
     MaxIntervalGrade: 0,
-    gradeName: ''
+    gradeName: '',
+    gradeValue: ''
   })));
 
   const formValues = {
@@ -85,8 +86,10 @@ export const EvaluationSystemForm = ({
         evaluationSystemID: gradeConversion.evaluationSystemID,
         MinIntervalGrade: gradeConversion.MinIntervalGrade,
         MaxIntervalGrade: gradeConversion.MaxIntervalGrade,
-        gradeName: gradeConversion.gradeName
+        gradeName: gradeConversion.gradeName,
+        gradeValue: gradeConversion.gradeValue
       })));
+      console.log(getContinouosGradeConversionListByEvaluationID);
     }
   }, [isFetched, getContinouosGradeConversionListByEvaluationID]);
 
@@ -196,7 +199,7 @@ export const EvaluationSystemForm = ({
               <div>
                 <h3>European equivalences </h3>
                 {values.continuousEquivalences.map((interval: GradeConversion, index: number) => (
-                  <div key={index}>
+                  values.evaluationSystemID && interval.MinIntervalGrade && interval.MaxIntervalGrade ? (<div key={index}>
                     <strong> {europeanGrade[index]}</strong>
                     <Field
                       name={`continuousEquivalences.${index}.MinIntervalGrade`}
@@ -210,7 +213,14 @@ export const EvaluationSystemForm = ({
                       step={getStep(values.fixed)}
                     />
                     <ErrorMessage name={`continuousEquivalences.${index}.MaxIntervalGrade`} component="div" className="text-error" />
-                  </div>
+                  </div>) : (<div key={index}>
+                    <strong> {europeanGrade[index]}</strong>
+                    <Field
+                      name={`continuousEquivalences.${index}.gradeValue`}
+                      type="text"
+                    />
+                    <ErrorMessage name={`continuousEquivalences.${index}.gradeValue`} component="div" className="text-error" />
+                  </div>)
                 ))}
               </div>
             )
