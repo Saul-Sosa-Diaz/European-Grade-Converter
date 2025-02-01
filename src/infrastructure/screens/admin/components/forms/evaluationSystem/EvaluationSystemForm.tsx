@@ -1,6 +1,6 @@
 import { GradeConversion, EvaluationSystem, EvaluationSystemWithGradeConversions, EvaluationType, EuropeanEquivalence } from '@/domain/evaluationSystem/evaluationSystem';
 import { University } from '@/domain/university/university';
-import { useGetContinuousGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetContinuousGradeConversion';
+import { useGetGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetContinuousGradeConversion';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { useCallback, useEffect, useState } from 'react';
@@ -57,12 +57,12 @@ export const EvaluationSystemForm = ({
   onSubmit,
   universityList
 }: EvaluationSystemFormProps) => {
-  const { getContinouosGradeConversionListByEvaluationID, isFetched } =
-    useGetContinuousGradeConversionListByEvaluationID({
+  const { getContinouosGradeConversionListByEvaluationID: getGradeConversionListByEvaluationID, isFetched } =
+    useGetGradeConversionListByEvaluationID({
       evaluationSystemID: initialValues.evaluationSystemID,
     });
 
-  const europeanGrade = [EuropeanEquivalence.F, EuropeanEquivalence.FX, EuropeanEquivalence.E, EuropeanEquivalence.D, EuropeanEquivalence.C, EuropeanEquivalence.B, EuropeanEquivalence.A]);
+  const europeanGrade = [EuropeanEquivalence.F, EuropeanEquivalence.FX, EuropeanEquivalence.E, EuropeanEquivalence.D, EuropeanEquivalence.C, EuropeanEquivalence.B, EuropeanEquivalence.A];
   const [gradeConversionFromBack, setGradeConversionFromBack] = useState(europeanGrade.map((grade) => ({
     gradeConversionID: '',
     evaluationSystemID: initialValues.evaluationSystemID,
@@ -80,17 +80,27 @@ export const EvaluationSystemForm = ({
   };
 
   useEffect(() => {
-    if (isFetched && getContinouosGradeConversionListByEvaluationID) {
-      setGradeConversionFromBack(getContinouosGradeConversionListByEvaluationID.map((gradeConversion) => ({
-        gradeConversionID: gradeConversion.gradeConversionID,
-        evaluationSystemID: gradeConversion.evaluationSystemID,
-        MinIntervalGrade: gradeConversion.MinIntervalGrade,
-        MaxIntervalGrade: gradeConversion.MaxIntervalGrade,
-        gradeName: gradeConversion.gradeName,
-        gradeValue: gradeConversion.gradeValue
-      })));
+    if (isFetched && getGradeConversionListByEvaluationID) {
+      console.log(getGradeConversionListByEvaluationID)
+      const conversions = europeanGrade.map((grade) => {
+        const conversionFound = getGradeConversionListByEvaluationID.find(
+          (item) => item.europeanEquivalence === grade
+        );
+        return (
+          conversionFound || {
+            gradeConversionID: '',
+            evaluationSystemID: initialValues.evaluationSystemID,
+            MinIntervalGrade: 0,
+            MaxIntervalGrade: 0,
+            gradeName: grade,
+            gradeValue: ''
+          }
+        );
+      });
+      console.log(conversions);
+      setGradeConversionFromBack(conversions);
     }
-  }, [isFetched, getContinouosGradeConversionListByEvaluationID]);
+  }, [isFetched, getGradeConversionListByEvaluationID]);
 
   const getStep = useCallback((fixed) => {
     return 1 / Math.pow(10, fixed);
@@ -114,9 +124,9 @@ export const EvaluationSystemForm = ({
           fixed: updatedEvaluationSystem.fixed,
           universityID: universityList.find((university) => university.name === updatedEvaluationSystem.universityName).id,
           universityName: updatedEvaluationSystem.universityName,
-          gradeConversions: updatedEvaluationSystem.gradeEquivalence.map((interval) => ({
+          gradeConversions: updatedEvaluationSystem.gradeEquivalence.map((interval, index) => ({
             gradeConversionID: interval.gradeConversionID,
-            europeanGrade: interval.europeanGrade,
+            europeanGrade: europeanGrade[index],
             evaluationSystemID: interval.evaluationSystemID,
             ...interval
           }))

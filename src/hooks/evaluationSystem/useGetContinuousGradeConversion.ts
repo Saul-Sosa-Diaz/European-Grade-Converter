@@ -2,7 +2,7 @@ import { useApi } from '@/context/ApiContext'
 import { GetGradeConversionListByEvaluationID } from '@/domain/evaluationSystem/evaluationSystemRepository'
 import { useQuery } from '@tanstack/react-query'
 
-export const useGetContinuousGradeConversionListByEvaluationID = (
+export const useGetGradeConversionListByEvaluationID = (
   params: GetGradeConversionListByEvaluationID.Params,
 ) => {
   const { EvaluationSystem } = useApi()
