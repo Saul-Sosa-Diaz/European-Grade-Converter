@@ -234,14 +234,14 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
 
           <div>
             <h3>European equivalences</h3>
-            {isFetched ? (
+            {!isFetched && values.evaluationSystemID ? <ProgressSpinner /> : (
               <GradeEquivalenceFields
                 evaluationType={values.evaluationType}
                 gradeEquivalence={values.gradeEquivalence}
                 europeanGrades={europeanGrades}
                 fixed={values.fixed}
                 getStep={getStep}
-              />) : <ProgressSpinner />}
+              />)}
           </div>
           <button type="submit">{values.evaluationSystemID ? 'Update' : 'Create'}</button>
         </Form>
