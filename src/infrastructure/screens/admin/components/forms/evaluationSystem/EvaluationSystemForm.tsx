@@ -212,17 +212,36 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
               ))}
             </Field>
             <ErrorMessage name="evaluationType" component="div" className="text-error" />
+            <>
+              {values.evaluationType == EvaluationType.CONTINUOUS && (
+                <><div>
+                  <label>Minimum grade</label>
+                  <Field type="number" name="minGrade" />
+                  <ErrorMessage name="minGrade" component="div" className="text-error" />
+                </div>
+                  <div>
+                    <label>Maximum grade</label>
+                    <Field type="number" name="maxGrade" />
+                    <ErrorMessage name="maxGrade" component="div" className="text-error" />
+                  </div>
+                  <div>
+                    <label>Number of decimals</label>
+                    <Field type="number" name="fixed" />
+                    <ErrorMessage name="fixed" component="div" className="text-error" />
+                  </div></>)}
+            </>
           </div>
+
           <div>
             <h3>European equivalences</h3>
             {isFetched ? (
-            <GradeEquivalenceFields
-              evaluationType={values.evaluationType}
-              gradeEquivalence={values.gradeEquivalence}
-              europeanGrades={europeanGrades}
-              fixed={values.fixed}
-              getStep={getStep}
-            />): <ProgressSpinner/>}
+              <GradeEquivalenceFields
+                evaluationType={values.evaluationType}
+                gradeEquivalence={values.gradeEquivalence}
+                europeanGrades={europeanGrades}
+                fixed={values.fixed}
+                getStep={getStep}
+              />) : <ProgressSpinner />}
           </div>
           <button type="submit">{values.evaluationSystemID ? 'Update' : 'Create'}</button>
         </Form>
