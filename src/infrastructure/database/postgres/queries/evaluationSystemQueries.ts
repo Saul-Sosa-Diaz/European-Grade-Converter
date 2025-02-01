@@ -8,6 +8,10 @@ export const evaluationSystemQueries = {
     FROM CONTINUOUS_GRADE_CONVERSION
     WHERE evaluationSystemID = $1 ORDER BY BaseEquivalentSpanishGrade
     `,
+  GET_DISCRETE_GRADE_CONVERSION_LIST_BY_EVALUATION_ID: ` 
+  SELECT discreteGradeID as gradeconversionid, evaluationSystemID,gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade
+    FROM DISCRETE_GRADE_CONVERSION
+    WHERE evaluationSystemID = $1 ORDER BY BaseEquivalentSpanishGrade`,
   UPDATE_EVALUATION_SYSTEM: `
     UPDATE EVALUATION_SYSTEM SET evaluationsystemname = $1, universityID = $2, validgrades = $3, evaluationtype = $4, fixed = $5
     WHERE evaluationsystemid = $6`,

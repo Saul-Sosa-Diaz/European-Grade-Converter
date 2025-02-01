@@ -5,6 +5,7 @@ import {
 import {
   EvaluationSystem,
   EvaluationSystemWithGradeConversions,
+  EvaluationType,
 } from '@/domain/evaluationSystem/evaluationSystem'
 
 export const buildAPIEvaluationSystem = async (
@@ -31,6 +32,23 @@ export const buildAPIEvaluationSystemWithGradeConversions = async (
   EvaluationSystemWithGradeConversions: EvaluationSystemWithGradeConversions,
 ): Promise<APIEvaluationSystem> => {
   try {
+    let gradeConversions = []
+    if (EvaluationSystemWithGradeConversions.evaluationType === EvaluationType.CONTINUOUS) {
+      gradeConversions = EvaluationSystemWithGradeConversions.gradeConversions.map((gc) => ({
+        gradeconversionid: gc.gradeConversionID,
+        evaluationsystemid: gc.evaluationSystemID,
+        minintervalgrade: gc.MinIntervalGrade,
+        maxintervalgrade: gc.MaxIntervalGrade,
+        gradename: gc.gradeName,
+      }))
+    } else {
+      gradeConversions = EvaluationSystemWithGradeConversions.gradeConversions.map((gc) => ({
+        gradeconversionid: gc.gradeConversionID,
+        evaluationsystemid: gc.evaluationSystemID,
+        gradename: gc.gradeName,
+        gradevalue: gc.gradeValue,
+      }))
+    }
     const apiEvaluationSystemWithGradeConversion: APIEvaluationSystemWithGradeConversions = {
       evaluationsystemid: EvaluationSystemWithGradeConversions.evaluationSystemID,
       universityid: EvaluationSystemWithGradeConversions.universityID,
@@ -39,13 +57,7 @@ export const buildAPIEvaluationSystemWithGradeConversions = async (
       validgrades: EvaluationSystemWithGradeConversions.validGrades,
       evaluationsystemname: EvaluationSystemWithGradeConversions.evaluationSystemName,
       fixed: EvaluationSystemWithGradeConversions.fixed,
-      gradeconversions: EvaluationSystemWithGradeConversions.gradeConversions.map((gc) => ({
-        gradeconversionid: gc.gradeConversionID,
-        evaluationsystemid: gc.evaluationSystemID,
-        minintervalgrade: gc.MinIntervalGrade,
-        maxintervalgrade: gc.MaxIntervalGrade,
-        gradename: gc.gradeName,
-      })),
+      gradeconversions: gradeConversions,
     }
     return apiEvaluationSystemWithGradeConversion
   } catch (error) {
@@ -53,5 +65,3 @@ export const buildAPIEvaluationSystemWithGradeConversions = async (
     throw new Error(error)
   }
 }
-
-

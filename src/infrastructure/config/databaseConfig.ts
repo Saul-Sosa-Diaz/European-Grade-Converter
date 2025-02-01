@@ -3,7 +3,7 @@ import { PostgresAdapter } from '../database/postgres/postgresAdapter'
 import { APIUniversity } from '@/domain/university/dto/ApiUniversity'
 import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
 import {
-  APIContinuousGradeConversion,
+  APIGradeConversion,
   APIEvaluationSystem,
   APIEvaluationSystemWithGradeConversions,
 } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
@@ -30,9 +30,9 @@ export interface DatabaseAdapter {
   createUniversity(university: APIUniversity): Promise<void>
   deleteUniversity(university: APIUniversity): Promise<void>
   getEvaluationSystemList(): Promise<APIEvaluationSystem[]>
-  getContinouosGradeConversionListByEvaluationID(
+  getGradeConversionListByEvaluationID(
     evaluationSystemID: string,
-  ): Promise<APIContinuousGradeConversion[]>
+  ): Promise<APIGradeConversion[]>
   updateEvaluationSystem(evaluationSystem: APIEvaluationSystemWithGradeConversions): Promise<void>
   createEvaluationSystem(evaluationSystem: APIEvaluationSystemWithGradeConversions): Promise<void>
   deleteEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>

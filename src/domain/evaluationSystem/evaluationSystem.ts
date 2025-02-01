@@ -19,6 +19,7 @@ export type GradeConversion = {
   MinIntervalGrade?: number
   MaxIntervalGrade?: number
   gradeName?: string
+  gradeValue?: string
 }
 
 export type EvaluationSystemWithGradeConversions = {

@@ -1,12 +1,12 @@
-import { APIContinuousGradeConversion } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
+import { APIGradeConversion } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
 import { GradeConversion } from '@/domain/evaluationSystem/evaluationSystem'
 
-export const buildContinuousGradeConversionListByEvaluationIDMap = async (
-  dto: APIContinuousGradeConversion[],
+export const buildGradeConversionListByEvaluationIDMap = async (
+  dto: APIGradeConversion[],
 ): Promise<GradeConversion[]> => {
   try {
     const continuousGradeConversionList: GradeConversion[] = dto.map(
-      (continuousGradeConversion: APIContinuousGradeConversion) => {
+      (continuousGradeConversion: APIGradeConversion) => {
         return {
           gradeConversionID: continuousGradeConversion.gradeconversionid,
           evaluationSystemID: continuousGradeConversion.evaluationsystemid,

@@ -19,13 +19,14 @@ export interface APIEvaluationSystemWithGradeConversions {
   validgrades: string[]
   evaluationsystemname: string
   fixed: number
-  gradeconversions: APIContinuousGradeConversion[]
+  gradeconversions: APIGradeConversion[]
 }
 
-export type APIContinuousGradeConversion = {
+export type APIGradeConversion = {
   gradeconversionid: string
   evaluationsystemid: string
-  minintervalgrade: number
-  maxintervalgrade: number
-  gradename: string
+  minintervalgrade?: number
+  maxintervalgrade?: number
+  gradename?: string
+  gradevalue?: string
 }

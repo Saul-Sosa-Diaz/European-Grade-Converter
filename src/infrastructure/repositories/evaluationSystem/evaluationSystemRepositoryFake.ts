@@ -24,7 +24,7 @@ export function createEvaluationSystemRepositoryFake(): EvaluationSystemReposito
         },
       ]
     },
-    getContinouosGradeConversionListByEvaluationID: async (params) => {
+    getGradeConversionListByEvaluationID: async (params) => {
       console.log('getContinouosGradeConversion', params)
       return [
         {

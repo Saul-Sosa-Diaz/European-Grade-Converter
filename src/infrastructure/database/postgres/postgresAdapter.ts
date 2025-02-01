@@ -11,7 +11,7 @@ import { universityQueries } from './queries/universityQueries'
 import { evaluationSystemQueries } from './queries/evaluationSystemQueries'
 import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
 import {
-  APIContinuousGradeConversion,
+  APIGradeConversion,
   APIEvaluationSystem,
   APIEvaluationSystemWithGradeConversions,
 } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
@@ -87,12 +87,21 @@ export class PostgresAdapter implements DatabaseAdapter {
     return this.pool.query(QUERY).then((result) => result.rows as APIEvaluationSystem[])
   }
 
-  async getContinouosGradeConversionListByEvaluationID(evaluationSystemID: string) {
+  async getGradeConversionListByEvaluationID(evaluationSystemID: string) {
     const QUERY = evaluationSystemQueries.GET_CONTINUOUS_GRADE_CONVERSION_LIST_BY_EVALUATION_ID
     const VALUES = [evaluationSystemID]
-    return this.pool
+    const continuousGradeConversion = this.pool
       .query(QUERY, VALUES)
-      .then((result) => result.rows as APIContinuousGradeConversion[])
+      .then((result) => result.rows as APIGradeConversion[])
+    const DISCRETE_QUERY =
+      evaluationSystemQueries.GET_DISCRETE_GRADE_CONVERSION_LIST_BY_EVALUATION_ID
+    const discreteGradeConversion = this.pool
+      .query(DISCRETE_QUERY, VALUES)
+      .then((result) => result.rows as APIGradeConversion[])
+
+    return Promise.all([continuousGradeConversion, discreteGradeConversion]).then(
+      ([continuous, discrete]) => [...continuous, ...discrete] as APIGradeConversion[],
+    )
   }
 
   async updateEvaluationSystem(

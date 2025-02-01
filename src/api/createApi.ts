@@ -20,7 +20,7 @@ import { getEvaluationSystemList } from '@/application/evaluationSystem/getEvalu
 import { updateEvaluationSystem } from '@/application/evaluationSystem/updateEvaluationSystem'
 import { createEvaluationSystem } from '@/application/evaluationSystem/createEvaluationSystem'
 import { deleteEvaluationSystem } from '@/application/evaluationSystem/deleteEvaluationSystem'
-import { getContinouosGradeConversionListByEvaluationID } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/getContinuousGradeConversion'
+import { getGradeConversionListByEvaluationID } from '@/application/evaluationSystem/getGradeConversionListByEvaluationID/getGradeConversion'
 
 type CreateApiProps = {
   offline?: boolean
@@ -49,8 +49,9 @@ export function createApi({ offline = false }: CreateApiProps): Api {
     EvaluationSystem: {
       convertGrade: convertGrade(evaluationSystemRepository),
       getEvaluationSystemList: getEvaluationSystemList(evaluationSystemRepository),
-      getContinouosGradeConversionListByEvaluationID:
-        getContinouosGradeConversionListByEvaluationID(evaluationSystemRepository),
+      getGradeConversionListByEvaluationID: getGradeConversionListByEvaluationID(
+        evaluationSystemRepository,
+      ),
       updateEvaluationSystem: updateEvaluationSystem(evaluationSystemRepository),
       createEvaluationSystem: createEvaluationSystem(evaluationSystemRepository),
       deleteEvaluationSystem: deleteEvaluationSystem(evaluationSystemRepository),

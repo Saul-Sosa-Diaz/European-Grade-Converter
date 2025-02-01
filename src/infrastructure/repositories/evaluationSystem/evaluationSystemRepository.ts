@@ -1,4 +1,4 @@
-import { buildContinuousGradeConversionListByEvaluationIDMap } from '@/application/evaluationSystem/getContinuousGradeConversionListByEvaluationID/mapGetContinuousGradeConversionts'
+import { buildGradeConversionListByEvaluationIDMap } from '@/application/evaluationSystem/getGradeConversionListByEvaluationID/mapGetGradeConversionts'
 import { buildEvaluationSystemListMap } from '@/application/evaluationSystem/getEvaluationSystemList/mapGetEvaluationSystemList'
 import {
   buildAPIEvaluationSystem,
@@ -6,13 +6,13 @@ import {
 } from '@/application/evaluationSystem/mapAPIEvaluationSystemy'
 import { API_URL } from '@/constants/apiURL'
 import {
-  APIContinuousGradeConversion,
+  APIGradeConversion,
   APIEvaluationSystem,
 } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
 import {
   ConvertGrade,
   EvaluationSystemRepository,
-  GetContinuousGradeConversionListByEvaluationID,
+  GetGradeConversionListByEvaluationID,
 } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
 export function createEvaluationSystemRepository(): EvaluationSystemRepository {
@@ -42,12 +42,12 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
       )
       return mappedEvaluationSystemList
     },
-    getContinouosGradeConversionListByEvaluationID: async (
-      params: GetContinuousGradeConversionListByEvaluationID.Params,
+    getGradeConversionListByEvaluationID: async (
+      params: GetGradeConversionListByEvaluationID.Params,
     ) => {
       const continuousGradeConversionList: {
-        continuousGradeConversionListByEvaluationID: APIContinuousGradeConversion[]
-      } = await fetch(API_URL.evaluationSystem.getContinouosGradeConversionListByEvaluationID, {
+        continuousGradeConversionListByEvaluationID: APIGradeConversion[]
+      } = await fetch(API_URL.evaluationSystem.getGradeConversionListByEvaluationID, {
         method: 'post',
         body: JSON.stringify({ ...params }),
       })
@@ -55,7 +55,7 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
         .catch((error) => {
           throw new Error(error)
         })
-      const continuousGradeConversion = await buildContinuousGradeConversionListByEvaluationIDMap(
+      const continuousGradeConversion = await buildGradeConversionListByEvaluationIDMap(
         continuousGradeConversionList.continuousGradeConversionListByEvaluationID,
       )
       return continuousGradeConversion
