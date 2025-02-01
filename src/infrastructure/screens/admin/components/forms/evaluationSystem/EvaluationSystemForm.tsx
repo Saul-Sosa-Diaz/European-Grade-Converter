@@ -1,7 +1,7 @@
 import { GradeConversion, EvaluationSystem, EvaluationSystemWithGradeConversions, EvaluationType, EuropeanEquivalence } from '@/domain/evaluationSystem/evaluationSystem';
 import { University } from '@/domain/university/university';
 import { useGetGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetContinuousGradeConversion';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -52,6 +52,11 @@ const validationSchema = Yup.object().shape({
   })
 });
 
+enum InputType {
+  INTERVAL = "interval",
+  DISCRETE = "discrete"
+}
+
 export const EvaluationSystemForm = ({
   initialValues,
   onSubmit,
@@ -84,23 +89,44 @@ export const EvaluationSystemForm = ({
     if (isFetched && getGradeConversionListByEvaluationID) {
       const conversions = europeanGrade.map((grade) => {
         const conversionFound = getGradeConversionListByEvaluationID.find(
-          (item) => item.europeanEquivalence === grade
+          (gradeConversion) => gradeConversion.europeanEquivalence === grade
         );
-        return (
-          conversionFound || {
-            gradeConversionID: '',
-            evaluationSystemID: initialValues.evaluationSystemID,
-            MinIntervalGrade: 0,
-            MaxIntervalGrade: 0,
-            gradeName: '',
-            europeanEquivalence: grade,
-            gradeValue: ''
+
+        if (conversionFound) {
+          let inputType = InputType.INTERVAL;
+          const hasInterval =
+            conversionFound.MinIntervalGrade !== null &&
+            conversionFound.MinIntervalGrade !== 0 ||
+            conversionFound.MaxIntervalGrade !== null &&
+            conversionFound.MaxIntervalGrade !== 0;
+
+          const hasDiscrete = conversionFound.gradeValue && conversionFound.gradeValue.trim() !== "";
+          if (hasDiscrete) {
+            inputType = InputType.DISCRETE;
+          } else if (hasInterval) {
+            inputType = InputType.INTERVAL;
+          } else {
+            inputType = InputType.INTERVAL;
           }
-        );
+          console.log(conversionFound)
+          return { ...conversionFound, inputType };
+        } else {
+          return {
+            gradeConversionID: "",
+            evaluationSystemID: initialValues.evaluationSystemID,
+            MinIntervalGrade: null,
+            MaxIntervalGrade: null,
+            gradeName: grade,
+            gradeValue: "",
+            inputType: InputType.INTERVAL,
+          };
+        }
       });
       setGradeConversionFromBack(conversions);
     }
-  }, [isFetched, getGradeConversionListByEvaluationID]);
+  }, [
+    isFetched
+  ]);
 
   const getStep = useCallback((fixed) => {
     return 1 / Math.pow(10, fixed);
@@ -109,27 +135,46 @@ export const EvaluationSystemForm = ({
   return (
     <Formik
       initialValues={formValues}
-      validationSchema={validationSchema}
+      validationSchema={validationSchema} // Asegúrate de definir tu esquema de validación
       enableReinitialize={true}
       onSubmit={(updatedEvaluationSystem) => {
+        // Procesamos el objeto de salida. Por cada equivalencia, enviamos los campos según el inputType
         const updatedValues: EvaluationSystemWithGradeConversions = {
-          validGrades: generateGrades(
-            updatedEvaluationSystem.minGrade,
-            updatedEvaluationSystem.maxGrade,
-            getStep(updatedEvaluationSystem.fixed)
-          ),
+          validGrades: updatedEvaluationSystem.validGrades,
           evaluationSystemID: updatedEvaluationSystem.evaluationSystemID,
           evaluationSystemName: updatedEvaluationSystem.evaluationSystemName,
           evaluationType: updatedEvaluationSystem.evaluationType,
           fixed: updatedEvaluationSystem.fixed,
-          universityID: universityList.find((university) => university.name === updatedEvaluationSystem.universityName).id,
+          universityID: universityList.find(
+            (university) =>
+              university.name === updatedEvaluationSystem.universityName
+          )?.id,
           universityName: updatedEvaluationSystem.universityName,
-          gradeConversions: updatedEvaluationSystem.gradeEquivalence.map((interval, index) => ({
-            gradeConversionID: interval.gradeConversionID,
-            europeanGrade: europeanGrade[index],
-            evaluationSystemID: interval.evaluationSystemID,
-            ...interval
-          }))
+          gradeConversions: updatedEvaluationSystem.gradeEquivalence.map(
+            (interval, index) => {
+              if (interval.inputType === InputType.INTERVAL) {
+                return {
+                  gradeConversionID: interval.gradeConversionID,
+                  evaluationSystemID: interval.evaluationSystemID,
+                  europeanGrade: europeanGrade[index],
+                  gradeName: interval.gradeName || europeanGrade[index],
+                  MinIntervalGrade: interval.MinIntervalGrade,
+                  MaxIntervalGrade: interval.MaxIntervalGrade,
+                  gradeValue: ""
+                };
+              } else {
+                return {
+                  gradeConversionID: interval.gradeConversionID,
+                  evaluationSystemID: interval.evaluationSystemID,
+                  europeanGrade: europeanGrade[index],
+                  gradeName: interval.gradeName || europeanGrade[index],
+                  MinIntervalGrade: 0,
+                  MaxIntervalGrade: 0,
+                  gradeValue: interval.gradeValue
+                };
+              }
+            }
+          )
         };
 
         onSubmit(updatedValues);
@@ -144,9 +189,12 @@ export const EvaluationSystemForm = ({
                 <Dropdown
                   id="universityName"
                   value={form.values.universityName}
-                  options={universityList.map((university) => ({ label: university.name, value: university.name }))}
+                  options={universityList.map((university) => ({
+                    label: university.name,
+                    value: university.name
+                  }))}
                   filter
-                  onChange={(e) => form.setFieldValue('universityName', e.value)}
+                  onChange={(e) => form.setFieldValue("universityName", e.value)}
                 />
               )}
             </Field>
@@ -170,90 +218,96 @@ export const EvaluationSystemForm = ({
             </Field>
             <ErrorMessage name="evaluationType" component="div" className="text-error" />
           </div>
-
           <div>
-            <label>Valid Grades</label>
-            {values.evaluationType === EvaluationType.DISCRETE ? (<>
-              <h3>European equivalences </h3>
-              <div>
-                <strong> </strong>
-                {values.gradeEquivalence.map((grade, index) => (
+            <h3>European equivalences</h3>
+            {values.evaluationType === EvaluationType.CONTINUOUS ? (<>{values.gradeEquivalence.map((entry: any, index: number) => (
+              <div
+                key={index}>
+                <strong>{europeanGrade[index]}</strong>
+                <div>
+                  <label>
+                    <Field
+                      type="radio"
+                      name={`gradeEquivalence.${index}.inputType`}
+                      value={InputType.INTERVAL}
+                    />
+                    Interval
+                  </label>
+                  <label style={{ marginLeft: "1rem" }}>
+                    <Field
+                      type="radio"
+                      name={`gradeEquivalence.${index}.inputType`}
+                      value={InputType.DISCRETE}
+                    />
+                    Discrete value
+                  </label>
+                </div>
+
+                {values.gradeEquivalence[index].inputType === InputType.INTERVAL ? (
                   <>
-                    {europeanGrade[index]}
-                    <div key={index}>
+                    <div>
+                      <label>Bottom limit of the interval</label>
                       <Field
-                        name={`gradeEquivalence.${index}.gradeValue`}
-                        type="text"
+                        name={`gradeEquivalence.${index}.MinIntervalGrade`}
+                        type="number"
+                        step={getStep(values.fixed)}
                       />
-                      <ErrorMessage name={`gradeEquivalence.${index}.gradeValue`} component="div" className="text-error" />
+                      <ErrorMessage
+                        name={`gradeEquivalence.${index}.MinIntervalGrade`}
+                        component="div"
+                        className="text-error"
+                      />
+                    </div>
+                    <div>
+                      <label>Top limit of the interval</label>
+                      <Field
+                        name={`gradeEquivalence.${index}.MaxIntervalGrade`}
+                        type="number"
+                        step={getStep(values.fixed)}
+                      />
+                      <ErrorMessage
+                        name={`gradeEquivalence.${index}.MaxIntervalGrade`}
+                        component="div"
+                        className="text-error"
+                      />
                     </div>
                   </>
-                ))}
-              </div>
-            </>
-            ) : (
-              <>
-                <div>
-                  <label>Min grade</label>
-                  <Field type="number" name="minGrade" />
-                  <ErrorMessage name="maxGrade" component="div" className="text-error" />
-                </div>
-                <div>
-                  <label>Max Grade</label>
-                  <Field type="number" name="maxGrade" />
-                  <ErrorMessage name="maxGrade" component="div" className="text-error" />
-                </div>
-                <div>
-                  <label>Number of decimals</label>
-                  <Field
-                    type="number"
-                    name="fixed"
-                    min="0"
-                    max="5"
-                  />
-                  <ErrorMessage name="fixed" component="div" className="text-error" />
-                </div>
-              </>
-            )}
-            <ErrorMessage name="validGrades" component="div" className="text-error" />
-          </div>
-
-
-
-          {values.evaluationType === EvaluationType.CONTINUOUS && (
-            !isFetched && values.evaluationSystemID ? <ProgressSpinner /> : (
-              <div>
-                <h3>European equivalences </h3>
-                {values.gradeEquivalence.map((interval: GradeConversion, index: number) => (
-                  values.evaluationSystemID && interval.MinIntervalGrade && interval.MaxIntervalGrade ? (<div key={index}>
-                    <strong> {europeanGrade[index]}</strong>
-                    <Field
-                      name={`gradeEquivalence.${index}.MinIntervalGrade`}
-                      type="number"
-                      step={getStep(values.fixed)}
-                    />
-                    <ErrorMessage name={`gradeEquivalence.${index}.MinIntervalGrade`} component="div" className="text-error" />
-                    <Field
-                      name={`gradeEquivalence.${index}.MaxIntervalGrade`}
-                      type="number"
-                      step={getStep(values.fixed)}
-                    />
-                    <ErrorMessage name={`gradeEquivalence.${index}.MaxIntervalGrade`} component="div" className="text-error" />
-                  </div>) : (<div key={index}>
-                    <strong> {europeanGrade[index]}</strong>
+                ) : (
+                  <div>
+                    <label>Discrete value</label>
                     <Field
                       name={`gradeEquivalence.${index}.gradeValue`}
                       type="text"
                     />
-                    <ErrorMessage name={`gradeEquivalence.${index}.gradeValue`} component="div" className="text-error" />
-                  </div>)
-                ))}
+                    <ErrorMessage
+                      name={`gradeEquivalence.${index}.gradeValue`}
+                      component="div"
+                      className="text-error"
+                    />
+                  </div>
+                )}
               </div>
-            )
-          )}
-          <button type="submit">{values.evaluationSystemID ? "Update" : "Create"}</button>
+            ))}</>) : (<>{values.gradeEquivalence.map((entry: any, index: number) => (
+              <div key={index}>
+                <strong>{europeanGrade[index]}</strong>
+                <Field
+                  name={`gradeEquivalence.${index}.gradeValue`}
+                  type="text"
+                />
+                <ErrorMessage
+                  name={`gradeEquivalence.${index}.gradeValue`}
+                  component="div"
+                  className="text-error"
+                />
+              </div>))}</>)}
+          </div>
+
+          <button type="submit">
+            {values.evaluationSystemID ? "Update" : "Create"}
+          </button>
         </Form>
       )}
     </Formik>
+
   );
 };
