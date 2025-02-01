@@ -1,4 +1,9 @@
-import { EvaluationSystem, EvaluationType, ContinuousGradeConversion, EvaluationSystemWithGradeConversions } from './evaluationSystem'
+import {
+  EvaluationSystem,
+  EvaluationType,
+  GradeConversion,
+  EvaluationSystemWithGradeConversions,
+} from './evaluationSystem'
 
 export namespace ConvertGrade {
   export type Params = {
@@ -23,7 +28,7 @@ export namespace GetEvaluationSystemList {
 
 export namespace GetContinuousGradeConversionListByEvaluationID {
   export type Params = { evaluationSystemID: string }
-  export type Response = ContinuousGradeConversion[]
+  export type Response = GradeConversion[]
   export type Request = (
     params: GetContinuousGradeConversionListByEvaluationID.Params,
   ) => Promise<GetContinuousGradeConversionListByEvaluationID.Response>

@@ -45,9 +45,7 @@ export const buildCountryEvaluationMap = async (
       }
 
       let children: CountryWithEvaluationInfo[] = []
-      if (
-        CountryIdOccurrences[countryId] > 1
-      ) {
+      if (CountryIdOccurrences[countryId] > 1) {
         // Management of single universities per country
         children = dto
           .filter((country) => parseInt(country.countryid) === parseInt(countryId))

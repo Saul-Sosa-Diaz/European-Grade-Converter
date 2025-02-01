@@ -13,12 +13,12 @@ export type EvaluationSystem = {
   universityName: string
 }
 
-export type ContinuousGradeConversion = {
+export type GradeConversion = {
   gradeConversionID: string
   evaluationSystemID: string
-  MinIntervalGrade: number
-  MaxIntervalGrade: number
-  gradeName: string
+  MinIntervalGrade?: number
+  MaxIntervalGrade?: number
+  gradeName?: string
 }
 
 export type EvaluationSystemWithGradeConversions = {
@@ -29,5 +29,5 @@ export type EvaluationSystemWithGradeConversions = {
   fixed: number
   universityID: string
   universityName: string
-  gradeConversions: ContinuousGradeConversion[]
+  gradeConversions: GradeConversion[]
 }

@@ -1,4 +1,4 @@
-import { ContinuousGradeConversion, EvaluationSystem, EvaluationSystemWithGradeConversions, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
+import { GradeConversion, EvaluationSystem, EvaluationSystemWithGradeConversions, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem';
 import { University } from '@/domain/university/university';
 import { useGetContinuousGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetContinuousGradeConversion';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -195,7 +195,7 @@ export const EvaluationSystemForm = ({
             !isFetched && values.evaluationSystemID ? <ProgressSpinner /> : (
               <div>
                 <h3>European equivalences </h3>
-                {values.continuousEquivalences.map((interval: ContinuousGradeConversion, index: number) => (
+                {values.continuousEquivalences.map((interval: GradeConversion, index: number) => (
                   <div key={index}>
                     <strong> {europeanGrade[index]}</strong>
                     <Field
