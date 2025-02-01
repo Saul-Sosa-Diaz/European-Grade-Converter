@@ -61,7 +61,8 @@ export const EvaluationSystemForm = ({
     useGetContinuousGradeConversionListByEvaluationID({
       evaluationSystemID: initialValues.evaluationSystemID,
     });
-  const europeanGrade = ['F', 'E', 'D', 'C', 'B', 'A'];
+
+  const [europeanGrade, setEuropeanGrade] = useState(['F', 'E', 'D', 'C', 'B', 'A']);
   const [gradeConversionFromBack, setGradeConversionFromBack] = useState(europeanGrade.map((grade) => ({
     gradeConversionID: '',
     evaluationSystemID: initialValues.evaluationSystemID,
@@ -88,6 +89,9 @@ export const EvaluationSystemForm = ({
         gradeName: gradeConversion.gradeName,
         gradeValue: gradeConversion.gradeValue
       })));
+      if (getContinouosGradeConversionListByEvaluationID.length > europeanGrade.length) {
+        setEuropeanGrade(["F", "Fx", "E", "D", "C", "B", "A"]);
+      }
     }
   }, [isFetched, getContinouosGradeConversionListByEvaluationID]);
 
@@ -191,16 +195,16 @@ export const EvaluationSystemForm = ({
                   <Field type="number" name="maxGrade" />
                   <ErrorMessage name="maxGrade" component="div" className="text-error" />
                 </div>
-                  <div>
-                    <label>Number of decimals</label>
-                    <Field
-                      type="number"
-                      name="fixed"
-                      min="0"
-                      max="5"
-                    />
-                    <ErrorMessage name="fixed" component="div" className="text-error" />
-                  </div>
+                <div>
+                  <label>Number of decimals</label>
+                  <Field
+                    type="number"
+                    name="fixed"
+                    min="0"
+                    max="5"
+                  />
+                  <ErrorMessage name="fixed" component="div" className="text-error" />
+                </div>
               </>
             )}
             <ErrorMessage name="validGrades" component="div" className="text-error" />
