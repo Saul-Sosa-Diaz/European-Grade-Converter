@@ -30,6 +30,16 @@ CREATE TABLE EVALUATION_SYSTEM (
     PRIMARY KEY (evaluationSystemID)
 );
 
+CREATE TYPE EUROPEAN_EQUIVALENCE_TYPE AS ENUM(
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'Fx',
+  'F'
+);
+
 CREATE TABLE CONTINUOUS_GRADE_CONVERSION (
     gradeConversionID SERIAL,
     evaluationSystemID INT NOT NULL REFERENCES EVALUATION_SYSTEM(evaluationSystemID) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -38,6 +48,7 @@ CREATE TABLE CONTINUOUS_GRADE_CONVERSION (
     baseEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
     topEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
     gradeName VARCHAR(255),
+	europeanEquivalence EUROPEAN_EQUIVALENCE_TYPE NOT NULL,
     PRIMARY KEY (gradeConversionID)
 );
 
@@ -47,5 +58,6 @@ CREATE TABLE DISCRETE_GRADE_CONVERSION (
     gradeValue VARCHAR(50) NOT NULL,
     baseEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
     topEquivalentSpanishGrade NUMERIC(5,2) NOT NULL,
+	europeanEquivalence EUROPEAN_EQUIVALENCE_TYPE NOT NULL,
     PRIMARY KEY (discreteGradeID)
 );
