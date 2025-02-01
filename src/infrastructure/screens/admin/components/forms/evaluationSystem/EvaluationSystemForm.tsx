@@ -63,7 +63,7 @@ export const EvaluationSystemForm = ({
     });
 
   const europeanGrade = [EuropeanEquivalence.F, EuropeanEquivalence.FX, EuropeanEquivalence.E, EuropeanEquivalence.D, EuropeanEquivalence.C, EuropeanEquivalence.B, EuropeanEquivalence.A];
-  const [gradeConversionFromBack, setGradeConversionFromBack] = useState(europeanGrade.map((grade) => ({
+  const [gradeConversionFromBack, setGradeConversionFromBack] = useState<GradeConversion[]>(europeanGrade.map((grade) => ({
     gradeConversionID: '',
     evaluationSystemID: initialValues.evaluationSystemID,
     MinIntervalGrade: 0,
@@ -82,7 +82,6 @@ export const EvaluationSystemForm = ({
 
   useEffect(() => {
     if (isFetched && getGradeConversionListByEvaluationID) {
-      console.log(getGradeConversionListByEvaluationID)
       const conversions = europeanGrade.map((grade) => {
         const conversionFound = getGradeConversionListByEvaluationID.find(
           (item) => item.europeanEquivalence === grade
@@ -93,12 +92,12 @@ export const EvaluationSystemForm = ({
             evaluationSystemID: initialValues.evaluationSystemID,
             MinIntervalGrade: 0,
             MaxIntervalGrade: 0,
-            gradeName: grade,
+            gradeName: '',
+            europeanEquivalence: grade,
             gradeValue: ''
           }
         );
       });
-      console.log(conversions);
       setGradeConversionFromBack(conversions);
     }
   }, [isFetched, getGradeConversionListByEvaluationID]);
