@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
       otherwise: (schema) => schema.notRequired(),
     }),
 
-  continuousEquivalences: Yup.array().when('evaluationType', {
+  gradeEquivalence: Yup.array().when('evaluationType', {
     is: (value: EvaluationType) => value === EvaluationType.CONTINUOUS,
     then: (schema) =>
       schema.of(
@@ -49,7 +49,7 @@ const validationSchema = Yup.object().shape({
         })
       ),
     otherwise: (schema) => schema.notRequired(),
-  }),
+  })
 });
 
 export const EvaluationSystemForm = ({
@@ -61,7 +61,6 @@ export const EvaluationSystemForm = ({
     useGetContinuousGradeConversionListByEvaluationID({
       evaluationSystemID: initialValues.evaluationSystemID,
     });
-
   const europeanGrade = ['F', 'E', 'D', 'C', 'B', 'A'];
   const [gradeConversionFromBack, setGradeConversionFromBack] = useState(europeanGrade.map((grade) => ({
     gradeConversionID: '',
@@ -74,7 +73,7 @@ export const EvaluationSystemForm = ({
 
   const formValues = {
     ...initialValues,
-    continuousEquivalences: gradeConversionFromBack,
+    gradeEquivalence: gradeConversionFromBack,
     maxGrade: parseFloat(initialValues.validGrades[initialValues.validGrades.length - 1]),
     minGrade: parseFloat(initialValues.validGrades[0])
   };
@@ -89,7 +88,6 @@ export const EvaluationSystemForm = ({
         gradeName: gradeConversion.gradeName,
         gradeValue: gradeConversion.gradeValue
       })));
-      console.log(getContinouosGradeConversionListByEvaluationID);
     }
   }, [isFetched, getContinouosGradeConversionListByEvaluationID]);
 
@@ -115,7 +113,7 @@ export const EvaluationSystemForm = ({
           fixed: updatedEvaluationSystem.fixed,
           universityID: universityList.find((university) => university.name === updatedEvaluationSystem.universityName).id,
           universityName: updatedEvaluationSystem.universityName,
-          gradeConversions: updatedEvaluationSystem.continuousEquivalences.map((interval) => ({
+          gradeConversions: updatedEvaluationSystem.gradeEquivalence.map((interval) => ({
             gradeConversionID: interval.gradeConversionID,
             evaluationSystemID: interval.evaluationSystemID,
             ...interval
@@ -163,9 +161,24 @@ export const EvaluationSystemForm = ({
 
           <div>
             <label>Valid Grades</label>
-            {values.evaluationType === EvaluationType.DISCRETE ? (
+            {values.evaluationType === EvaluationType.DISCRETE ? (<>
+              <h3>European equivalences </h3>
               <div>
+                <strong> </strong>
+                {values.gradeEquivalence.map((grade, index) => (
+                  <>
+                    {europeanGrade[index]}
+                    <div key={index}>
+                      <Field
+                        name={`gradeEquivalence.${index}.gradeValue`}
+                        type="text"
+                      />
+                      <ErrorMessage name={`gradeEquivalence.${index}.gradeValue`} component="div" className="text-error" />
+                    </div>
+                  </>
+                ))}
               </div>
+            </>
             ) : (
               <>
                 <div>
@@ -178,48 +191,49 @@ export const EvaluationSystemForm = ({
                   <Field type="number" name="maxGrade" />
                   <ErrorMessage name="maxGrade" component="div" className="text-error" />
                 </div>
+                  <div>
+                    <label>Number of decimals</label>
+                    <Field
+                      type="number"
+                      name="fixed"
+                      min="0"
+                      max="5"
+                    />
+                    <ErrorMessage name="fixed" component="div" className="text-error" />
+                  </div>
               </>
             )}
             <ErrorMessage name="validGrades" component="div" className="text-error" />
           </div>
 
-          <div>
-            <label>Number of decimals</label>
-            <Field
-              type="number"
-              name="fixed"
-              min="0"
-              max="5"
-            />
-            <ErrorMessage name="fixed" component="div" className="text-error" />
-          </div>
+
 
           {values.evaluationType === EvaluationType.CONTINUOUS && (
             !isFetched && values.evaluationSystemID ? <ProgressSpinner /> : (
               <div>
                 <h3>European equivalences </h3>
-                {values.continuousEquivalences.map((interval: GradeConversion, index: number) => (
+                {values.gradeEquivalence.map((interval: GradeConversion, index: number) => (
                   values.evaluationSystemID && interval.MinIntervalGrade && interval.MaxIntervalGrade ? (<div key={index}>
                     <strong> {europeanGrade[index]}</strong>
                     <Field
-                      name={`continuousEquivalences.${index}.MinIntervalGrade`}
+                      name={`gradeEquivalence.${index}.MinIntervalGrade`}
                       type="number"
                       step={getStep(values.fixed)}
                     />
-                    <ErrorMessage name={`continuousEquivalences.${index}.MinIntervalGrade`} component="div" className="text-error" />
+                    <ErrorMessage name={`gradeEquivalence.${index}.MinIntervalGrade`} component="div" className="text-error" />
                     <Field
-                      name={`continuousEquivalences.${index}.MaxIntervalGrade`}
+                      name={`gradeEquivalence.${index}.MaxIntervalGrade`}
                       type="number"
                       step={getStep(values.fixed)}
                     />
-                    <ErrorMessage name={`continuousEquivalences.${index}.MaxIntervalGrade`} component="div" className="text-error" />
+                    <ErrorMessage name={`gradeEquivalence.${index}.MaxIntervalGrade`} component="div" className="text-error" />
                   </div>) : (<div key={index}>
                     <strong> {europeanGrade[index]}</strong>
                     <Field
-                      name={`continuousEquivalences.${index}.gradeValue`}
+                      name={`gradeEquivalence.${index}.gradeValue`}
                       type="text"
                     />
-                    <ErrorMessage name={`continuousEquivalences.${index}.gradeValue`} component="div" className="text-error" />
+                    <ErrorMessage name={`gradeEquivalence.${index}.gradeValue`} component="div" className="text-error" />
                   </div>)
                 ))}
               </div>
