@@ -13,7 +13,7 @@ import { useGetGradeConversionListByEvaluationID } from '@/hooks/evaluationSyste
 import { UniversityDropdown } from './UniversityDropdown';
 import { GradeEquivalenceFields } from './GradeEquivalenceField';
 import { ProgressSpinner } from 'primereact/progressspinner';
-// import { generateGrades } from '...'; // Si lo llegas a necesitar
+// import { generateGrades } from '...';
 
 const validationSchema = Yup.object().shape({
   universityName: Yup.string().required('Required'),
@@ -28,29 +28,37 @@ const validationSchema = Yup.object().shape({
   }),
   gradeEquivalence: Yup.array().when('evaluationType', {
     is: (value: EvaluationType) => value === EvaluationType.CONTINUOUS,
-    then: (schema) =>
-      schema.of(
+    then: () =>
+      Yup.array().of(
         Yup.object().shape({
           MinIntervalGrade: Yup.number()
-            .required('Required')
+            .nullable()
             .min(Yup.ref('$minGrade'), ({ min }) => `The value must be >= ${min}`)
-            .test(
-              'min<=max',
-              'The min part has to be <= than the max part of the interval.',
-              function (value) {
-                return value <= this.parent.MaxIntervalGrade;
-              }
-            ),
+            .test('min<=max', 'The min part has to be <= than the max part of the interval.', function (value) {
+              if (value == null || this.parent.MaxIntervalGrade == null) return true;
+              return value <= this.parent.MaxIntervalGrade;
+            })
+            .test('minRequiredIfMaxExists', 'MinIntervalGrade is required when MaxIntervalGrade is present', function (value) {
+              if (this.parent.MaxIntervalGrade != null && value == null) return false;
+              return true;
+            }),
+
           MaxIntervalGrade: Yup.number()
-            .required('Required')
+            .nullable()
+            .max(Yup.ref('$maxGrade'), ({ max }) => `The value must be <= ${max}`)
             .test('max>=min', 'Max must be >= Min', function (value) {
+              if (value == null || this.parent.MinIntervalGrade == null) return true;
               return value >= this.parent.MinIntervalGrade;
             })
-            .max(Yup.ref('$maxGrade'), ({ max }) => `The value must be <= ${max}`),
+            .test('maxRequiredIfMinExists', 'MaxIntervalGrade is required when MinIntervalGrade is present', function (value) {
+              if (this.parent.MinIntervalGrade != null && value == null) return false;
+              return true;
+            }),
+
           gradeName: Yup.string(),
         })
       ),
-    otherwise: (schema) => schema.notRequired(),
+    otherwise: (schema) => schema.of(Yup.object().shape({ gradeValue: Yup.string() })),
   }),
 });
 
@@ -98,7 +106,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
       MaxIntervalGrade: 0,
       gradeName: '',
       gradeValue: '',
-      europeanEquivalence: grade,
+      europeanEquivalence: '',
     }))
   );
 
@@ -133,7 +141,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
             evaluationSystemID: initialValues.evaluationSystemID,
             MinIntervalGrade: null,
             MaxIntervalGrade: null,
-            gradeName: grade,
+            gradeName: '',
             gradeValue: '',
             inputType: InputType.INTERVAL,
           };
@@ -146,6 +154,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
   const getStep = useCallback((fixed: number) => 1 / Math.pow(10, fixed), []);
 
   const handleSubmit = (updatedEvaluationSystem) => {
+    console.log(updatedEvaluationSystem);
     const updatedValues: EvaluationSystemWithGradeConversions = {
       validGrades: updatedEvaluationSystem.validGrades,
       evaluationSystemID: updatedEvaluationSystem.evaluationSystemID,
@@ -190,7 +199,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
       enableReinitialize
       onSubmit={handleSubmit}
     >
-      {({ values }) => (
+      {({ values, errors }) => (
         <Form>
           <div>
             <label htmlFor="universityName">University Name</label>
@@ -243,6 +252,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
                 getStep={getStep}
               />)}
           </div>
+          {Object.keys(errors).length > 0 && <pre>{JSON.stringify(errors, null, 2)}</pre>}
           <button type="submit">{values.evaluationSystemID ? 'Update' : 'Create'}</button>
         </Form>
       )}

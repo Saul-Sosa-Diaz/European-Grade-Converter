@@ -95,6 +95,16 @@ export const GradeEquivalenceFields = ({
               />
             </div>
           )}
+          <label>Grade Name</label>
+          <Field
+            name={`gradeEquivalence.${index}.gradeName`}
+            type="text"
+          />
+          <ErrorMessage
+            name={`gradeEquivalence.${index}.gradeName`}
+            component="div"
+            className="text-error"
+          />
         </div>
       ))}
     </>
