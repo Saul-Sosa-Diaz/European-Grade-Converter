@@ -13,6 +13,7 @@ import { useGetGradeConversionListByEvaluationID } from '@/hooks/evaluationSyste
 import { UniversityDropdown } from './UniversityDropdown';
 import { GradeEquivalenceFields } from './GradeEquivalenceField';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { generateGrades } from '../../../../../../../scripts/validGrades.mjs';
 // import { generateGrades } from '...';
 
 const validationSchema = Yup.object().shape({
@@ -106,7 +107,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
       MaxIntervalGrade: 0,
       gradeName: '',
       gradeValue: '',
-      europeanEquivalence: '',
+      europeanEquivalence: grade,
     }))
   );
 
@@ -139,6 +140,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
           return {
             gradeConversionID: '',
             evaluationSystemID: initialValues.evaluationSystemID,
+            europeanEquivalence: grade,
             MinIntervalGrade: null,
             MaxIntervalGrade: null,
             gradeName: '',
@@ -154,9 +156,25 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
   const getStep = useCallback((fixed: number) => 1 / Math.pow(10, fixed), []);
 
   const handleSubmit = (updatedEvaluationSystem) => {
-    console.log(updatedEvaluationSystem);
+    let validGrades = [];
+    if (updatedEvaluationSystem.evaluationType === EvaluationType.DISCRETE) {
+      for (const gradeEquivalence of updatedEvaluationSystem.gradeEquivalence) {
+        if (gradeEquivalence.gradeValue && gradeEquivalence.gradeValue.trim() !== '') {
+          validGrades.push(gradeEquivalence.gradeValue);
+        }
+      }
+    } else {
+      validGrades = generateGrades(updatedEvaluationSystem.minGrade, updatedEvaluationSystem.maxGrade, updatedEvaluationSystem.fixed);
+      for (const gradeEquivalence of updatedEvaluationSystem.gradeEquivalence) {
+        if (gradeEquivalence.gradeValue && gradeEquivalence.gradeValue.trim() !== '') {
+          validGrades.push(gradeEquivalence.gradeValue);
+        }
+      }
+    }
+
+
     const updatedValues: EvaluationSystemWithGradeConversions = {
-      validGrades: updatedEvaluationSystem.validGrades,
+      validGrades,
       evaluationSystemID: updatedEvaluationSystem.evaluationSystemID,
       evaluationSystemName: updatedEvaluationSystem.evaluationSystemName,
       evaluationType: updatedEvaluationSystem.evaluationType,
@@ -199,7 +217,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
       enableReinitialize
       onSubmit={handleSubmit}
     >
-      {({ values, errors }) => (
+      {({ values }) => (
         <Form>
           <div>
             <label htmlFor="universityName">University Name</label>
@@ -252,7 +270,6 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
                 getStep={getStep}
               />)}
           </div>
-          {Object.keys(errors).length > 0 && <pre>{JSON.stringify(errors, null, 2)}</pre>}
           <button type="submit">{values.evaluationSystemID ? 'Update' : 'Create'}</button>
         </Form>
       )}
