@@ -280,6 +280,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
               <GradeEquivalenceFields
                 evaluationType={values.evaluationType}
                 gradeEquivalence={values.gradeEquivalence}
+                isUpdating={!!values.evaluationSystemID}
                 europeanGrades={europeanGrades}
                 fixed={values.fixed}
                 getStep={getStep}

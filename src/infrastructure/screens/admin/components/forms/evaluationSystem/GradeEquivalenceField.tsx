@@ -7,6 +7,7 @@ interface GradeEquivalenceFieldsProps {
   gradeEquivalence: any[];
   europeanGrades: EuropeanEquivalence[];
   fixed: number;
+  isUpdating: boolean;
   getStep: (fixed: number) => number;
 }
 
@@ -15,6 +16,7 @@ export const GradeEquivalenceFields = ({
   gradeEquivalence,
   europeanGrades,
   fixed,
+  isUpdating,
   getStep,
 }: GradeEquivalenceFieldsProps) => {
   if (evaluationType !== EvaluationType.CONTINUOUS) {
@@ -36,7 +38,7 @@ export const GradeEquivalenceFields = ({
       {gradeEquivalence.map((entry, index) => (
         <div key={index}>
           <strong>{europeanGrades[index]}</strong>
-          <div>
+          {!isUpdating && <div>
             <label>
               <Field
                 type="radio"
@@ -53,7 +55,7 @@ export const GradeEquivalenceFields = ({
               />
               Discrete value
             </label>
-          </div>
+          </div>}
 
           {entry.inputType === InputType.INTERVAL ? (
             <>
