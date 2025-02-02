@@ -9,129 +9,107 @@ export const buildCountryEvaluationMap = async (
   dto: APIGetCountryWithEvaluationInfoList,
 ): Promise<CountryWithEvaluationInfo[]> => {
   try {
-    const CountryIdOccurrences: Record<number, number> = {}
-    const UniversityIdOccurrences: Record<number, number> = {}
-
-    dto.forEach((country: APICountryWithEvaluationInfo) => {
-      if (CountryIdOccurrences[country.countryid]) {
-        CountryIdOccurrences[country.countryid]++
-      } else {
-        CountryIdOccurrences[country.countryid] = 1
+    // Group records by countryid
+    const countriesById: Record<string, APICountryWithEvaluationInfo[]> = {}
+    dto.forEach((item) => {
+      if (!countriesById[item.countryid]) {
+        countriesById[item.countryid] = []
       }
-      if (UniversityIdOccurrences[country.universityid]) {
-        UniversityIdOccurrences[country.universityid]++
-      } else {
-        UniversityIdOccurrences[country.universityid] = 1
-      }
+      countriesById[item.countryid].push(item)
     })
 
-    const mappedCountries: CountryWithEvaluationInfo[] = []
-
-    Object.keys(CountryIdOccurrences).forEach((countryId) => {
-      // Find the current country
-      const country = dto.find((country) => parseInt(country.countryid) === parseInt(countryId))
-      if (CountryIdOccurrences[countryId] === 1) {
-        // If there is only one entry for this country
-        mappedCountries.push({
-          label: country.countryname,
-          code: country.countrycode,
-          key: String(country.countryid),
-          evaluationType: country.evaluationtype as unknown as EvaluationType,
-          fixed: country.fixed,
-          validGrades: country.validgrades,
-          evaluationSystemID: country.evaluationsystemid,
-        })
-        return
-      }
-
-      let children: CountryWithEvaluationInfo[] = []
-      if (CountryIdOccurrences[countryId] > 1) {
-        // Management of single universities per country
-        children = dto
-          .filter((country) => parseInt(country.countryid) === parseInt(countryId))
-          .reduce((uniqueUniversities, country) => {
-            // Filter unique universities based on `universityid`.
-            if (
-              !uniqueUniversities.some(
-                (university) =>
-                  parseInt(university.universityid) === parseInt(country.universityid),
-              )
-            ) {
-              uniqueUniversities.push(country)
-            }
-            return uniqueUniversities
-          }, [])
-          .map((country) => {
-            if (UniversityIdOccurrences[country.universityid] > 1) {
-              // Management of unique evaluation systems per university
-              const deepestChildren: CountryWithEvaluationInfo[] = dto
-                .filter(
-                  (dtoItem) => parseInt(dtoItem.universityid) === parseInt(country.universityid),
-                )
-                .reduce((uniqueSystems, dtoItem) => {
-                  const key = `${dtoItem.countrycode}-${dtoItem.universityid}-${dtoItem.evaluationsystemname}`
-                  if (!uniqueSystems.some((system) => system.key === key)) {
-                    uniqueSystems.push({
-                      label: dtoItem.evaluationsystemname,
-                      code: dtoItem.countrycode,
-                      fixed: dtoItem.fixed,
-                      key,
-                      evaluationType: country.evaluationtype as unknown as EvaluationType,
-                      evaluationSystemID: dtoItem.evaluationsystemid,
-                      validGrades: dtoItem.validgrades,
-                    })
-                  }
-                  return uniqueSystems
-                }, [])
-
-              return {
-                label: country.universityname,
-                selectable: false,
-                code: country.countrycode,
-                key: `${country.countrycode}-${country.universityid}`,
-                children: deepestChildren,
-              }
-            }
-
-            return {
-              label: country.universityname,
-              code: country.countrycode,
-              evaluationType: country.evaluationtype as unknown as EvaluationType,
-              key: `${country.countrycode}-${country.universityid}`,
-              fixed: country.fixed,
-              evaluationSystemID: country.evaluationsystemid,
-              validGrades: country.validgrades,
-            }
-          })
-      } else {
-        children = dto
-          .filter((country) => parseInt(country.countryid) === parseInt(countryId))
-          .map((country) => {
-            return {
-              label: country.universityname,
-              code: country.countrycode,
-              evaluationType: country.evaluationtype as unknown as EvaluationType,
-              key: `${country.countrycode}-${country.universityid}`,
-              fixed: country.fixed,
-              evaluationSystemID: country.evaluationsystemid,
-              validGrades: country.validgrades,
-            }
-          })
-      }
-
-      // add country with the childrens
-      mappedCountries.push({
-        label: country.countryname,
-        code: country.countrycode,
-        selectable: false,
-        key: String(country.countryid),
-        children: children,
+    // Auxiliary function to group by university and, in case of having more than one evaluation system, to group them together.
+    const buildUniversityNodes = (
+      items: APICountryWithEvaluationInfo[],
+    ): CountryWithEvaluationInfo[] => {
+      // We group by universityid
+      const universitiesById: Record<string, APICountryWithEvaluationInfo[]> = {}
+      items.forEach((item) => {
+        if (!universitiesById[item.universityid]) {
+          universitiesById[item.universityid] = []
+        }
+        universitiesById[item.universityid].push(item)
       })
-    })
+
+      return Object.values(universitiesById).map((uniGroup) => {
+        // If a university has more than one evaluation system, we create an intermediate node.
+        if (uniGroup.length > 1) {
+          // Grouping of evaluation systems (unique in combination)
+          const systems = uniGroup.reduce((acc, cur) => {
+            const key = `${cur.countrycode}-${cur.universityid}-${cur.evaluationsystemname}`
+            if (!acc.some((s) => s.key === key)) {
+              acc.push({
+                label: cur.evaluationsystemname,
+                code: cur.countrycode,
+                fixed: cur.fixed,
+                key,
+                evaluationType: cur.evaluationtype as unknown as EvaluationType,
+                evaluationSystemID: cur.evaluationsystemid,
+                validGrades: cur.validgrades,
+              })
+            }
+            return acc
+          }, [] as CountryWithEvaluationInfo[])
+
+          return {
+            label: uniGroup[0].universityname,
+            selectable: false,
+            code: uniGroup[0].countrycode,
+            key: `${uniGroup[0].countrycode}-${uniGroup[0].universityid}`,
+            children: systems,
+          }
+        }
+
+        // If there is only one record for the university, it is returned as a sheet.
+        const item = uniGroup[0]
+        return {
+          label: item.universityname,
+          code: item.countrycode,
+          evaluationType: item.evaluationtype as unknown as EvaluationType,
+          key: `${item.countrycode}-${item.universityid}`,
+          fixed: item.fixed,
+          evaluationSystemID: item.evaluationsystemid,
+          validGrades: item.validgrades,
+        }
+      })
+    }
+
+    // Build the structure by country
+    const mappedCountries: CountryWithEvaluationInfo[] = Object.keys(countriesById).map(
+      (countryId) => {
+        const items = countriesById[countryId]
+        // A representative record is taken for general country information.
+        const countryInfo = items[0]
+
+        // If the country has only one record, it is returned as a leaf node (no children or subdivision of evaluationtype).
+        if (items.length === 1) {
+          return {
+            label: countryInfo.countryname,
+            code: countryInfo.countrycode,
+            key: String(countryInfo.countryid),
+            evaluationType: countryInfo.evaluationtype as unknown as EvaluationType,
+            fixed: countryInfo.fixed,
+            evaluationSystemID: countryInfo.evaluationsystemid,
+            validGrades: countryInfo.validgrades,
+          }
+        }
+
+        // If the country has more than one registry, universities are grouped together.
+        const children = buildUniversityNodes(items)
+        return {
+          label: countryInfo.countryname,
+          code: countryInfo.countrycode,
+          key: String(countryInfo.countryid),
+          selectable: false,
+          children,
+        }
+      },
+    )
+
     const sortedCountries = mappedCountries.sort((a, b) => a.label.localeCompare(b.label))
     return sortedCountries
   } catch (error) {
     console.log(error)
-    throw new Error(error)
+    throw new Error(error as string)
   }
 }
