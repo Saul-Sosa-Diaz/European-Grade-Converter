@@ -34,6 +34,7 @@ export const EvaluationSystemList = ({ evaluationSystemList, universityList }: {
 
   const handleUpdate = async (updatedEvaluationSystem: EvaluationSystemWithGradeConversions) => {
     try {
+  
       await updateEvaluationSystem(updatedEvaluationSystem);
       setEvaluationSystemListState((prevList) =>
         prevList.map((evaluationSystem) => (evaluationSystem.evaluationSystemID === updatedEvaluationSystem.evaluationSystemID ? updatedEvaluationSystem : evaluationSystem))

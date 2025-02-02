@@ -110,12 +110,29 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
       europeanEquivalence: grade,
     }))
   );
-
+  const getMaxGrade = (validGrades) => {
+    for (let i = validGrades.length - 1; i >= 0; i--) {
+      const grade = parseFloat(validGrades[i]);
+      if (!isNaN(grade)) {
+        return grade;
+      }
+    }
+    return parseFloat(validGrades[validGrades.length - 1]);
+  }
+  const getMinGrade = (validGrades) => {
+    for (let i = 0; i < validGrades.length; i++) {
+      const grade = parseFloat(validGrades[i]);
+      if (!isNaN(grade)) {
+        return grade;
+      }
+    }
+    return parseFloat(validGrades[0]);
+  }
   const formInitialValues = {
     ...initialValues,
     gradeEquivalence: gradeConversionFromBack,
-    maxGrade: parseFloat(initialValues.validGrades[initialValues.validGrades.length - 1]),
-    minGrade: parseFloat(initialValues.validGrades[0]),
+    maxGrade: getMaxGrade(initialValues.validGrades),
+    minGrade: getMinGrade(initialValues.validGrades),
   };
 
   useEffect(() => {
@@ -164,15 +181,13 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
         }
       }
     } else {
-      validGrades = generateGrades(updatedEvaluationSystem.minGrade, updatedEvaluationSystem.maxGrade, updatedEvaluationSystem.fixed);
+      validGrades = generateGrades(updatedEvaluationSystem.minGrade, updatedEvaluationSystem.maxGrade, getStep(updatedEvaluationSystem.fixed));
       for (const gradeEquivalence of updatedEvaluationSystem.gradeEquivalence) {
         if (gradeEquivalence.gradeValue && gradeEquivalence.gradeValue.trim() !== '') {
           validGrades.push(gradeEquivalence.gradeValue);
         }
       }
     }
-
-
     const updatedValues: EvaluationSystemWithGradeConversions = {
       validGrades,
       evaluationSystemID: updatedEvaluationSystem.evaluationSystemID,
@@ -188,25 +203,25 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
           return {
             gradeConversionID: interval.gradeConversionID,
             evaluationSystemID: interval.evaluationSystemID,
-            europeanGrade: europeanGrades[index],
-            gradeName: interval.gradeName || europeanGrades[index],
+            europeanEquivalence: europeanGrades[index],
+            gradeName: interval.gradeName,
             MinIntervalGrade: interval.MinIntervalGrade,
             MaxIntervalGrade: interval.MaxIntervalGrade,
-            gradeValue: '',
+            gradeValue: null,
           };
         } else {
           return {
             gradeConversionID: interval.gradeConversionID,
             evaluationSystemID: interval.evaluationSystemID,
-            europeanGrade: europeanGrades[index],
-            gradeName: interval.gradeName || europeanGrades[index],
-            MinIntervalGrade: 0,
-            MaxIntervalGrade: 0,
+            europeanEquivalence: europeanGrades[index],
+            gradeName: interval.gradeName,
+            MinIntervalGrade: null,
+            MaxIntervalGrade: null,
             gradeValue: interval.gradeValue,
           };
         }
       }),
-    };
+    }
     onSubmit(updatedValues);
   };
 

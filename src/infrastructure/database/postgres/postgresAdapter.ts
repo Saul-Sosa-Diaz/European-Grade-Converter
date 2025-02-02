@@ -9,7 +9,7 @@ import { APIUniversity } from '@/domain/university/dto/ApiUniversity'
 import { countryQueries } from './queries/countryQueries'
 import { universityQueries } from './queries/universityQueries'
 import { evaluationSystemQueries } from './queries/evaluationSystemQueries'
-import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
+import { EuropeanEquivalence, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
 import {
   APIGradeConversion,
   APIEvaluationSystem,
@@ -18,17 +18,18 @@ import {
 
 export class PostgresAdapter implements DatabaseAdapter {
   private pool: Pool
-  private spanishEquivalent: { base: number; top: number }[]
+  private spanishEquivalent: Map<EuropeanEquivalence, { base: number; top: number }>
   constructor(connectionString: string) {
     this.pool = new Pool({ connectionString })
-    this.spanishEquivalent = [
-      { base: 0, top: 5 },
-      { base: 5, top: 6 },
-      { base: 6, top: 7 },
-      { base: 7, top: 8 },
-      { base: 8, top: 9 },
-      { base: 9, top: 10 },
-    ]
+    this.spanishEquivalent = new Map<EuropeanEquivalence, { base: number; top: number }>([
+      [EuropeanEquivalence.F, { base: 0, top: 5 }],
+      [EuropeanEquivalence.FX, { base: 4.5, top: 5 }],
+      [EuropeanEquivalence.E, { base: 6, top: 6.9 }],
+      [EuropeanEquivalence.D, { base: 7, top: 7.9 }],
+      [EuropeanEquivalence.C, { base: 8, top: 8.9 }],
+      [EuropeanEquivalence.B, { base: 9, top: 9.9 }],
+      [EuropeanEquivalence.A, { base: 10, top: 10 }],
+    ])
   }
 
   async updateCountry(country): Promise<void> {
@@ -116,25 +117,58 @@ export class PostgresAdapter implements DatabaseAdapter {
       evaluationSystem.fixed,
       evaluationSystem.evaluationsystemid,
     ]
+    console.log('evaluationSystem', evaluationSystem)
 
     // Update evaluation system table
     await this.pool.query(QUERY, VALUES)
     // Update associated grade conversions
     await Promise.all(
       evaluationSystem.gradeconversions.map((gradeConversion, index) => {
-        const GRADE_CONVERSION_VALUES = [
-          gradeConversion.minintervalgrade,
-          gradeConversion.maxintervalgrade,
-          gradeConversion.gradename,
-          this.spanishEquivalent[index].base,
-          this.spanishEquivalent[index].top,
-          gradeConversion.gradeconversionid,
-        ]
-
-        return this.pool.query(
-          evaluationSystemQueries.UPDATE_CONTINUOUS_GRADE_CONVERSION,
-          GRADE_CONVERSION_VALUES,
-        )
+        const baseEquivalentSpanishGrade = this.spanishEquivalent.get(
+          gradeConversion.europeanequivalence,
+        ).base
+        let topEquivalentSpanishGrade = this.spanishEquivalent.get(
+          gradeConversion.europeanequivalence,
+        ).top
+        if (
+          gradeConversion.europeanequivalence === EuropeanEquivalence.F &&
+          evaluationSystem.gradeconversions[index + 1] &&
+          (evaluationSystem.gradeconversions[index + 1].gradevalue ||
+            evaluationSystem.gradeconversions[index + 1].minintervalgrade ||
+            evaluationSystem.gradeconversions[index + 1].maxintervalgrade)
+        ) {
+          topEquivalentSpanishGrade = this.spanishEquivalent.get(EuropeanEquivalence.FX).base
+        }
+        if (
+          (gradeConversion.minintervalgrade && gradeConversion.maxintervalgrade) ||
+          gradeConversion.gradevalue // This means the equivalence of grade is empty
+        ) {
+          if (gradeConversion.gradevalue) {
+            const GRADE_CONVERSION_VALUES = [
+              gradeConversion.gradevalue,
+              baseEquivalentSpanishGrade,
+              topEquivalentSpanishGrade,
+              gradeConversion.gradeconversionid,
+            ]
+            return this.pool.query(
+              evaluationSystemQueries.UPDATE_DISCRETE_GRADE_CONVERSION,
+              GRADE_CONVERSION_VALUES,
+            )
+          } else {
+            const GRADE_CONVERSION_VALUES = [
+              gradeConversion.minintervalgrade,
+              gradeConversion.maxintervalgrade,
+              gradeConversion.gradename,
+              baseEquivalentSpanishGrade,
+              topEquivalentSpanishGrade,
+              gradeConversion.gradeconversionid,
+            ]
+            return this.pool.query(
+              evaluationSystemQueries.UPDATE_CONTINUOUS_GRADE_CONVERSION,
+              GRADE_CONVERSION_VALUES,
+            )
+          }
+        }
       }),
     )
   }

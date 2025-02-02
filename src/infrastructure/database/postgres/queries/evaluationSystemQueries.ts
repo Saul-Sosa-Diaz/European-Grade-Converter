@@ -18,6 +18,9 @@ export const evaluationSystemQueries = {
   UPDATE_CONTINUOUS_GRADE_CONVERSION: `
   UPDATE CONTINUOUS_GRADE_CONVERSION SET MinIntervalGrade = $1, MaxIntervalGrade = $2, gradeName = $3, baseEquivalentSpanishGrade = $4, topEquivalentSpanishGrade = $5
   WHERE gradeconversionid = $6`,
+  UPDATE_DISCRETE_GRADE_CONVERSION: `
+  UPDATE DISCRETE_GRADE_CONVERSION SET gradeValue = $1, baseEquivalentSpanishGrade = $2, topEquivalentSpanishGrade = $3
+  WHERE discreteGradeID = $4`,
   DELETE_EVALUATION_SYSTEM: `
     DELETE FROM EVALUATION_SYSTEM WHERE evaluationsystemid = $1`,
   CREATE_EVALUATION_SYSTEM: `

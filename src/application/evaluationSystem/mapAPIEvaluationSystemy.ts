@@ -30,25 +30,18 @@ export const buildAPIEvaluationSystem = async (
 
 export const buildAPIEvaluationSystemWithGradeConversions = async (
   EvaluationSystemWithGradeConversions: EvaluationSystemWithGradeConversions,
-): Promise<APIEvaluationSystem> => {
+): Promise<APIEvaluationSystemWithGradeConversions> => {
   try {
     let gradeConversions = []
-    if (EvaluationSystemWithGradeConversions.evaluationType === EvaluationType.CONTINUOUS) {
-      gradeConversions = EvaluationSystemWithGradeConversions.gradeConversions.map((gc) => ({
-        gradeconversionid: gc.gradeConversionID,
-        evaluationsystemid: gc.evaluationSystemID,
-        minintervalgrade: gc.MinIntervalGrade,
-        maxintervalgrade: gc.MaxIntervalGrade,
-        gradename: gc.gradeName,
-      }))
-    } else {
-      gradeConversions = EvaluationSystemWithGradeConversions.gradeConversions.map((gc) => ({
-        gradeconversionid: gc.gradeConversionID,
-        evaluationsystemid: gc.evaluationSystemID,
-        gradename: gc.gradeName,
-        gradevalue: gc.gradeValue,
-      }))
-    }
+    gradeConversions = EvaluationSystemWithGradeConversions.gradeConversions.map((gc) => ({
+      gradeconversionid: gc.gradeConversionID,
+      evaluationsystemid: gc.evaluationSystemID,
+      minintervalgrade: gc.MinIntervalGrade,
+      maxintervalgrade: gc.MaxIntervalGrade,
+      gradevalue: gc.gradeValue,
+      gradename: gc.gradeName,
+      europeanequivalence: gc.europeanEquivalence,
+    }))
     const apiEvaluationSystemWithGradeConversion: APIEvaluationSystemWithGradeConversions = {
       evaluationsystemid: EvaluationSystemWithGradeConversions.evaluationSystemID,
       universityid: EvaluationSystemWithGradeConversions.universityID,
@@ -59,6 +52,7 @@ export const buildAPIEvaluationSystemWithGradeConversions = async (
       fixed: EvaluationSystemWithGradeConversions.fixed,
       gradeconversions: gradeConversions,
     }
+    console.log(apiEvaluationSystemWithGradeConversion)
     return apiEvaluationSystemWithGradeConversion
   } catch (error) {
     console.log(error)

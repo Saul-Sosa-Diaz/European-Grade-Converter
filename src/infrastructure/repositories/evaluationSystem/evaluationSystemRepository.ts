@@ -61,27 +61,31 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
       return continuousGradeConversion
     },
     updateEvaluationSystem: async (params) => {
+      const apiParams = await buildAPIEvaluationSystemWithGradeConversions(params)
+
       const response = await fetch(API_URL.evaluationSystem.updateEvaluationSystem, {
         method: 'post',
-        body: JSON.stringify(await buildAPIEvaluationSystemWithGradeConversions(params)),
+        body: JSON.stringify(apiParams),
       }).then((response) => response.json())
       if (!response.success) {
         throw new Error(response.error)
       }
     },
     createEvaluationSystem: async (params) => {
+      const apiParams = await buildAPIEvaluationSystemWithGradeConversions(params)
       const response = await fetch(API_URL.evaluationSystem.createEvaluationSystem, {
         method: 'post',
-        body: JSON.stringify(await buildAPIEvaluationSystemWithGradeConversions(params)),
+        body: JSON.stringify(apiParams),
       }).then((response) => response.json())
       if (!response.success) {
         throw new Error(response.error)
       }
     },
     deleteEvaluationSystem: async (params) => {
+      const apiParams = await buildAPIEvaluationSystem(params)
       const response = await fetch(API_URL.evaluationSystem.deleteEvaluationSystem, {
         method: 'post',
-        body: JSON.stringify(await buildAPIEvaluationSystem(params)),
+        body: JSON.stringify(apiParams),
       }).then((response) => response.json())
       if (!response.success) {
         throw new Error(response.error)
