@@ -141,7 +141,7 @@ export class PostgresAdapter implements DatabaseAdapter {
         }
         if (
           (gradeConversion.minintervalgrade && gradeConversion.maxintervalgrade) ||
-          gradeConversion.gradevalue // This means the equivalence of grade is empty
+          gradeConversion.gradevalue
         ) {
           if (gradeConversion.gradevalue) {
             const GRADE_CONVERSION_VALUES = [

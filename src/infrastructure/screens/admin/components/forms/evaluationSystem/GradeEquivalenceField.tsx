@@ -14,17 +14,16 @@ interface GradeEquivalenceFieldsProps {
 export const GradeEquivalenceFields = ({
   evaluationType,
   gradeEquivalence,
-  europeanGrades,
   fixed,
   isUpdating,
   getStep,
 }: GradeEquivalenceFieldsProps) => {
-  if (evaluationType !== EvaluationType.CONTINUOUS) {
+  if (evaluationType === EvaluationType.DISCRETE) {
     return (
       <>
         {gradeEquivalence.map((entry, index) => (
           <div key={index}>
-            <strong>{europeanGrades[index]}</strong>
+            <strong>{gradeEquivalence[index].europeanEquivalence}</strong>
             <Field name={`gradeEquivalence.${index}.gradeValue`} type="text" />
             <ErrorMessage name={`gradeEquivalence.${index}.gradeValue`} component="div" className="text-error" />
           </div>
@@ -37,7 +36,7 @@ export const GradeEquivalenceFields = ({
     <>
       {gradeEquivalence.map((entry, index) => (
         <div key={index}>
-          <strong>{europeanGrades[index]}</strong>
+          <strong>{gradeEquivalence[index].europeanEquivalence}</strong>
           {!isUpdating && <div>
             <label>
               <Field
@@ -57,7 +56,7 @@ export const GradeEquivalenceFields = ({
             </label>
           </div>}
 
-          {entry.inputType === InputType.INTERVAL ? (
+          {entry && entry.inputType === InputType.INTERVAL ? (
             <>
               <div>
                 <label>Bottom limit of the interval</label>

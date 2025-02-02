@@ -108,6 +108,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
       gradeName: '',
       gradeValue: '',
       europeanEquivalence: grade,
+      inputType: InputType.INTERVAL,
     }))
   );
   const getMaxGrade = (validGrades) => {
@@ -137,9 +138,10 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
 
   useEffect(() => {
     if (isFetched && getGradeConversionListByEvaluationID) {
-      const conversions = europeanGrades.map((grade) => {
+
+      const conversions = getGradeConversionListByEvaluationID.map((grade) => {
         const conversionFound = getGradeConversionListByEvaluationID.find(
-          (gradeConversion) => gradeConversion.europeanEquivalence === grade
+          (gradeConversion) => gradeConversion.europeanEquivalence === grade.europeanEquivalence
         );
         if (conversionFound) {
           let inputType: InputType = InputType.INTERVAL;
@@ -153,18 +155,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
             inputType = InputType.INTERVAL;
           }
           return { ...conversionFound, inputType };
-        } else {
-          return {
-            gradeConversionID: '',
-            evaluationSystemID: initialValues.evaluationSystemID,
-            europeanEquivalence: grade,
-            MinIntervalGrade: null,
-            MaxIntervalGrade: null,
-            gradeName: '',
-            gradeValue: '',
-            inputType: InputType.INTERVAL,
-          };
-        }
+        } 
       });
       setGradeConversionFromBack(conversions);
     }
