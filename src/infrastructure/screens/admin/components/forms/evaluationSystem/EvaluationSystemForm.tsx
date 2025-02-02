@@ -183,7 +183,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
       minGrade: getMinGrade(initialValues.validGrades),
     };
   }
-  
+
 
   useEffect(() => {
     if (isFetched && getGradeConversionListByEvaluationID) {
@@ -238,12 +238,23 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
         (university) => university.name === updatedEvaluationSystem.universityName
       )?.id,
       universityName: updatedEvaluationSystem.universityName,
-      gradeConversions: updatedEvaluationSystem.gradeEquivalence.map((interval, index) => {
+      gradeConversions: updatedEvaluationSystem.gradeEquivalence.map((interval) => {
+        if (updatedEvaluationSystem.evaluationType === EvaluationType.DISCRETE) {
+          return {
+            gradeConversionID: interval.gradeConversionID,
+            evaluationSystemID: interval.evaluationSystemID,
+            europeanEquivalence: interval.europeanEquivalence,
+            gradeName: interval.gradeName,
+            MinIntervalGrade: null,
+            MaxIntervalGrade: null,
+            gradeValue: interval.gradeValue,
+          };
+        }
         if (interval.inputType === InputType.INTERVAL) {
           return {
             gradeConversionID: interval.gradeConversionID,
             evaluationSystemID: interval.evaluationSystemID,
-            europeanEquivalence: europeanGrades[index],
+            europeanEquivalence: interval.europeanEquivalence,
             gradeName: interval.gradeName,
             MinIntervalGrade: interval.MinIntervalGrade,
             MaxIntervalGrade: interval.MaxIntervalGrade,
@@ -253,7 +264,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
           return {
             gradeConversionID: interval.gradeConversionID,
             evaluationSystemID: interval.evaluationSystemID,
-            europeanEquivalence: europeanGrades[index],
+            europeanEquivalence: interval.europeanEquivalence,
             gradeName: interval.gradeName,
             MinIntervalGrade: null,
             MaxIntervalGrade: null,
@@ -272,7 +283,7 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
       enableReinitialize
       onSubmit={handleSubmit}
     >
-      {({ values, errors }) => (
+      {({ values }) => (
         <Form>
           <div>
             <label htmlFor="universityName">University Name</label>

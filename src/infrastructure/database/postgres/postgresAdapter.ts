@@ -24,11 +24,11 @@ export class PostgresAdapter implements DatabaseAdapter {
     this.spanishEquivalent = new Map<EuropeanEquivalence, { base: number; top: number }>([
       [EuropeanEquivalence.F, { base: 0, top: 5 }],
       [EuropeanEquivalence.FX, { base: 4.5, top: 5 }],
-      [EuropeanEquivalence.E, { base: 6, top: 6.9 }],
-      [EuropeanEquivalence.D, { base: 7, top: 7.9 }],
-      [EuropeanEquivalence.C, { base: 8, top: 8.9 }],
-      [EuropeanEquivalence.B, { base: 9, top: 9.9 }],
-      [EuropeanEquivalence.A, { base: 10, top: 10 }],
+      [EuropeanEquivalence.E, { base: 5, top: 6 }],
+      [EuropeanEquivalence.D, { base: 6, top: 7 }],
+      [EuropeanEquivalence.C, { base: 7, top: 8 }],
+      [EuropeanEquivalence.B, { base: 8, top: 9 }],
+      [EuropeanEquivalence.A, { base: 9, top: 10 }],
     ])
   }
 
@@ -117,11 +117,69 @@ export class PostgresAdapter implements DatabaseAdapter {
       evaluationSystem.fixed,
       evaluationSystem.evaluationsystemid,
     ]
-    console.log('evaluationSystem', evaluationSystem)
-
-    // Update evaluation system table
     await this.pool.query(QUERY, VALUES)
-    // Update associated grade conversions
+    await Promise.all(
+      evaluationSystem.gradeconversions.map((gradeConversion, index) => {
+        const baseEquivalentSpanishGrade = this.spanishEquivalent.get(
+          gradeConversion.europeanequivalence,
+        ).base
+        let topEquivalentSpanishGrade = this.spanishEquivalent.get(
+          gradeConversion.europeanequivalence,
+        ).top
+        if (
+          gradeConversion.europeanequivalence === EuropeanEquivalence.F &&
+          evaluationSystem.gradeconversions[index + 1] &&
+          (evaluationSystem.gradeconversions[index + 1].gradevalue ||
+            evaluationSystem.gradeconversions[index + 1].minintervalgrade ||
+            evaluationSystem.gradeconversions[index + 1].maxintervalgrade)
+        ) {
+          topEquivalentSpanishGrade = this.spanishEquivalent.get(EuropeanEquivalence.FX).base
+        }
+
+        if (gradeConversion.gradevalue) {
+          const GRADE_CONVERSION_VALUES = [
+            gradeConversion.gradevalue,
+            baseEquivalentSpanishGrade,
+            topEquivalentSpanishGrade,
+            gradeConversion.gradeconversionid,
+          ]
+          return this.pool.query(
+            evaluationSystemQueries.UPDATE_DISCRETE_GRADE_CONVERSION,
+            GRADE_CONVERSION_VALUES,
+          )
+        } else {
+          const GRADE_CONVERSION_VALUES = [
+            gradeConversion.minintervalgrade,
+            gradeConversion.maxintervalgrade,
+            gradeConversion.gradename,
+            baseEquivalentSpanishGrade,
+            topEquivalentSpanishGrade,
+            gradeConversion.gradeconversionid,
+          ]
+          return this.pool.query(
+            evaluationSystemQueries.UPDATE_CONTINUOUS_GRADE_CONVERSION,
+            GRADE_CONVERSION_VALUES,
+          )
+        }
+      }),
+    )
+  }
+
+  async createEvaluationSystem(
+    evaluationSystem: APIEvaluationSystemWithGradeConversions,
+  ): Promise<void> {
+    const QUERY = evaluationSystemQueries.CREATE_EVALUATION_SYSTEM
+    const VALUES = [
+      evaluationSystem.evaluationsystemname,
+      evaluationSystem.universityid,
+      evaluationSystem.validgrades,
+      evaluationSystem.evaluationtype,
+      evaluationSystem.fixed,
+    ]
+    console.log(evaluationSystem.evaluationtype)
+    // Create evaluation system
+    const newEvaluationSystemId = (await this.pool.query(QUERY, VALUES)).rows[0].evaluationsystemid
+    // Create associated grade conversions
     await Promise.all(
       evaluationSystem.gradeconversions.map((gradeConversion, index) => {
         const baseEquivalentSpanishGrade = this.spanishEquivalent.get(
@@ -140,32 +198,34 @@ export class PostgresAdapter implements DatabaseAdapter {
           topEquivalentSpanishGrade = this.spanishEquivalent.get(EuropeanEquivalence.FX).base
         }
         if (
-          (gradeConversion.minintervalgrade && gradeConversion.maxintervalgrade) ||
-          gradeConversion.gradevalue
+          gradeConversion.gradevalue ||
+          (gradeConversion.minintervalgrade && gradeConversion.maxintervalgrade)
         ) {
           if (gradeConversion.gradevalue) {
-            const GRADE_CONVERSION_VALUES = [
+            const GRADE_DISCRETE_CONVERSION_VALUES = [
+              newEvaluationSystemId,
               gradeConversion.gradevalue,
               baseEquivalentSpanishGrade,
               topEquivalentSpanishGrade,
-              gradeConversion.gradeconversionid,
+              gradeConversion.europeanequivalence,
             ]
             return this.pool.query(
-              evaluationSystemQueries.UPDATE_DISCRETE_GRADE_CONVERSION,
-              GRADE_CONVERSION_VALUES,
+              evaluationSystemQueries.CREATE_DISCRETE_GRADE_CONVERSION,
+              GRADE_DISCRETE_CONVERSION_VALUES,
             )
           } else {
-            const GRADE_CONVERSION_VALUES = [
+            const GRADE_CONTINUOUS_CONVERSION_VALUES = [
+              newEvaluationSystemId,
               gradeConversion.minintervalgrade,
               gradeConversion.maxintervalgrade,
               gradeConversion.gradename,
               baseEquivalentSpanishGrade,
               topEquivalentSpanishGrade,
-              gradeConversion.gradeconversionid,
+              gradeConversion.europeanequivalence,
             ]
             return this.pool.query(
-              evaluationSystemQueries.UPDATE_CONTINUOUS_GRADE_CONVERSION,
-              GRADE_CONVERSION_VALUES,
+              evaluationSystemQueries.CREATE_CONTINUOUS_GRADE_CONVERSION,
+              GRADE_CONTINUOUS_CONVERSION_VALUES,
             )
           }
         }
@@ -173,43 +233,11 @@ export class PostgresAdapter implements DatabaseAdapter {
     )
   }
 
-  async createEvaluationSystem(
-    evaluationSystem: APIEvaluationSystemWithGradeConversions,
-  ): Promise<void> {
-    const QUERY = evaluationSystemQueries.CREATE_EVALUATION_SYSTEM
-    console.log('evaluationSystem', evaluationSystem)
-    const VALUES = [
-      evaluationSystem.evaluationsystemname,
-      evaluationSystem.universityid,
-      evaluationSystem.validgrades,
-      evaluationSystem.evaluationtype,
-      evaluationSystem.fixed,
-    ]
-    // Create evaluation system
-    const newEvaluationSystemId = (await this.pool.query(QUERY, VALUES)).rows[0].evaluationsystemid
-    // Create associated grade conversions
-    await Promise.all(
-      evaluationSystem.gradeconversions.map((gradeConversion, index) => {
-        const GRADE_CONVERSION_VALUES = [
-          newEvaluationSystemId,
-          gradeConversion.minintervalgrade,
-          gradeConversion.maxintervalgrade,
-          gradeConversion.gradename,
-          this.spanishEquivalent[index].base,
-          this.spanishEquivalent[index].top,
-        ]
-
-        return this.pool.query(
-          evaluationSystemQueries.CREATE_CONTINUOUS_GRADE_CONVERSION,
-          GRADE_CONVERSION_VALUES,
-        )
-      }),
-    )
-  }
-
   async deleteEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void> {
     const QUERY = evaluationSystemQueries.DELETE_EVALUATION_SYSTEM
     const VALUES = [evaluationSystem.evaluationsystemid]
+    await this.pool.query(evaluationSystemQueries.DELETE_CONTINUOUS_GRADE_CONVERSION, VALUES)
+    await this.pool.query(evaluationSystemQueries.DELETE_DISCRETE_GRADE_CONVERSION, VALUES)
     await this.pool.query(QUERY, VALUES)
   }
 

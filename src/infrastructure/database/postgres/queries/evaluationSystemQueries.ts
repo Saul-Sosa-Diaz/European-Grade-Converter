@@ -23,12 +23,19 @@ export const evaluationSystemQueries = {
   WHERE discreteGradeID = $4`,
   DELETE_EVALUATION_SYSTEM: `
     DELETE FROM EVALUATION_SYSTEM WHERE evaluationsystemid = $1`,
+  DELETE_CONTINUOUS_GRADE_CONVERSION: `
+    DELETE FROM CONTINUOUS_GRADE_CONVERSION WHERE evaluationsystemid = $1`,
+  DELETE_DISCRETE_GRADE_CONVERSION: `
+    DELETE FROM DISCRETE_GRADE_CONVERSION WHERE evaluationsystemid = $1`,
   CREATE_EVALUATION_SYSTEM: `
   INSERT INTO EVALUATION_SYSTEM (evaluationsystemname, universityID, validgrades, evaluationtype, fixed)
   VALUES ($1, $2, $3, $4, $5) RETURNING evaluationsystemid`,
   CREATE_CONTINUOUS_GRADE_CONVERSION: `
-  INSERT INTO CONTINUOUS_GRADE_CONVERSION (evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, gradeName, baseEquivalentSpanishGrade, topEquivalentSpanishGrade)
-  VALUES ($1, $2, $3, $4, $5, $6) RETURNING gradeconversionid`,
+  INSERT INTO CONTINUOUS_GRADE_CONVERSION (evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, gradeName, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, europeanEquivalence)
+  VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING gradeconversionid`,
+  CREATE_DISCRETE_GRADE_CONVERSION: `
+  INSERT INTO DISCRETE_GRADE_CONVERSION (evaluationSystemID, gradeValue, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, europeanEquivalence)
+  VALUES ($1, $2, $3, $4, $5) RETURNING discreteGradeID`,
   COUNTINUOUS_TO_SPAIN: `
      SELECT gc.MinIntervalGrade, gc.MaxIntervalGrade,
             gc.baseEquivalentSpanishGrade, gc.topEquivalentSpanishGrade
