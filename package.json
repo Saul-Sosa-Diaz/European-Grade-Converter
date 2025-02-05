@@ -22,6 +22,7 @@
     "primereact": "10.8.3",
     "react": "18.3.1",
     "react-dom": "18",
+    "react-error-boundary": "^5.0.0",
     "vercel": "39.0.2",
     "yup": "^1.6.1"
   },

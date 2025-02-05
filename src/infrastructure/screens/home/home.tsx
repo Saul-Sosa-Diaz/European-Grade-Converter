@@ -19,18 +19,18 @@ export function Home() {
     return <ProgressSpinner />
   }
   return (
-    <GradeConverterContextProvider countries={countryWithEvaluationInfoList}>
+    <GradeConverterContextProvider countries={countryWithEvaluationInfoList || []}>
       <HomeScreenMain>
         <Header />
         <ConversorContainer>
           <CountryAndGradeContainer>
-            <CountryFromTreeSelect countries={countryWithEvaluationInfoList} />
+            <CountryFromTreeSelect countries={countryWithEvaluationInfoList || []} />
             <InputGrade />
           </CountryAndGradeContainer>
           <ArrowRight className="pi pi-arrow-right" />
           <ArrowDown className="pi pi-arrow-down" />
           <CountryAndGradeContainer>
-            <CountryToTreeSelect countries={countryWithEvaluationInfoList} />
+            <CountryToTreeSelect countries={countryWithEvaluationInfoList || []} />
             <CalculatedGradeComponent />
           </CountryAndGradeContainer>
         </ConversorContainer>
