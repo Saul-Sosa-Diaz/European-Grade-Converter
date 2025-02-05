@@ -1,7 +1,7 @@
 
 
 import { useApi } from "@/context/ApiContext";
-import { Field, Form, Formik } from "formik";
+import { Field, Formik } from "formik";
 
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -10,7 +10,6 @@ import { signOut, useSession } from "next-auth/react";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
-import { Password } from "primereact/password";
 
 
 export const Login = () => {

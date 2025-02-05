@@ -17,7 +17,6 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        console.log(credentials)
         if (credentials.password === '1234') {
           return { id: '1', name: 'saul' }
         } else {

@@ -52,5 +52,4 @@ export const CountryAndGradeContainer = styled('div', {
 export const ContryAditionalInfoContainer = styled('div', {
     width: '80%',
     flex: '1',
-
 });

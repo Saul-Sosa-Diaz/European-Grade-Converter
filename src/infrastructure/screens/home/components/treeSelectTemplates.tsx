@@ -9,7 +9,7 @@
  * @description This file contains the country templates used to render the selected item and options.
  */
 
-import { Country } from "@/domain/countries/country";
+import { CountryWithEvaluationInfo } from "@/domain/country/country";
 
 
 
@@ -19,7 +19,7 @@ import { Country } from "@/domain/countries/country";
  * @param props - The props passed to the component.
  * @returns The JSX element to render the selected item.
  */
-export const renderSelectedItemTemplate = (option: Country[], props: any) => {
+export const renderSelectedItemTemplate = (option: CountryWithEvaluationInfo[], props: { placeholder: string }) => {
   if (option.length === 0) {
     // If the option is null or undefined, display the placeholder text
     return <span>{props.placeholder}</span>;
@@ -48,7 +48,7 @@ export const renderSelectedItemTemplate = (option: Country[], props: any) => {
  * @param option - The selected country.
  * @returns The JSX element to render the selected item.
  */
-export const renderOptionTemplate = (option: Country | string) => {
+export const renderOptionTemplate = (option: CountryWithEvaluationInfo | string) => {
   if (typeof option === "string") {
     return <span>{option}</span>;
   }

@@ -5,6 +5,7 @@ import { signIn } from 'next-auth/react'
 export function createAuthRepositoryFake(): AuthRepository {
   return {
     signIn: async (params) => {
+      console.log(params)
       await signIn('credentials', { ...credentialsFixture , callbackUrl: '/admin' })
     }, 
   }
