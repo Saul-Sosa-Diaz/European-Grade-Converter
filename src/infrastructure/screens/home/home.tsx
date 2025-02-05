@@ -8,32 +8,38 @@ import { CountryToTreeSelect } from "./components/CountryToTreeSelectComponent.t
 import { InputGrade } from "./components/InputGradeComponent/InputGradeComponent";
 import { CountryFromTreeSelect } from "./components/CountryFromTreeSelectorComponent/CountryFromTreeSelectComponent";
 import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/CountryAdditionalInfoComponent";
-// TODO: FIX SWITZELAND
+import { useGetCountryWithEvaluationInfoList } from "@/hooks/country/useGetCountryWithEvaluationInfoList";
+import { GradeConverterContextProvider } from "@/context/GradeConverterContext";
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 export function Home() {
-
+  const { countryWithEvaluationInfoList, isLoading } = useGetCountryWithEvaluationInfoList();
   // TODO: GIVE A VISUAL FEEDBACK WITH COLORS IN GRADE
+  if (isLoading) {
+    return <ProgressSpinner />
+  }
   return (
-    <HomeScreenMain>
+    <GradeConverterContextProvider countries={countryWithEvaluationInfoList || []}>
+      <HomeScreenMain>
+        <Header />
+        <ConversorContainer>
+          <CountryAndGradeContainer>
+            <CountryFromTreeSelect countries={countryWithEvaluationInfoList || []} />
+            <InputGrade />
+          </CountryAndGradeContainer>
+          <ArrowRight className="pi pi-arrow-right" />
+          <ArrowDown className="pi pi-arrow-down" />
+          <CountryAndGradeContainer>
+            <CountryToTreeSelect countries={countryWithEvaluationInfoList || []} />
+            <CalculatedGradeComponent />
+          </CountryAndGradeContainer>
+        </ConversorContainer>
+        <ContryAditionalInfoContainer>
+          <CountryAdditionalInfo />
+        </ContryAditionalInfoContainer>
+        <Footer />
 
-      <Header />
-      <ConversorContainer>
-        <CountryAndGradeContainer>
-          <CountryFromTreeSelect />
-          <InputGrade />
-        </CountryAndGradeContainer>
-        <ArrowRight className="pi pi-arrow-right" />
-        <ArrowDown className="pi pi-arrow-down" />
-        <CountryAndGradeContainer>
-          <CountryToTreeSelect />
-          <CalculatedGradeComponent />
-        </CountryAndGradeContainer>
-      </ConversorContainer>
-      <ContryAditionalInfoContainer>
-        <CountryAdditionalInfo />
-      </ContryAditionalInfoContainer>
-      <Footer />
-
-    </HomeScreenMain>
+      </HomeScreenMain>
+    </GradeConverterContextProvider >
   );
 }

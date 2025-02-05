@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * Universidad de La Laguna
  * Escuela Superior de Ingeniería y Tecnología
@@ -11,8 +10,8 @@
  */
 import React from "react";
 import { ChevronDownIcon } from "primereact/icons/chevrondown";
-import { ChevronRightIcon } from "primereact/icons/chevronright";
 import { TreeSelect } from "primereact/treeselect";
+import { DropdownChangeEvent } from "primereact/dropdown";
 
 /**
  * Props interface for the reusable TreeSelect component.
@@ -25,7 +24,7 @@ interface CustomTreeSelectProps<T> {
   placeholder: string; // Placeholder text to display when no option is selected
   onChange: (e: DropdownChangeEvent) => void; // Callback function triggered when an option is selected
   nodeTemplate?: (option: T) => React.ReactNode; // Custom template to display options in the dropdown
-  valueTemplate?: (option: any, props: any) => React.ReactNode; // Custom template to display the selected value
+  valueTemplate?: (option: T[], props: {placeholder: string}) => JSX.Element; // Custom template to display the selected value
   itemTemplate?: (option: T) => React.ReactNode; // Custom template to display options in the dropdown
   panelFooterTemplate?: () => React.ReactNode; // Template for the footer section of the dropdown panel
   dropdownClassName?: string; // CSS class for the dropdown styling
@@ -39,7 +38,6 @@ interface CustomTreeSelectProps<T> {
 export const CustomTreeSelect = <T,>({
   value, // Selected value
   options, // Array of options to select from
-  optionLabel, // Label field to display as the name of the options
   placeholder, // Placeholder text when no option is selected
   nodeTemplate, // Custom template for rendering options in the dropdown
   valueTemplate, // Custom template for rendering the selected value
@@ -53,21 +51,14 @@ export const CustomTreeSelect = <T,>({
       value={value} // Selected value passed to TreeSelect
       onChange={onChange} // Trigger onChange event when an option is selected
       options={options} // Array of options passed to the dropdown
-      optionlabel={optionLabel} // Label field to display option names
       placeholder={placeholder} // Placeholder text when no option is selected
       filter={filter ? true : false} // Conditionally enable filtering if 'filter' prop is true
       className={dropdownClassName} // Apply CSS class for dropdown styling
       nodeTemplate={nodeTemplate} // Custom template for rendering options
       valueTemplate={valueTemplate} // Custom template for rendering the selected value
       panelFooterTemplate={panelFooterTemplate} // Custom footer for the dropdown panel
-      dropdownIcon={(
-        opts // Custom logic to switch between dropdown icons based on the state
-      ) =>
-        opts.iconProps["data-pr-overlay-visible"] ? (
-          <ChevronRightIcon {...opts.iconProps} /> // Show ChevronRightIcon when dropdown is open
-        ) : (
-          <ChevronDownIcon {...opts.iconProps} /> // Show ChevronDownIcon when dropdown is closed
-        )
+      dropdownIcon={
+        <ChevronDownIcon /> // Show ChevronDownIcon by default
       }
     />
   );

@@ -1,19 +1,56 @@
-import { createProductsRepositoryFake } from '../infrastructure/repositories/countryRepositoryFake'
 import { Api } from './domain/Api'
-import { getCountries } from '../application/getCountries'
+import { getCountryWithEvaluationInfoList } from '../application/country/getCountryWithEvaluationInfoList/getCountryWithEvaluationInfoList'
 import { createAuthRepositoryFake } from '@/infrastructure/repositories/auth/authRepositoryFake'
 import { signIn } from '@/application/auth/signIn'
-
+import { createCountryRepositoryFake } from '@/infrastructure/repositories/country/countryRepositoryFake'
+import { createEvaluationSystemRepositoryFake } from '@/infrastructure/repositories/evaluationSystem/evaluationSystemRepositoryFake'
+import { convertGrade } from '@/application/evaluationSystem/calculateConversion.ts'
+import { getCountryList } from '@/application/country/getCountryList/getCountryList'
+import { updateCountry } from '@/application/country/updateCountry'
+import { createCountry } from '@/application/country/createCountry'
+import { deleteCountry } from '@/application/country/deleteCountry'
+import { getUniversityList } from '@/application/university/getUniversityList/getUniversityList'
+import { updateUniversity } from '@/application/university/updateCountry'
+import { createUniversity } from '@/application/university/createUniversity'
+import { deleteUniversity } from '@/application/university/deleteUniversity'
+import { createUniversityRepositoryFake } from '@/infrastructure/repositories/university/universityRepositoryFake'
+import { getEvaluationSystemList } from '@/application/evaluationSystem/getEvaluationSystemList/getEvaluationSystemList'
+import { updateEvaluationSystem } from '@/application/evaluationSystem/updateEvaluationSystem'
+import { createEvaluationSystem } from '@/application/evaluationSystem/createEvaluationSystem'
+import { deleteEvaluationSystem } from '@/application/evaluationSystem/deleteEvaluationSystem'
+import { getGradeConversionListByEvaluationID } from '@/application/evaluationSystem/getGradeConversionListByEvaluationID/getGradeConversion'
 
 export function createApiFake(): Api {
-  const COUNTRIES_REPOSITORY = createProductsRepositoryFake()
-  const AUTH_REPOSITORY = createAuthRepositoryFake()
+  const FAKE_COUNTRY_REPOSITORY = createCountryRepositoryFake()
+  const FAKE_UNIVERSITY_REPOSITORY = createUniversityRepositoryFake()
+  const FAKE_AUTH_REPOSITORY = createAuthRepositoryFake()
+  const FAKE_EVALUATION_SYSTEM_REPOSITORY = createEvaluationSystemRepositoryFake()
   return {
-    Countries: {
-      getCountries: getCountries(COUNTRIES_REPOSITORY),
+    Country: {
+      getCountryWithEvaluationInfoList: getCountryWithEvaluationInfoList(FAKE_COUNTRY_REPOSITORY),
+      getCountryList: getCountryList(FAKE_COUNTRY_REPOSITORY),
+      updateCountry: updateCountry(FAKE_COUNTRY_REPOSITORY),
+      createCountry: createCountry(FAKE_COUNTRY_REPOSITORY),
+      deleteCountry: deleteCountry(FAKE_COUNTRY_REPOSITORY),
+    },
+    University: {
+      getUniversityList: getUniversityList(FAKE_UNIVERSITY_REPOSITORY),
+      updateUniversity: updateUniversity(FAKE_UNIVERSITY_REPOSITORY),
+      createUniversity: createUniversity(FAKE_UNIVERSITY_REPOSITORY),
+      deleteUniversity: deleteUniversity(FAKE_UNIVERSITY_REPOSITORY),
+    },
+    EvaluationSystem: {
+      convertGrade: convertGrade(FAKE_EVALUATION_SYSTEM_REPOSITORY),
+      getEvaluationSystemList: getEvaluationSystemList(FAKE_EVALUATION_SYSTEM_REPOSITORY),
+      getGradeConversionListByEvaluationID: getGradeConversionListByEvaluationID(
+        FAKE_EVALUATION_SYSTEM_REPOSITORY,
+      ),
+      updateEvaluationSystem: updateEvaluationSystem(FAKE_EVALUATION_SYSTEM_REPOSITORY),
+      createEvaluationSystem: createEvaluationSystem(FAKE_EVALUATION_SYSTEM_REPOSITORY),
+      deleteEvaluationSystem: deleteEvaluationSystem(FAKE_EVALUATION_SYSTEM_REPOSITORY),
     },
     Auth: {
-      signIn: signIn(AUTH_REPOSITORY),
+      signIn: signIn(FAKE_AUTH_REPOSITORY),
     },
   }
 }
