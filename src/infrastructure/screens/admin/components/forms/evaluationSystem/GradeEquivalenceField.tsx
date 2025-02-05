@@ -2,9 +2,18 @@ import { EuropeanEquivalence, EvaluationType } from "@/domain/evaluationSystem/e
 import { ErrorMessage, Field } from "formik";
 import { InputType } from "./EvaluationSystemForm";
 
+interface GradeEquivalenceInput {
+  inputType: InputType;
+  gradeValue: string;
+  MinIntervalGrade?: number;
+  MaxIntervalGrade?: number;
+  gradeName: string;
+  europeanEquivalence: EuropeanEquivalence;
+}
+
 interface GradeEquivalenceFieldsProps {
   evaluationType: EvaluationType;
-  gradeEquivalence: any[];
+  gradeEquivalence: GradeEquivalenceInput[];
   europeanGrades: EuropeanEquivalence[];
   fixed: number;
   isUpdating: boolean;

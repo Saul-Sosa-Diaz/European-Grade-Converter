@@ -187,7 +187,6 @@ export const EvaluationSystemForm: React.FC<EvaluationSystemFormProps> = ({
 
   useEffect(() => {
     if (isFetched && getGradeConversionListByEvaluationID) {
-
       const conversions = getGradeConversionListByEvaluationID.map((grade) => {
         const conversionFound = getGradeConversionListByEvaluationID.find(
           (gradeConversion) => gradeConversion.europeanEquivalence === grade.europeanEquivalence

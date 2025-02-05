@@ -19,7 +19,7 @@ import { CountryWithEvaluationInfo } from "@/domain/country/country";
  * @param props - The props passed to the component.
  * @returns The JSX element to render the selected item.
  */
-export const renderSelectedItemTemplate = (option: CountryWithEvaluationInfo[], props: any) => {
+export const renderSelectedItemTemplate = (option: CountryWithEvaluationInfo[], props: { placeholder: string }) => {
   if (option.length === 0) {
     // If the option is null or undefined, display the placeholder text
     return <span>{props.placeholder}</span>;

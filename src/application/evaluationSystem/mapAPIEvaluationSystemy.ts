@@ -5,7 +5,6 @@ import {
 import {
   EvaluationSystem,
   EvaluationSystemWithGradeConversions,
-  EvaluationType,
 } from '@/domain/evaluationSystem/evaluationSystem'
 
 export const buildAPIEvaluationSystem = async (

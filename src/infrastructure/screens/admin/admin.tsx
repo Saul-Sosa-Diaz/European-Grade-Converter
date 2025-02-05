@@ -42,7 +42,7 @@ export const Admin = () => {
   const { countryList, isLoading: countryListIsLoading, refetch: refetchCountryList } = useGetCountryList();
   const { universityList, isLoading: universityListIsLoading, refetch: refetchUniversityList } = useGetUniversityList();
   const { evaluationSystemList, isLoading: evaluationSystemListIsLoading, refetch: refetchEvaluationSystemList } = useGetEvaluationSystemList();
-
+  console.log(countryList);
   useEffect(() => {
     if (activeTab === AdminTabsNames.COUNTRIES || activeTab === AdminTabsNames.UNIVERSITIES || activeTab === AdminTabsNames.EVALUATION_SYSTEM) {
       refetchCountryList();

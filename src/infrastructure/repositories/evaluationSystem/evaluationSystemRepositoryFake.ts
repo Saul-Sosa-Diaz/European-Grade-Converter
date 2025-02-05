@@ -1,4 +1,4 @@
-import { EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
+import { EuropeanEquivalence, EvaluationType } from '@/domain/evaluationSystem/evaluationSystem'
 import { EvaluationSystemRepository } from '@/domain/evaluationSystem/evaluationSystemRepository'
 
 export function createEvaluationSystemRepositoryFake(): EvaluationSystemRepository {
@@ -25,7 +25,7 @@ export function createEvaluationSystemRepositoryFake(): EvaluationSystemReposito
       ]
     },
     getGradeConversionListByEvaluationID: async (params) => {
-      console.log('getContinouosGradeConversion', params)
+      console.log('getContinuousGradeConversion', params)
       return [
         {
           gradeName: 'A',
@@ -35,6 +35,12 @@ export function createEvaluationSystemRepositoryFake(): EvaluationSystemReposito
           topEquivalentSpanishGrade: 10,
           evaluationSystemID: '1',
           gradeConversionID: '1',
+          europeanEquivalence: {
+            equivalenceID: '1',
+            equivalenceName: 'Equivalence 1',
+            equivalenceDescription: 'Description 1',
+            equivalenceScale: 'Scale 1',
+          } as unknown as EuropeanEquivalence,
         },
       ]
     },

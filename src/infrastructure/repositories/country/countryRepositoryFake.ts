@@ -1,16 +1,15 @@
-import { COUNTRIES } from '../../fixture/countries'
+import { COUNTRIES, COUNTRY_LIST } from '../../fixture/countries'
 import { CountryRepository } from '@/domain/country/countryRepository'
 
 export function createCountryRepositoryFake(): CountryRepository {
   return {
     getCountryWithEvaluationInfoList: async () => COUNTRIES,
     getCountryList: async () => {
-      COUNTRY_LIST
+      return COUNTRY_LIST  
     },
     updateCountry: async (country) => {
       // Use the country parameter
       console.log(country)
-      return
     },
     createCountry: async (country) => {
       console.log(country)

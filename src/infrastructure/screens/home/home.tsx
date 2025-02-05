@@ -11,7 +11,6 @@ import { CountryAdditionalInfo } from "./components/CountryAdditionalComponent/C
 import { useGetCountryWithEvaluationInfoList } from "@/hooks/country/useGetCountryWithEvaluationInfoList";
 import { GradeConverterContextProvider } from "@/context/GradeConverterContext";
 import { ProgressSpinner } from 'primereact/progressspinner';
-// TODO: FIX SWITZELAND
 
 export function Home() {
   const { countryWithEvaluationInfoList, isLoading } = useGetCountryWithEvaluationInfoList();
