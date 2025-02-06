@@ -33,7 +33,6 @@ const handler = NextAuth({
       return token
     },
     async session({ session, token }) {
-      console.log('session', token)
       session.user.name = token.name as string
       session.role = token.role as Role
       return session
@@ -50,9 +49,9 @@ const handler = NextAuth({
           const databaseAdapter = createDatabaseAdapter()
           const user = await databaseAdapter.verifyUser(credentials.username, credentials.password)
           return {
-            id: user.userID,
-            name: user.username,
-            role: user.roleName,
+            id: user.id,
+            name: user.name,
+            role: user.role,
           }
         } catch (error) {
           console.error(error)
