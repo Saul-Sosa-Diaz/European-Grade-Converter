@@ -27,14 +27,6 @@ export const Admin = () => {
   const { countryList, isLoading: countryListIsLoading, refetch: refetchCountryList } = useGetCountryList();
   const { universityList, isLoading: universityListIsLoading, refetch: refetchUniversityList } = useGetUniversityList();
   const { evaluationSystemList, isLoading: evaluationSystemListIsLoading, refetch: refetchEvaluationSystemList } = useGetEvaluationSystemList();
-  console.log(countryList);
-  useEffect(() => {
-    if (activeTab === AdminTabsNames.COUNTRIES || activeTab === AdminTabsNames.UNIVERSITIES || activeTab === AdminTabsNames.EVALUATION_SYSTEM) {
-      refetchCountryList();
-      refetchUniversityList();
-      refetchEvaluationSystemList();
-    }
-  }, [activeTab]);
   useEffect(() => {
     if (status === "loading") {
       setLoading(true);
@@ -43,16 +35,26 @@ export const Admin = () => {
     }
   }, [status]);
 
+  useEffect(() => {
+    if (activeTab === AdminTabsNames.COUNTRIES || activeTab === AdminTabsNames.UNIVERSITIES || activeTab === AdminTabsNames.EVALUATION_SYSTEM) {
+      refetchCountryList();
+      refetchUniversityList();
+      refetchEvaluationSystemList();
+    }
+  }, [activeTab]);
+ 
   if (loading) {
     return <ProgressSpinner />
   }
+
   if (status !== "loading" && !session) {
     redirect('/403')
   }
+
   if (countryListIsLoading || universityListIsLoading || evaluationSystemListIsLoading) {
     return <ProgressSpinner />
   }
-  console.log(session);
+
   return (
     <>
       <MainContainer>
