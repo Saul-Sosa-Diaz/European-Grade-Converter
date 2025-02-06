@@ -1,12 +1,10 @@
-// import { useSession } from "next-auth/react";
-// import { redirect } from "next/navigation";
-// import { ProgressSpinner } from 'primereact/progressspinner';
-// import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { useEffect, useState } from "react";
 import { useGetCountryList } from "@/hooks/country/useGetCountryList";
 import { CountryList } from "./components/CountryList/CountryList";
-import { ProgressSpinner } from "primereact/progressspinner";
 import { HeaderSideBar, MainContainer, MainContent, SideBar } from "./admin.styles";
-import { useEffect, useState } from "react";
 import { UniversityList } from "./components/UniversityList/UniversityList";
 import { useGetUniversityList } from "@/hooks/university/useGetUniversityList";
 import { EvaluationSystemList } from "./components/EvaluationSystemList/EvaluationSystemList";
@@ -20,24 +18,9 @@ enum AdminTabsNames {
 }
 
 export const Admin = () => {
-  // const { data: session, status } = useSession();
-  // const [loading, setLoading] = useState(true);
+  const { data: session, status } = useSession();
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(AdminTabsNames.COUNTRIES);
-
-  // useEffect(() => {
-  //   if (status === "loading") {
-  //     setLoading(true);
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [status]);
-
-  // if (loading) {
-  //   return <ProgressSpinner />
-  // }
-  // if (status !== "loading" && !session) {
-  //   redirect('/403')
-  // }
 
   const { countryList, isLoading: countryListIsLoading, refetch: refetchCountryList } = useGetCountryList();
   const { universityList, isLoading: universityListIsLoading, refetch: refetchUniversityList } = useGetUniversityList();
@@ -60,6 +43,20 @@ export const Admin = () => {
   //     )}
   //   </>
   // );
+  useEffect(() => {
+    if (status === "loading") {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [status]);
+
+  if (loading) {
+    return <ProgressSpinner />
+  }
+  if (status !== "loading" && !session) {
+    redirect('/403')
+  }
   if (countryListIsLoading || universityListIsLoading || evaluationSystemListIsLoading) {
     return <ProgressSpinner />
   }
