@@ -1,4 +1,5 @@
 import { MAX_AGE_SESSION } from '@/constants/session'
+import { createDatabaseAdapter } from '@/infrastructure/config/databaseConfig'
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 
@@ -17,9 +18,17 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (credentials.password === '1234') {
-          return { id: '1', name: 'saul' }
-        } else {
+        try {
+          const databaseAdapter = createDatabaseAdapter()
+          const user = await databaseAdapter.verifyUser(credentials.username, credentials.password)
+          return {
+            id: user.userID,
+            name: user.username,
+            apiKey: user.apiKey,
+            roleName: user.roleName,
+          }
+        } catch (error) {
+          console.error(error)
           return null
         }
       },

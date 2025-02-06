@@ -340,6 +340,7 @@ export class PostgresAdapter implements DatabaseAdapter {
       throw new Error('Invalid credentials')
     }
     const user = {
+      userID: rows[0].userid,
       username: rows[0].username,
       password: rows[0].password,
       apiKey: rows[0].apikey,
