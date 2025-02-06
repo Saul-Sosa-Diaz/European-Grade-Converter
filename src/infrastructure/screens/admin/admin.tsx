@@ -9,9 +9,11 @@ import { UniversityList } from "./components/UniversityList/UniversityList";
 import { useGetUniversityList } from "@/hooks/university/useGetUniversityList";
 import { EvaluationSystemList } from "./components/EvaluationSystemList/EvaluationSystemList";
 import { useGetEvaluationSystemList } from "@/hooks/evaluationSystem/useGetEvaluationSystemList";
+import { Dashboard } from "./components/dashboard/dashboard";
 // TODO: UNCOMMENT THE FOLLOWING LINES
 
 enum AdminTabsNames {
+  DASHBOARD = 'Dashboard',
   COUNTRIES = 'Countries',
   UNIVERSITIES = 'Universities',
   EVALUATION_SYSTEM = 'Evaluation Systems'
@@ -20,7 +22,7 @@ enum AdminTabsNames {
 export const Admin = () => {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(AdminTabsNames.COUNTRIES);
+  const [activeTab, setActiveTab] = useState(AdminTabsNames.DASHBOARD);
 
   const { countryList, isLoading: countryListIsLoading, refetch: refetchCountryList } = useGetCountryList();
   const { universityList, isLoading: universityListIsLoading, refetch: refetchUniversityList } = useGetUniversityList();
@@ -33,16 +35,6 @@ export const Admin = () => {
       refetchEvaluationSystemList();
     }
   }, [activeTab]);
-  // return (
-  //   <>
-  //     {session && (
-  //       <>
-  //         <h1>Admin Page</h1>
-  //         <p>Welcome, {session.user.name}</p>
-  //       </>
-  //     )}
-  //   </>
-  // );
   useEffect(() => {
     if (status === "loading") {
       setLoading(true);
@@ -60,18 +52,21 @@ export const Admin = () => {
   if (countryListIsLoading || universityListIsLoading || evaluationSystemListIsLoading) {
     return <ProgressSpinner />
   }
+  console.log(session);
   return (
     <>
       <MainContainer>
         <SideBar>
           <HeaderSideBar><h1>Admin Page</h1 ></HeaderSideBar>
           <ul>
+            <li onClick={() => { setActiveTab(AdminTabsNames.DASHBOARD) }}>{AdminTabsNames.DASHBOARD}</li>
             <li onClick={() => { setActiveTab(AdminTabsNames.COUNTRIES) }}>{AdminTabsNames.COUNTRIES}</li>
             <li onClick={() => { setActiveTab(AdminTabsNames.UNIVERSITIES) }}>{AdminTabsNames.UNIVERSITIES}</li>
             <li onClick={() => { setActiveTab(AdminTabsNames.EVALUATION_SYSTEM) }}>{AdminTabsNames.EVALUATION_SYSTEM}</li>
           </ul>
         </SideBar>
         <MainContent>
+          {activeTab === AdminTabsNames.DASHBOARD && <Dashboard userName={session.user.name} role={session.role}/>}
           {activeTab === AdminTabsNames.COUNTRIES && <CountryList countryList={countryList} />}
           {activeTab === AdminTabsNames.UNIVERSITIES && <UniversityList universityList={universityList} countryList={countryList} />}
           {activeTab === AdminTabsNames.EVALUATION_SYSTEM && <EvaluationSystemList evaluationSystemList={evaluationSystemList} universityList={universityList} />}
