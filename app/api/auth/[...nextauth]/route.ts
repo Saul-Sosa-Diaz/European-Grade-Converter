@@ -1,7 +1,19 @@
 import { MAX_AGE_SESSION } from '@/constants/session'
+import { Role } from '@/domain/auth/auth'
 import { createDatabaseAdapter } from '@/infrastructure/config/databaseConfig'
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
+
+declare module 'next-auth' {
+  interface Session {
+    role: Role
+  }
+  interface User {
+    id: string
+    name: string
+    role: string
+  }
+}
 
 const handler = NextAuth({
   pages: {
@@ -10,6 +22,22 @@ const handler = NextAuth({
   session: {
     strategy: 'jwt',
     maxAge: MAX_AGE_SESSION,
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+        token.name = user.name
+        token.role = user.role
+      }
+      return token
+    },
+    async session({ session, token }) {
+      console.log('session', token)
+      session.user.name = token.name as string
+      session.role = token.role as Role
+      return session
+    },
   },
   providers: [
     Credentials({
@@ -24,8 +52,7 @@ const handler = NextAuth({
           return {
             id: user.userID,
             name: user.username,
-            apiKey: user.apiKey,
-            roleName: user.roleName,
+            role: user.roleName,
           }
         } catch (error) {
           console.error(error)
