@@ -7,7 +7,7 @@ import {
   APIEvaluationSystem,
   APIEvaluationSystemWithGradeConversions,
 } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
-import { Credentials } from '@/domain/auth/auth'
+import { User } from '@/domain/auth/auth'
 
 export enum ConverterDirection {
   toSpain = 'toSpain',
@@ -37,7 +37,7 @@ export interface DatabaseAdapter {
   updateEvaluationSystem(evaluationSystem: APIEvaluationSystemWithGradeConversions): Promise<void>
   createEvaluationSystem(evaluationSystem: APIEvaluationSystemWithGradeConversions): Promise<void>
   deleteEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
-  verifyUser(username: string, password: string): Promise<Credentials>
+  verifyUser(username: string, password: string): Promise<User>
 }
 
 export function createDatabaseAdapter(): DatabaseAdapter {

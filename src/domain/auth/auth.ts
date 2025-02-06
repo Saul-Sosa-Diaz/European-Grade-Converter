@@ -1,9 +1,6 @@
 export type Credentials = {
-  userID: string
   username: string
   password: string
-  apiKey: string
-  roleName: Role
 }
 
 export enum ResponseCredentials {
@@ -19,5 +16,5 @@ export type User = {
   id: string
   name: string
   apiKey: string
-  roleName: string
+  role: Role
 }
