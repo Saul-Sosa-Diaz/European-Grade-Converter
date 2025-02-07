@@ -347,4 +347,10 @@ export class PostgresAdapter implements DatabaseAdapter {
     }
     return user
   }
+
+  async logUserActivity(username: string, date: Date, operation: string): Promise<void> {
+    const QUERY = authQueries.LOG_USER_ACTIVITY
+    const VALUES = [username, date, operation]
+    await this.pool.query(QUERY, VALUES)
+  }
 }

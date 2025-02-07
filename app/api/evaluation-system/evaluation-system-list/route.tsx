@@ -6,6 +6,7 @@ export async function GET() {
     const result = await databaseAdapter.getEvaluationSystemList();
     return Response.json({ evaluationSystemList: result });
   } catch (error) {
-    return Response.json({ error });
+    console.error(error);
+    return Response.json({ error: "Internal Server Error", success: false });
   }
 }

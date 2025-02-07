@@ -38,6 +38,7 @@ export interface DatabaseAdapter {
   createEvaluationSystem(evaluationSystem: APIEvaluationSystemWithGradeConversions): Promise<void>
   deleteEvaluationSystem(evaluationSystem: APIEvaluationSystem): Promise<void>
   verifyUser(username: string, password: string): Promise<User>
+  logUserActivity(username: string, date: Date, operation: string): Promise<void>
 }
 
 export function createDatabaseAdapter(): DatabaseAdapter {

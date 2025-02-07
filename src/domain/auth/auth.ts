@@ -5,6 +5,7 @@ export type Credentials = {
 
 export enum ResponseCredentials {
   INVALID_CREDENTIALS = 'Invalid credentials',
+  MISSING_CREDENTIALS = 'Missing credentials',
 }
 
 export enum Role {
