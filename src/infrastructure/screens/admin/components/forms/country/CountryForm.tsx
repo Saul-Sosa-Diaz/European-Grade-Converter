@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Country } from '@/domain/country/country';
+import { Dropdown } from 'primereact/dropdown';
+import { COUNTRIES } from '@/constants/countries';
 
 export const CountryForm = ({ initialValue, onSubmit }: { initialValue: Country, onSubmit: (country: Country) => void }) => {
   const [formValues, setFormValues] = useState(initialValue);
@@ -14,9 +16,6 @@ export const CountryForm = ({ initialValue, onSubmit }: { initialValue: Country,
     name: Yup.string()
       .max(255, 'The max length for the country name is 255 characters')
       .required('The country name is required'),
-    code: Yup.string()
-      .max(4, 'The max length for the country code is 4 characters')
-      .required('The country code is required'),
   });
 
   return (
@@ -24,20 +23,24 @@ export const CountryForm = ({ initialValue, onSubmit }: { initialValue: Country,
       enableReinitialize
       initialValues={formValues}
       validationSchema={validationSchema}
-      onSubmit={(country) => onSubmit({ ...country, code: country.code.toUpperCase() })}
+      onSubmit={(country) => { onSubmit({ ...country, code: COUNTRIES.find((c) => c.name === country.name)?.code || '' }) }}
     >
       {({ isSubmitting }) => (
         <Form>
           <div>
             <label htmlFor="name">Country Name</label>
-            <Field type="text" name="name" />
+            <Field name="name">
+              {({ form }) => (
+                <Dropdown
+                  id="name"
+                  value={form.values.name}
+                  options={COUNTRIES.map((country) => ({ label: country.name, value: country.name }))}
+                  filter
+                  onChange={(e) => form.setFieldValue('name', e.value)}
+                />
+              )}
+            </Field>
             <ErrorMessage name="name" component="div" className="error" />
-          </div>
-
-          <div>
-            <label htmlFor="code">Country Code</label>
-            <Field type="text" name="code" />
-            <ErrorMessage name="code" component="div" className="error" />
           </div>
 
           <button type="submit" disabled={isSubmitting}>
