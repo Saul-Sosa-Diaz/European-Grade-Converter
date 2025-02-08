@@ -1,7 +1,7 @@
-INSERT INTO USERS (username, role, password, APIKey)
+INSERT INTO USERS (username, role, password)
 VALUES 
-('admin', 'admin', crypt('adminpassword1', gen_salt('md5')), '27483d93-46af-4fe7-9caf-45f44aaeebe0'),
-('Saul', 'admin', crypt('1234', gen_salt('md5')), 'c72966c6-368b-4427-bda1-b366b9f5f8ec')
+('admin', 'admin', crypt('adminpassword1', gen_salt('md5'))),
+('saul', 'admin', crypt('1234', gen_salt('md5')))
 RETURNING (userID);
 
 INSERT INTO COUNTRY (countryName, countryCode)

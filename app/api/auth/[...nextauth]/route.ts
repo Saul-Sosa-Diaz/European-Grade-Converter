@@ -47,7 +47,10 @@ const handler = NextAuth({
       async authorize(credentials) {
         try {
           const databaseAdapter = createDatabaseAdapter()
-          const user = await databaseAdapter.verifyUser(credentials.username, credentials.password)
+          const user = await databaseAdapter.verifyUser(
+            credentials.username.toLowerCase(),
+            credentials.password,
+          )
           return {
             id: user.id,
             name: user.name,
