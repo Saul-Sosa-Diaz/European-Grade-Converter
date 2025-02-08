@@ -11,6 +11,6 @@ export async function POST(request: Request) {
     return Response.json({ continuousGradeConversionListByEvaluationID: result });
   } catch (error) {
     console.error(error);
-    return Response.json({ error });
+    return Response.json({ error: "Internal Server Error", success: false },);
   }
 }

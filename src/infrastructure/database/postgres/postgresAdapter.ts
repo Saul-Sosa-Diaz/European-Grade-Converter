@@ -15,6 +15,8 @@ import {
   APIEvaluationSystem,
   APIEvaluationSystemWithGradeConversions,
 } from '@/domain/evaluationSystem/dto/ApiEvaluationSystem'
+import { authQueries } from './queries/authQueries'
+import { User } from '@/domain/auth/auth'
 
 export class PostgresAdapter implements DatabaseAdapter {
   private pool: Pool
@@ -328,5 +330,26 @@ export class PostgresAdapter implements DatabaseAdapter {
         : gradeValue
 
     return convertedGrade
+  }
+
+  async verifyUser(username: string, password: string): Promise<User> {
+    const QUERY = authQueries.VERIFY_USER
+    const VALUES = [username, password]
+    const { rows } = await this.pool.query(QUERY, VALUES)
+    if (rows.length === 0) {
+      throw new Error('Invalid credentials')
+    }
+    const user: User = {
+      id: rows[0].userID,
+      name: rows[0].username,
+      role: rows[0].role,
+    }
+    return user
+  }
+
+  async logUserActivity(username: string, date: Date, operation: string): Promise<void> {
+    const QUERY = authQueries.LOG_USER_ACTIVITY
+    const VALUES = [username, date, operation]
+    await this.pool.query(QUERY, VALUES)
   }
 }

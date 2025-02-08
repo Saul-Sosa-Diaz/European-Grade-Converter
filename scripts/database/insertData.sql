@@ -1,3 +1,9 @@
+INSERT INTO USERS (username, role, password)
+VALUES 
+('admin', 'admin', crypt('adminpassword1', gen_salt('md5'))),
+('saul', 'admin', crypt('1234', gen_salt('md5')))
+RETURNING (userID);
+
 INSERT INTO COUNTRY (countryName, countryCode)
 VALUES 
 	('Spain', 'ES'), 
