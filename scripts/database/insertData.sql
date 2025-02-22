@@ -1,7 +1,4 @@
-INSERT INTO USERS (username, role, password)
-VALUES 
-('admin', 'admin', crypt('1234', gen_salt('md5')))
-RETURNING (userID);
+
 
 INSERT INTO COUNTRY (countryName, countryCode)
 VALUES 
@@ -45,6 +42,11 @@ INSERT INTO UNIVERSITY (countryID, universityName)
    (16, 'University of Zurich'), -- 16 Switzerland
    (17, 'University of Ljubljana') -- 17 Slovenia
 RETURNING (countryID, universityID);
+
+INSERT INTO USERS (username, role, password, universityID)
+VALUES 
+('admin', 'admin', crypt('1234', gen_salt('md5')), 1)
+RETURNING (userID);
 
 -- Spain Evaluation System
 INSERT INTO EVALUATION_SYSTEM (
