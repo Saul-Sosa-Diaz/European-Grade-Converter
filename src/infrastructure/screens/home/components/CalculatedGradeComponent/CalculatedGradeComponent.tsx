@@ -12,15 +12,14 @@
 
 import { useGradeConverterContext } from "@/context/GradeConverterContext";
 import { useEffect, useRef, useState } from "react";
-import { GradeStyled, StyledCard } from "./CalculatedGradeComponent.styles";
+import { GradeStyled, SpinnerStyled, StyledCard } from "./CalculatedGradeComponent.styles";
 import { useConvertGrade } from "@/hooks/converter/useConvertGrade";
 import { Toast } from "primereact/toast";
-
 
 export const CalculatedGradeComponent = () => {
   const { gradeToConvert, countryFrom, countryTo } = useGradeConverterContext();
   const [calculatedGrade, setCalculatedGrade] = useState<string | null>(null);
-  const { convertedGrade, error, isError } = useConvertGrade(
+  const { convertedGrade, error, isError, isFetching } = useConvertGrade(
     countryFrom && countryFrom.evaluationSystemID
       ? {
         fromEvaluationSystemID: countryFrom.evaluationSystemID,
@@ -55,6 +54,14 @@ export const CalculatedGradeComponent = () => {
       setCalculatedGrade(newGrade);
     }
   }, [convertedGrade, countryFrom]);
+
+  if (isFetching) {
+    return <>
+        <StyledCard>
+        <SpinnerStyled />
+        </StyledCard>
+    </>
+  }
 
   return (
     <>

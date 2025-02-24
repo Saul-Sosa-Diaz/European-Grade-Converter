@@ -12,8 +12,12 @@
 
 import { styled } from '@stitches/react';
 import { Card } from 'primereact/card';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 export const StyledCard = styled(Card, {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     '& .p-card': {
         padding: '0',
     },
@@ -35,4 +39,10 @@ export const GradeStyled = styled('p', {
     padding: '0',
     textAlign: 'center',
     fontWeight: 'bold',
+});
+
+export const SpinnerStyled = styled(ProgressSpinner, {
+    maxHeight: '20px',
+    maxWidth: '20px',
+    margin: 'auto',
 });
