@@ -77,5 +77,6 @@ export const StyledButton = styled(Button, {
     color: 'white',
     '&:hover': {
         backgroundColor: COLORS.primary,
-    }
+    },
+    marginBottom: '12px',
 })
