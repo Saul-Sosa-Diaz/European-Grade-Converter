@@ -11,4 +11,4 @@
  * @author Saul Sosa
  */
 
-export const MAX_AGE_SESSION = 10 * 60 // 10 minutes
+export const MAX_AGE_SESSION = 60 * 60 * 3 // 3 hours
