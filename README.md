@@ -107,7 +107,7 @@ Antes de ejecutar el proyecto, debes configurar la conexión a la base de datos 
 > * **Contraseña:** 1234
 
 ### Estructura de archivos
-La estructura de directorios del proyecto igue el patrón de diseño de arquitectura hexagonal y es el siguiente:
+La estructura de directorios del proyecto sigue el patrón de diseño de arquitectura hexagonal y es el siguiente:
 ```
 .
 ├── app 
@@ -212,7 +212,7 @@ La estructura de directorios del proyecto igue el patrón de diseño de arquitec
 ```
 
 > [!NOTE]  
-> Esto on solo directorios dentro de ellos hay varios ficheros.
+> Estos son solo directorios dentro de ellos hay varios ficheros.
 
 
 ### APIs de la Aplicación
