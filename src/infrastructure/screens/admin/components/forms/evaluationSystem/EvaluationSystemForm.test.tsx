@@ -35,7 +35,6 @@ describe('EvaluationSystemForm', () => {
 
     expect(screen.getByLabelText(/University Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Name of the system/i)).toHaveValue(initialValues.evaluationSystemName);
-    expect(screen.getByLabelText(/Evaluation type/i)).toHaveValue(initialValues.evaluationType);
     expect(screen.getByLabelText(/Minimum grade/i)).toHaveValue(getMinGrade(initialValues.validGrades));
     expect(screen.getByLabelText(/Maximum grade/i)).toHaveValue(getMaxGrade(initialValues.validGrades));
     expect(screen.getByLabelText(/Number of decimals/i)).toHaveValue(initialValues.fixed);

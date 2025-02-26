@@ -90,14 +90,17 @@ export const EvaluationSystemForm = ({
             <ErrorText name={NamesFormInput.EVALUATION_SYSTEM_NAME} component="div" className="text-error" />
           </FormGroup>
           <FormGroup>
-            <Label htmlFor={NamesFormInput.EVALUATION_TYPE}>Evaluation type</Label>
-            <Field id={NamesFormInput.EVALUATION_TYPE} as="select" name={NamesFormInput.EVALUATION_TYPE}>
-              {Object.values(EvaluationType).map((type) => (
-                <option key={type} value={type}>
-                  {type.toUpperCase()}
-                </option>
-              ))}
-            </Field>
+            {!values.evaluationSystemID && (<>
+              <Label htmlFor={NamesFormInput.EVALUATION_TYPE}>Evaluation type</Label>
+              <Field id={NamesFormInput.EVALUATION_TYPE} as="select" name={NamesFormInput.EVALUATION_TYPE}>
+                {Object.values(EvaluationType).map((type) => (
+                  <option key={type} value={type}>
+                    {type.toUpperCase()}
+                  </option>
+                ))}
+              </Field>
+            </>)}
+
             <ErrorText name={NamesFormInput.EVALUATION_TYPE} component="div" className="text-error" />
             <>
               {values.evaluationType == EvaluationType.CONTINUOUS && (
