@@ -58,7 +58,7 @@ Antes de ejecutar el proyecto, debes configurar la conexión a la base de datos 
         ```
         DATABASE_URL=postgresql://tu_usuario:tu_contraseña@localhost:5432/tu_base_de_datos
         NEXTAUTH_URL=http://localhost:3000  # O la URL de tu aplicación en producción
-        NEXTAUTH_SECRET=un_secreto_largo_y_aleatorio  # Genera un secreto seguro
+        NEXTAUTH_SECRET=un_secreto_largo_y_aleatorio  # Genera un secreto seguro con openssl rand -base64 32
         ```
 > [!IMPORTANT]  
 >  Reemplaza `tu_usuario`, `tu_contraseña` y `tu_base_de_datos` con los valores correctos para tu configuración.  El `NEXTAUTH_URL` es la URL base de tu aplicación (en desarrollo, suele ser `http://localhost:3000`). El `NEXTAUTH_SECRET` debe ser una cadena larga y aleatoria; puedes generarla con un comando como `openssl rand -base64 32` en la terminal o buscando "secret generator" online.
