@@ -26,16 +26,7 @@ export interface APIEvaluationSystem {
   fixed: number
 }
 
-export interface APIEvaluationSystemWithGradeConversions {
-  evaluationsystemid: string
-  universityid: string
-  universityname: string
-  evaluationsysteminfo: string
-  urltoevidence: string
-  evaluationtype: EvaluationType
-  validgrades: string[]
-  evaluationsystemname: string
-  fixed: number
+export type APIEvaluationSystemWithGradeConversions = APIEvaluationSystem & {
   gradeconversions: APIGradeConversion[]
 }
 
