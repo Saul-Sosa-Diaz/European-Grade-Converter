@@ -40,5 +40,5 @@ it('should return data with status 200', async () => {
   const response = await POST(request);
   const body = await response.json();
   expect(response.status).toBe(200);
-  expect(body).toEqual({ continuousGradeConversionListByEvaluationID: SPAIN_GRADE_CONVERSIONS });
+  expect(body).toEqual({ gradeConversionListByID: SPAIN_GRADE_CONVERSIONS });
 });

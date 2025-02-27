@@ -47,7 +47,7 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
       params: GetGradeConversionListByEvaluationID.Params,
     ) => {
       const continuousGradeConversionList: {
-        continuousGradeConversionListByEvaluationID: APIGradeConversion[]
+        gradeConversionListByID: APIGradeConversion[]
       } = await fetch(API_URL.evaluationSystem.getGradeConversionListByEvaluationID, {
         method: 'post',
         body: JSON.stringify({ ...params }),
@@ -57,7 +57,7 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
           throw new Error(error)
         })
       const continuousGradeConversion = await buildGradeConversionListByEvaluationIDMap(
-        continuousGradeConversionList.continuousGradeConversionListByEvaluationID,
+        continuousGradeConversionList.gradeConversionListByID,
       )
       return continuousGradeConversion
     },
