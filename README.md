@@ -110,32 +110,6 @@ Antes de ejecutar el proyecto, debes configurar la conexión a la base de datos 
 La estructura de directorios del proyecto sigue el patrón de diseño de arquitectura hexagonal y es el siguiente:
 ```
 .
-├── app 
-│   ├── 403  # Página de error 403
-│   ├── admin # Página de administrador
-│   ├── api  # Rutas de APIS    
-│   │   ├── auth
-│   │   │   └── [...nextauth]
-│   │   ├── converter
-│   │   │   └── convert-grade
-│   │   ├── country
-│   │   │   ├── country-list
-│   │   │   ├── country-with-evaluation-info-list
-│   │   │   ├── create-country
-│   │   │   ├── delete-country
-│   │   │   └── update-country
-│   │   ├── evaluation-system
-│   │   │   ├── create-evaluation-system
-│   │   │   ├── delete-evaluation-system
-│   │   │   ├── evaluation-system-list
-│   │   │   ├── grade-conversion-by-evaluation-system
-│   │   │   └── update-evaluation-system
-│   │   └── university
-│   │       ├── create-university
-│   │       ├── delete-university
-│   │       ├── university-list
-│   │       └── update-university
-│   └── login # Página de login
 ├── public # Archivos estáticos del proyecto (imágenes, iconos, etc.)
 │   ├── flags
 │   └── ull
@@ -145,6 +119,32 @@ La estructura de directorios del proyecto sigue el patrón de diseño de arquite
 └── src # Código fuente del proyecto
     ├── api # Interfaz de API de la arquitectura hexagonal
     │   └── domain
+    ├── app 
+    │   ├── 403  # Página de error 403
+    │   ├── admin # Página de administrador
+    │   ├── api  # Rutas de APIS    
+    │   │   ├── auth
+    │   │   │   └── [...nextauth]
+    │   │   ├── converter
+    │   │   │   └── convert-grade
+    │   │   ├── country
+    │   │   │   ├── country-list
+    │   │   │   ├── country-with-evaluation-info-list
+    │   │   │   ├── create-country
+    │   │   │   ├── delete-country
+    │   │   │   └── update-country
+    │   │   ├── evaluation-system
+    │   │   │   ├── create-evaluation-system
+    │   │   │   ├── delete-evaluation-system
+    │   │   │   ├── evaluation-system-list
+    │   │   │   ├── grade-conversion-by-evaluation-system
+    │   │   │   └── update-evaluation-system
+    │   │   └── university
+    │   │       ├── create-university
+    │   │       ├── delete-university
+    │   │       ├── university-list
+    │   │       └── update-university
+    │   └── login # Página de login
     ├── application # Capa de aplicación de la arquitectura hexagonal
     │   ├── converter
     │   ├── country
