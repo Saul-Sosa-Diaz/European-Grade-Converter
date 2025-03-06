@@ -80,23 +80,22 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
     // Update associated grade conversions
     await Promise.all(
       evaluationSystem.gradeconversions.map((gradeConversion, index) => {
-        // Get the equivalent Spanish grade for the European equivalence
-        const baseEquivalentSpanishGrade = this.spanishEquivalent.get(
-          gradeConversion.europeanequivalence,
-        ).base
-        let topEquivalentSpanishGrade = this.spanishEquivalent.get(
-          gradeConversion.europeanequivalence,
-        ).top
-        // Change the top of spanish equivalent grade if the next grade is FX
-        if (
-          gradeConversion.europeanequivalence === EuropeanEquivalence.F &&
-          evaluationSystem.gradeconversions[index + 1] &&
-          (evaluationSystem.gradeconversions[index + 1].gradevalue ||
-            evaluationSystem.gradeconversions[index + 1].minintervalgrade ||
-            evaluationSystem.gradeconversions[index + 1].maxintervalgrade)
-        ) {
-          topEquivalentSpanishGrade = this.spanishEquivalent.get(EuropeanEquivalence.FX).base
-        }
+         const equivalenceData = this.spanishEquivalent.get(gradeConversion.europeanequivalence)
+         const baseEquivalentSpanishGrade = equivalenceData.base
+         let topEquivalentSpanishGrade = equivalenceData.top
+         for (let i = index + 1; i < evaluationSystem.gradeconversions.length; i++) {
+           const nextConversion = evaluationSystem.gradeconversions[i]
+           if (
+             nextConversion.gradevalue ||
+             nextConversion.minintervalgrade ||
+             nextConversion.maxintervalgrade
+           ) {
+             topEquivalentSpanishGrade = this.spanishEquivalent.get(
+               nextConversion.europeanequivalence,
+             ).base
+             break
+           }
+         }
         // Update the grade conversion depending on the type of grade conversion (discrete or continuous)
         if (gradeConversion.gradevalue) {
           // discrete
@@ -147,23 +146,22 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
     // Create associated grade conversions
     await Promise.all(
       evaluationSystem.gradeconversions.map((gradeConversion, index) => {
-        const baseEquivalentSpanishGrade = this.spanishEquivalent.get(
-          gradeConversion.europeanequivalence,
-        ).base
-        let topEquivalentSpanishGrade = this.spanishEquivalent.get(
-          gradeConversion.europeanequivalence,
-        ).top
-
-        if (
-          gradeConversion.europeanequivalence === EuropeanEquivalence.F &&
-          evaluationSystem.gradeconversions[index + 1].europeanequivalence ===
-            EuropeanEquivalence.FX &&
-          (evaluationSystem.gradeconversions[index + 1].gradevalue ||
-            evaluationSystem.gradeconversions[index + 1].minintervalgrade ||
-            evaluationSystem.gradeconversions[index + 1].maxintervalgrade)
-        ) {
-          topEquivalentSpanishGrade = this.spanishEquivalent.get(EuropeanEquivalence.FX).base
-        }
+         const equivalenceData = this.spanishEquivalent.get(gradeConversion.europeanequivalence)
+         const baseEquivalentSpanishGrade = equivalenceData.base
+         let topEquivalentSpanishGrade = equivalenceData.top
+         for (let i = index + 1; i < evaluationSystem.gradeconversions.length; i++) {
+           const nextConversion = evaluationSystem.gradeconversions[i]
+           if (
+             nextConversion.gradevalue ||
+             nextConversion.minintervalgrade ||
+             nextConversion.maxintervalgrade
+           ) {
+             topEquivalentSpanishGrade = this.spanishEquivalent.get(
+               nextConversion.europeanequivalence,
+             ).base
+             break
+           }
+         }
         if (
           // Care with this condition because it is not clear, when minIntervalGrade is 0 it is false and it should be true because of that I added the !== null
           (gradeConversion.gradevalue !== null && gradeConversion.gradevalue !== '') ||
