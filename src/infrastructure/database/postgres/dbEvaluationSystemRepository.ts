@@ -151,6 +151,7 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
          let topEquivalentSpanishGrade = equivalenceData.top
          for (let i = index + 1; i < evaluationSystem.gradeconversions.length; i++) {
            const nextConversion = evaluationSystem.gradeconversions[i]
+           // If the next conversion is a grade value or a grade interval, then the top equivalent spanish grade is the base of the next conversion
            if (
              nextConversion.gradevalue ||
              nextConversion.minintervalgrade ||
