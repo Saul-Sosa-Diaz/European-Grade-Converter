@@ -1130,3 +1130,72 @@ VALUES (
   'Excellent',
    'A'
 );
+-- United Kingdom
+INSERT INTO EVALUATION_SYSTEM (
+   universityID, evaluationSystemName, evaluationType, validGrades, fixed, evaluationsysteminfo, urlToEvidence
+) VALUES (
+  6,
+  'United Kingdom',
+  'continuous',
+  '{"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100"}',
+   0,
+  'Insert a value between 0 and 100',
+  'https://www.mastersportal.com/articles/3207/understanding-european-grading-systems.html'
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, gradeName, europeanEquivalence
+)
+VALUES (
+  15,               
+  0,               
+  40,               
+  0,                               
+  6.0,            
+  'Fail',
+  'F'
+);
+VALUES (
+15, 
+  45,               
+  50,               
+  6.0,                             
+  7,            
+  'Satisfactory',
+   'D'
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, gradeName, europeanEquivalence
+)
+VALUES (
+15, 
+  50,               
+  60,               
+  7.0,                               
+  8,            
+  'Good',
+   'C'
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, gradeName, europeanEquivalence
+)
+VALUES (
+15, 
+  60,               
+  70,               
+  8.0,                               
+  9,            
+  'Very Good',
+   'B'
+);
+INSERT INTO CONTINUOUS_GRADE_CONVERSION (
+   evaluationSystemID, MinIntervalGrade, MaxIntervalGrade, baseEquivalentSpanishGrade, topEquivalentSpanishGrade, gradeName, europeanEquivalence
+)
+VALUES (
+  15, 
+  70,               
+  100,               
+  9,                               
+  10,            
+  'Excellent',
+   'A'
+);
