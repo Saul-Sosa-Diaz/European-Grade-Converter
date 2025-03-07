@@ -19,7 +19,7 @@ import {
   EvaluationType,
 } from '@/domain/evaluationSystem/evaluationSystem';
 import { University } from '@/domain/university/university';
-import { useGetGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetContinuousGradeConversion';
+import { useGetGradeConversionListByEvaluationID } from '@/hooks/evaluationSystem/useGetGradeConversion';
 import { UniversityDropdown } from './UniversityDropdown';
 import { GradeEquivalenceFields } from './GradeEquivalenceField';
 import { ProgressSpinner } from 'primereact/progressspinner';
