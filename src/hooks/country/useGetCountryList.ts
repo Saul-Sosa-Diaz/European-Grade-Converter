@@ -30,6 +30,7 @@ export const useGetCountryList = () => {
   const { data, ...rest } = useQuery({
     queryKey: ['countryList'],
     queryFn: async () => await Country.getCountryList(),
+    staleTime: 0,
   })
 
   return { countryList: data, ...rest }

@@ -58,7 +58,6 @@ export const useConvertGrade = (params: ConvertGrade.Params | null) => {
         throw new Error(error.message)
       }
     },
-
     enabled: isParamsValid,
   })
 

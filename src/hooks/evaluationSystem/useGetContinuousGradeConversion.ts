@@ -36,6 +36,7 @@ export const useGetGradeConversionListByEvaluationID = (
     queryKey: ['getGradeConversionListByEvaluationID', JSON.stringify(params)],
     queryFn: async () => await EvaluationSystem.getGradeConversionListByEvaluationID(params),
     enabled: !!params.evaluationSystemID,
+    staleTime: 0,
   })
   return { getGradeConversionListByEvaluationID: data, ...rest }
 }

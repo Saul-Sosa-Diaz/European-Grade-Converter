@@ -29,6 +29,7 @@ export const useGetCountryWithEvaluationInfoList = () => {
   const { data, ...rest } = useQuery({
     queryKey: ['countryWithEvaluationInfoList'],
     queryFn: async () => await Country.getCountryWithEvaluationInfoList(),
+    staleTime: 0,
   })
 
   return { countryWithEvaluationInfoList: data, ...rest }

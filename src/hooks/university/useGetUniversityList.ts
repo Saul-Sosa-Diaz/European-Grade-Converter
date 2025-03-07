@@ -30,6 +30,7 @@ export const useGetUniversityList = () => {
   const { data, ...rest } = useQuery({
     queryKey: ['universityList'],
     queryFn: async () => await University.getUniversityList(),
+    staleTime: 0,
   })
 
   return { universityList: data, ...rest }

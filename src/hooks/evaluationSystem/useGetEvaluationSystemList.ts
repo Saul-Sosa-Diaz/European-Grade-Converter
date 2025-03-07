@@ -30,6 +30,7 @@ export const useGetEvaluationSystemList = () => {
   const { data, ...rest } = useQuery({
     queryKey: ['evaluationSystemList'],
     queryFn: async () => await EvaluationSystem.getEvaluationSystemList(),
+    staleTime: 0,
   })
 
   return { evaluationSystemList: data, ...rest }
