@@ -32,7 +32,6 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
     getEvaluationSystemList: async () => {
       const evaluationSystemList: { evaluationSystemList: APIEvaluationSystem[] } = await fetch(
         API_URL.evaluationSystem.getEvaluationSystemList,
-        { cache: 'no-store' },
       )
         .then((response) => response.json())
         .catch((error) => {
@@ -51,7 +50,6 @@ export function createEvaluationSystemRepository(): EvaluationSystemRepository {
         gradeConversionListByID: APIGradeConversion[]
       } = await fetch(API_URL.evaluationSystem.getGradeConversionListByEvaluationID, {
         method: 'post',
-        cache: 'no-store',
         body: JSON.stringify({ ...params }),
       })
         .then((response) => response.json())

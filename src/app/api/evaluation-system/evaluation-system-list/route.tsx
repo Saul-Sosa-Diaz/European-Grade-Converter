@@ -17,9 +17,23 @@ export async function GET() {
   try {
     const databaseAdapter = createDatabaseAdapter().getDBEvaluationSystemRepository();
     const result = await databaseAdapter.getEvaluationSystemList();
-    return Response.json({ evaluationSystemList: result });
+    const jsonResponse = JSON.stringify({ evaluationSystemList: result });
+    return new Response(jsonResponse, {
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-store',
+        'Content-Type': 'application/json'
+      }
+    });
   } catch (error) {
     console.error(error);
-    return Response.json({ error: "Internal Server Error", success: false });
+    const errorResponse = JSON.stringify({ error: "Internal Server Error", success: false });
+    return new Response(errorResponse, {
+      status: 500,
+      headers: {
+        'Cache-Control': 'no-store',
+        'Content-Type': 'application/json'
+      }
+    });
   }
 }

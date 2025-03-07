@@ -19,9 +19,22 @@ export async function POST(request: Request) {
     const body: GetGradeConversionListByEvaluationID.Params = await request.json();
     const databaseAdapter = createDatabaseAdapter().getDBEvaluationSystemRepository();
     const result = await databaseAdapter.getGradeConversionListByEvaluationID(body.evaluationSystemID.toString());
-    return Response.json({ gradeConversionListByID: result });
+
+    return new Response(JSON.stringify({ gradeConversionListByID: result }), {
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-store',
+        'Content-Type': 'application/json'
+      }
+    });
   } catch (error) {
     console.error(error);
-    return Response.json({ error: "Internal Server Error", success: false },);
+    return new Response(JSON.stringify({ error: "Internal Server Error", success: false }), {
+      status: 500,
+      headers: {
+        'Cache-Control': 'no-store',
+        'Content-Type': 'application/json'
+      }
+    });
   }
 }
