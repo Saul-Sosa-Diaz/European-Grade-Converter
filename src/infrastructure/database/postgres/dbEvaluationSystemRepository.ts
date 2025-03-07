@@ -79,23 +79,23 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
     await this.pool.query(QUERY, VALUES)
     // Update associated grade conversions
     await Promise.all(
-      evaluationSystem.gradeconversions.map((gradeConversion, index) => {
-         const equivalenceData = this.spanishEquivalent.get(gradeConversion.europeanequivalence)
-         const baseEquivalentSpanishGrade = equivalenceData.base
-         let topEquivalentSpanishGrade = equivalenceData.top
-         for (let i = index + 1; i < evaluationSystem.gradeconversions.length; i++) {
-           const nextConversion = evaluationSystem.gradeconversions[i]
-           if (
-             nextConversion.gradevalue ||
-             nextConversion.minintervalgrade ||
-             nextConversion.maxintervalgrade
-           ) {
-             topEquivalentSpanishGrade = this.spanishEquivalent.get(
-               nextConversion.europeanequivalence,
-             ).base
-             break
-           }
-         }
+      evaluationSystem.gradeconversions.map(async (gradeConversion, index) => {
+        const equivalenceData = this.spanishEquivalent.get(gradeConversion.europeanequivalence)
+        const baseEquivalentSpanishGrade = equivalenceData.base
+        let topEquivalentSpanishGrade = equivalenceData.top
+        for (let i = index + 1; i < evaluationSystem.gradeconversions.length; i++) {
+          const nextConversion = evaluationSystem.gradeconversions[i]
+          if (
+            nextConversion.gradevalue ||
+            nextConversion.minintervalgrade ||
+            nextConversion.maxintervalgrade
+          ) {
+            topEquivalentSpanishGrade = this.spanishEquivalent.get(
+              nextConversion.europeanequivalence,
+            ).base
+            break
+          }
+        }
         // Update the grade conversion depending on the type of grade conversion (discrete or continuous)
         if (gradeConversion.gradevalue) {
           // discrete
@@ -119,7 +119,7 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
             topEquivalentSpanishGrade,
             gradeConversion.gradeconversionid,
           ]
-          return this.pool.query(
+          return await this.pool.query(
             EVALUATION_SYSTEM_QUERIES.UPDATE_CONTINUOUS_GRADE_CONVERSION,
             GRADE_CONVERSION_VALUES,
           )
@@ -145,24 +145,24 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
     const newEvaluationSystemId = (await this.pool.query(QUERY, VALUES)).rows[0].evaluationsystemid
     // Create associated grade conversions
     await Promise.all(
-      evaluationSystem.gradeconversions.map((gradeConversion, index) => {
-         const equivalenceData = this.spanishEquivalent.get(gradeConversion.europeanequivalence)
-         const baseEquivalentSpanishGrade = equivalenceData.base
-         let topEquivalentSpanishGrade = equivalenceData.top
-         for (let i = index + 1; i < evaluationSystem.gradeconversions.length; i++) {
-           const nextConversion = evaluationSystem.gradeconversions[i]
-           // If the next conversion is a grade value or a grade interval, then the top equivalent spanish grade is the base of the next conversion
-           if (
-             nextConversion.gradevalue ||
-             nextConversion.minintervalgrade ||
-             nextConversion.maxintervalgrade
-           ) {
-             topEquivalentSpanishGrade = this.spanishEquivalent.get(
-               nextConversion.europeanequivalence,
-             ).base
-             break
-           }
-         }
+      evaluationSystem.gradeconversions.map(async (gradeConversion, index) => {
+        const equivalenceData = this.spanishEquivalent.get(gradeConversion.europeanequivalence)
+        const baseEquivalentSpanishGrade = equivalenceData.base
+        let topEquivalentSpanishGrade = equivalenceData.top
+        for (let i = index + 1; i < evaluationSystem.gradeconversions.length; i++) {
+          const nextConversion = evaluationSystem.gradeconversions[i]
+          // If the next conversion is a grade value or a grade interval, then the top equivalent spanish grade is the base of the next conversion
+          if (
+            nextConversion.gradevalue ||
+            nextConversion.minintervalgrade ||
+            nextConversion.maxintervalgrade
+          ) {
+            topEquivalentSpanishGrade = this.spanishEquivalent.get(
+              nextConversion.europeanequivalence,
+            ).base
+            break
+          }
+        }
         if (
           // Care with this condition because it is not clear, when minIntervalGrade is 0 it is false and it should be true because of that I added the !== null
           (gradeConversion.gradevalue !== null && gradeConversion.gradevalue !== '') ||
@@ -171,7 +171,6 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
             gradeConversion.maxintervalgrade !== null &&
             gradeConversion.maxintervalgrade !== '')
         ) {
-
           if (gradeConversion.gradevalue) {
             const GRADE_DISCRETE_CONVERSION_VALUES = [
               newEvaluationSystemId,
@@ -184,7 +183,6 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
               EVALUATION_SYSTEM_QUERIES.CREATE_DISCRETE_GRADE_CONVERSION,
               GRADE_DISCRETE_CONVERSION_VALUES,
             )
-            
           } else {
             const GRADE_CONTINUOUS_CONVERSION_VALUES = [
               newEvaluationSystemId,
@@ -195,7 +193,7 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
               topEquivalentSpanishGrade,
               gradeConversion.europeanequivalence,
             ]
-            return this.pool.query(
+            return await this.pool.query(
               EVALUATION_SYSTEM_QUERIES.CREATE_CONTINUOUS_GRADE_CONVERSION,
               GRADE_CONTINUOUS_CONVERSION_VALUES,
             )
