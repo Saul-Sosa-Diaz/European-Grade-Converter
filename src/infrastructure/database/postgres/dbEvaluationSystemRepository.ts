@@ -39,7 +39,7 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
 
   async getEvaluationSystemList() {
     const QUERY = EVALUATION_SYSTEM_QUERIES.GET_EVALUATION_SYSTEM_LIST
-    return this.pool.query(QUERY).then((result) => result.rows as APIEvaluationSystem[])
+    return await this.pool.query(QUERY).then((result) => result.rows as APIEvaluationSystem[])
   }
 
   async getGradeConversionListByEvaluationID(evaluationSystemID: string) {
@@ -56,7 +56,7 @@ export class PostgresEvaluationSystemRepository implements DBEvaluationSystemRep
       .query(DISCRETE_QUERY, VALUES)
       .then((result) => result.rows as APIGradeConversion[])
     // Return both continuous and discrete grade conversions because there are countries like italy that have both types of grade conversions
-    return Promise.all([continuousGradeConversion, discreteGradeConversion]).then(
+    return await Promise.all([continuousGradeConversion, discreteGradeConversion]).then(
       ([continuous, discrete]) => [...continuous, ...discrete] as APIGradeConversion[],
     )
   }
