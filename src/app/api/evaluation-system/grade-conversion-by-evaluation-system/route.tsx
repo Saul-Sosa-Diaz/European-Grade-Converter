@@ -13,7 +13,7 @@
  */
 import { GetGradeConversionListByEvaluationID } from '@/domain/evaluationSystem/evaluationSystemRepository';
 import { createDatabaseAdapter } from '@/infrastructure/config/databaseConfig';
-
+export const revalidate = 0;
 export async function POST(request: Request) {
   try {
     const body: GetGradeConversionListByEvaluationID.Params = await request.json();
