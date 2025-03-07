@@ -37,6 +37,8 @@ export const useGetGradeConversionListByEvaluationID = (
     queryFn: async () => await EvaluationSystem.getGradeConversionListByEvaluationID(params),
     enabled: !!params.evaluationSystemID,
     staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   })
   return { getGradeConversionListByEvaluationID: data, ...rest }
 }

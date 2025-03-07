@@ -31,6 +31,8 @@ export const useGetEvaluationSystemList = () => {
     queryKey: ['evaluationSystemList'],
     queryFn: async () => await EvaluationSystem.getEvaluationSystemList(),
     staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   })
 
   return { evaluationSystemList: data, ...rest }

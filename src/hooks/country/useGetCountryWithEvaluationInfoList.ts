@@ -30,6 +30,8 @@ export const useGetCountryWithEvaluationInfoList = () => {
     queryKey: ['countryWithEvaluationInfoList'],
     queryFn: async () => await Country.getCountryWithEvaluationInfoList(),
     staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   })
 
   return { countryWithEvaluationInfoList: data, ...rest }

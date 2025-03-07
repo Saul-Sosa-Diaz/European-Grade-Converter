@@ -31,6 +31,8 @@ export const useGetUniversityList = () => {
     queryKey: ['universityList'],
     queryFn: async () => await University.getUniversityList(),
     staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   })
 
   return { universityList: data, ...rest }

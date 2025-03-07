@@ -31,6 +31,8 @@ export const useGetCountryList = () => {
     queryKey: ['countryList'],
     queryFn: async () => await Country.getCountryList(),
     staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   })
 
   return { countryList: data, ...rest }
