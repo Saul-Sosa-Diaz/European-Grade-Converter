@@ -10,7 +10,7 @@
  */
 
 import { createDatabaseAdapter } from '@/infrastructure/config/databaseConfig';
-
+export const revalidate = 0;
 export async function GET() {
   try {
     const databaseAdapter = createDatabaseAdapter().getDBCountryRepository();
